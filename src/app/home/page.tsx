@@ -1,37 +1,15 @@
-"use client";
 import Image from "next/image";
 
 export default function Home() {
   return (
     <div className="min-h-screen flex flex-col bg-gray-50 text-gray-900">
-      {/* NAVBAR */}
-      <nav className="w-full bg-white shadow-md fixed top-0 left-0 z-10"> 
-        <div className="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
-          <h1 className="text-2xl font-bold text-gray-700">Umass Lowell Robotics Research</h1>
-          <ul className="flex space-x-6 text-sm font-medium">
-          <li className="bg-gray-200 px-3 py-1 rounded-md hover:bg-gray-300 cursor-pointer transition-colors">
-            Projects 
-          </li>
-          <li className="hover:text-gray-600 cursor-pointer transition-colors">
-            People
-          </li>
-          <li className="hover:text-gray-600 cursor-pointer transition-colors">
-            News 
-          </li>
-          <li className="hover:text-gray-600 cursor-pointer transition-colors">
-            Contact
-          </li> 
-          </ul>
-        </div>
-      </nav>
-
       {/*All the content  */}
       <main className="flex-grow mt-24 flex flex-col items-center text-center px-6">
         {/*"hero" part of page */} 
         <section className="flex flex-col items-center justify-center text-center w-full
          h-[90vh] bg-gradient-to-b from-white to-gray-100">
           <h1 className="text-7xl sm:text-8xl font-extrabold mb-6 text-gray-900 tracking-tight">
-            ARA Lab 
+            ARA Lab Home
           </h1>
         <p className="text-2xl sm:text-3xl text-gray-600 max-w-2xl">
           Assistive Robots & Accessibility 
@@ -120,11 +98,6 @@ export default function Home() {
           </div>
         </section>
       </main>
-
-      {/*Footer for social media links eventually */}
-      <footer className="w-full bg-gray-100 text-center py-6 text-sm text-gray-500">
-       Put social media stuff down here *placeholder for now* 
-      </footer>
     </div>
   );
 }
