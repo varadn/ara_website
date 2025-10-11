@@ -16,8 +16,8 @@ export default function Navbar() {
                     <Link
                       key={route.key}
                       href={route.path}
-                      className={clsx('hover:text-gray-600 cursor-pointer transition-colors', {
-                        'bg-gray-200 px-3 py-1 rounded-md hover:bg-gray-300': pathname === route.path,
+                      className={clsx('text-gray-500 hover:text-gray-900 cursor-pointer transition-colors', {
+                        'bg-gray-200 px-3 py-1 rounded-md hover:bg-gray-300 text-gray-900': pathname === route.path,
                       })}
                     >
                         <li>{route.name}</li>
