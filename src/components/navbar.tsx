@@ -23,7 +23,22 @@ export default function Navbar() {
                         <li>{route.name}</li>
                     </Link>
                 ))}
-            </ul>   
+            </ul>  
+            {/*All the authentication buttons we need*/}
+            <div className="flex space-x-3">
+            <Link
+                href="/login"
+                className="px-4 py-2 text-sm font-semibold text-gray-700 border border-gray-300 rounded-md hover:bg-gray-100 transition"
+                >
+                Login
+            </Link>
+            <Link
+                href="/register" 
+                className="px-4 py-2 text-sm font-semibold text-white bg-gray-800 rounded-md hover:bg-gray-900 transition"
+            > 
+                Register 
+            </Link>
+            </div>
         </div>
     </nav>
     )

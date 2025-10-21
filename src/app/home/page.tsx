@@ -1,4 +1,30 @@
 import Image from "next/image";
+import ProjectCard from "@/components/ProjectCard"
+
+const projects = [
+  {
+    title: "Ethan's Lorem Ipsum Robot", 
+    description:
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas quod fugiat non vero aut rem eos aliquid libero, atque explicabo voluptate pariatur quis inventore esse iusto aspernatur magnam ab excepturi?",
+    imageSrc: "/AraLabPic.jpg", 
+    imageAlt: "Ethan's robot project",
+  },
+
+  {
+    title: "Varad's robot that can teach me how to use Next.js",
+    description:
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas quod fugiat non vero aut rem eos aliquid libero, atque explicabo voluptate pariatur quis inventore esse iusto aspernatur magnam ab excepturi? Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quas facere totam, itaque officiis, dolorum reprehenderit ab doloribus, sunt ullam accusantium sit.",
+    imageSrc: "/AraLabPic.jpg",
+    imageAlt: "Varad's robot project",
+  },
+  {
+    title: "Dan the Goat",
+    description:
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas quod fugiat non vero aut rem eos aliquid libero, atque explicabo voluptate pariatur quis inventore esse iusto aspernatur magnam ab excepturi?",
+    imageSrc: "/AraLabPic.jpg",
+    imageAlt: "Dan's project robot", 
+  },
+];
 
 export default function Home() {
   return (
@@ -22,79 +48,16 @@ export default function Home() {
             Projects
           </h3>
 
-          <div className="space-y-8">
-            {/*First place holder*/}
-            <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6">
-              <div className="w-full sm:w-1/3">
-              <Image
-                src="/AraLabPic.jpg" /*Using these jpgs as placeholder till we get real project pics*/
-                alt="Me when I put alt text: ;)"
-                width={400}
-                height={300}
-                className="rounded-xl object-cover w-full h-auto shadow-sm"
-                /> 
-              </div>
-              <div className="w-full sm:w-2/3">
-                <h4 className="font-bold text-lg mb-2">Ethan's Lorem Ipsum Robot</h4>
-                <p className="text-gray-600">
-                  Lorem ipsum dolor, sit amet consectetur adipisicing elit. 
-                  Voluptas quod fugiat non vero aut rem eos aliquid libero, 
-                  atque explicabo voluptate pariatur quis inventore esse iusto aspernatur magnam ab excepturi?
-                  Lorem ipsum dolor, sit amet consectetur adipisicing elit. 
-                  Voluptas quod fugiat non vero aut rem eos aliquid libero, 
-                  atque explicabo voluptate pariatur quis inventore esse iusto aspernatur magnam ab excepturi?
-                </p>
-              </div>
-            </div> 
-
-            {/* Second project placeholder*/}
-            <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6">
-              <div className="w-full sm:w-1/3">
-                <Image
-                  src="/AraLabPic.jpg"
-                  alt="Me when I put alt text: ;)"
-                  width={400}
-                  height={300}
-                  className="rounded-xl object-cover w-full h-auto shadow-sm"
-                />
-              </div>
-              <div className="w-full sm:w-2/3">
-                <h4 className="font-bold text-lg mb-2">Varad's Robot that can teach me how to use Next.js</h4>
-                <p className="text-gray-600">
-                  Lorem ipsum dolor, sit amet consectetur adipisicing elit. 
-                  Voluptas quod fugiat non vero aut rem eos aliquid libero, 
-                  atque explicabo voluptate pariatur quis inventore esse iusto aspernatur magnam ab excepturi?
-                  Lorem ipsum dolor, sit amet consectetur adipisicing elit. 
-                  Voluptas quod fugiat non vero aut rem eos aliquid libero, 
-                  atque explicabo voluptate pariatur quis inventore esse iusto aspernatur magnam ab excepturi?
-                  lorem Lorem ipsum dolor sit amet consectetur, adipisicing elit. 
-                  Voluptas cupiditate officia expedita reiciendis blanditiis! Nam distinctio alias commodi incidunt, 
-                  porro sapiente consequatur ipsa vel veniam odit eveniet, odio quas molestias!
-                </p>
-              </div>
-            </div>
-
-            {/* Third dummy project*/}
-            <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6">
-              <div className="w-full sm:w-1/3">
-                <Image
-                  src="/AraLabPic.jpg"
-                  alt="Me when I put alt text: ;)"
-                  width={400} 
-                  height={300}
-                  className="rounded-xl object-cover w-full h-auto shadow-sm"
-                />
-              </div>
-              <div className="w-full sm:w-2/3">
-                <h4 className="font-bold text-lg mb-2">Dan the Goat</h4>
-                <p className="text-gray-600">
-                  Lorem ipsum dolor, sit amet consectetur adipisicing elit. 
-                  Voluptas quod fugiat non vero aut rem eos aliquid libero, 
-                  atque explicabo voluptate pariatur quis inventore esse iusto aspernatur magnam ab excepturi?
-                  Lorem ipsum dolor, sit amet consectetur adipisicing elit. 
-                </p>
-              </div>
-            </div>
+           <div className="space-y-8">
+            {projects.map((project, index) => (
+              <ProjectCard
+                key={index}
+                title={project.title} 
+                description={project.description}
+                imageSrc={project.imageSrc}
+                imageAlt={project.imageAlt}
+              />
+            ))}
           </div>
         </section>
       </main>
