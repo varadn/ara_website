@@ -19,4 +19,9 @@ export const routes = [
         path: '/contact',
         name: 'Contact',
     },
+    {
+        key: 'wiki',
+        path: '/wiki',
+        name: 'Wiki',
+    },
 ];
