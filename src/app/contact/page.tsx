@@ -38,7 +38,7 @@ export default function Contact() {
                         {/*Button to submit the form*/}
                         <button
                         type="submit"
-                        className="bg-gray-800 text-white py-3 rounded-md font-medium hover:bg-gray-700 transition-colors"
+                        className="bg-gray-800 text-white py-3 rounded-md font-medium hover:bg-blue-500 transition-colors"
                         >Submit
                         </button> 
                     </form>

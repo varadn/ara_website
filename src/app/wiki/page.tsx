@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import WikiEntryCard from "@/components/WikiArticleCard";
 
 interface WikiEntry {
   id: number;
@@ -109,32 +110,22 @@ export default function WikiPage() {
                 />
                 <button
                   type="submit" 
-                  className="px-4 py-2 bg-gray-800 text-white font-semibold rounded-xl hover:bg-blue-600 transition"
+                  className="px-4 py-2 bg-gray-800 text-white font-semibold rounded-xl hover:bg-blue-500 transition"
                 >
                 Add Entry
               </button>
             </form>
-
-              {/*All the wiki articles*/}
+ 
+              {/*All the wiki articles using the component */} 
               <div className="space-y-10">
-                {filteredEntries.length === 0 ? (
-                  <p className="text-gray-500 italic">No articles found.</p>
-                ) : (
-                  filteredEntries.map((entry) => (
-                    <div
-                      key={entry.id}
-                      className="text-left border border-gray-200 rounded-2xl p-6 bg-white shadow-sm hover:shadow-md transition"
-                    >
-                      <h3 className="font-bold text-lg mb-1 text-gray-900">
-                        {entry.title}
-                      </h3>
-                      <p className="text-sm text-gray-500 mb-3">{entry.date}</p>
-                      <p className="text-gray-700 leading-relaxed">
-                        {entry.content}
-                      </p>
-                    </div>
-                  ))
-                )}
+                  {filteredEntries.length === 0 ? (
+                    <p className="text-gray-500 italic">No articles found.</p>
+                  ) : (
+                    filteredEntries.map((entry) => (
+                      <WikiEntryCard key={entry.id} entry={entry} /> 
+                      
+                    ))
+                  )}
               </div>
             </section>
       </main>
