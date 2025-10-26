@@ -25,7 +25,7 @@ export default function RegisterPage() {
                 />
                 <button
                     type="submit"
-                    className="bg-gray-800 text-white py-3 rounded-md font-medium hover:bg-gray-700 transition-colors"
+                    className="bg-gray-800 text-white py-3 rounded-md font-medium hover:bg-blue-500 transition-colors"
                 >
                 Create Account
                 </button>
