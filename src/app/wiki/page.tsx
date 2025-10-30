@@ -1,71 +1,68 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { supabase } from "@/utils/supabase/supabaseClient";
 import WikiEntryCard from "@/components/WikiArticleCard";
 
 interface WikiEntry {
   id: number;
-  title: string;
+  articleName: string;
+  Content: string;
+  created_at: string;
 
-  content: string;
-  date: string;
 }
 
 export default function WikiPage() {
   const [searchTerm, setSearchTerm] = useState("");
-  const [entries, setEntries] = useState<WikiEntry[]>([
-      {
-        id: 1,
-        title: "How to fix issues on the ARA lab website!",
-        content: 
-          "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor",
-        date: "October 20, 2025",  
-      },
-      {
-        id: 2,
-        title: "rando wiki article",
-        content: 
-          "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor",
-        date: "October 18, 2025",
-      },
-      {
-        id: 3, 
-        title: "rando solution",
-        content:
-          "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor",
-        date: "October 15, 2025", 
-      },
-  ]);
-
+  const [entries, setEntries] = useState<WikiEntry[]>([]);
+  const [loading, setLoading] = useState(true);
   const [newEntry, setNewEntry] = useState({ title: "", content: "" });
+    
+  //getting wiki article from supabase
+  useEffect(() => {
+    const fetchEntries = async () => {
+    setLoading(true); 
+    const { data, error } = await supabase
+      .from("wikiArticles")
+      .select("*")
+      .order("id", { ascending: false });
 
-  const handleAddEntry = (e: React.FormEvent) => {
-      e.preventDefault(); 
-      if (!newEntry.title.trim() || !newEntry.content.trim()) return;
+    if (error) console.error("Error loading wiki articles:", error);
+    else setEntries(data || []);
 
-    const newWiki: WikiEntry = {
-        id: entries.length + 1,
-        title: newEntry.title,
-        content: newEntry.content,
-        date: new Date().toLocaleDateString("en-US", {
-          month: "long",
-          day: "numeric", 
-          year: "numeric",
-        }),
+    setLoading(false);
     };
 
-    setEntries([newWiki, ...entries]);
+    fetchEntries();
+  }, []);
+
+  //adds a new entry/article to supabase
+  const handleAddEntry = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newEntry.title.trim() || !newEntry.content.trim()) return;
+
+    const { data, error } = await supabase
+      .from("wikiArticles")
+      .insert([{ articleName: newEntry.title, Content: newEntry.content }])
+      .select();
+
+    if (error) {
+      console.error("Error adding wiki article:", error);
+      return; 
+    }
+
+    setEntries([...(data ?? []), ...entries]);
     setNewEntry({ title: "", content: "" });
   };
 
   const filteredEntries = entries.filter((entry) =>
-    entry.title.toLowerCase().includes(searchTerm.toLowerCase())
+    entry.articleName.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   return (
+    
       <div className="min-h-screen flex flex-col bg-gray-50 text-gray-900">
         <main className="flex-grow mt-24 flex flex-col items-center text-center px-6">
-
           <section className="w-full max-w-5xl text-center bg-white shadow-md rounded-2xl p-8 mb-16">
             <h1 className="text-3xl font-bold mb-8 text-gray-800"> 
               ARA Lab Wiki
@@ -118,12 +115,25 @@ export default function WikiPage() {
  
               {/*All the wiki articles using the component */} 
               <div className="space-y-10">
-                  {filteredEntries.length === 0 ? (
-                    <p className="text-gray-500 italic">No articles found.</p>
-                  ) : (
+                  {loading ? (
+                    <p className="text-gray-500 italic">Loading articles...</p>
+                    ) : filteredEntries.length === 0 ? (
+                      <p className="text-gray-500 italic">No articles found.</p>
+                    ) : (
                     filteredEntries.map((entry) => (
-                      <WikiEntryCard key={entry.id} entry={entry} /> 
-                      
+                      <WikiEntryCard
+                          key={entry.id}
+                          entry={{
+                            id: entry.id, 
+                            title: entry.articleName,
+                            content: entry.Content,
+                            date: new Date(entry.created_at).toLocaleDateString("en-US", {
+                              month: "long",
+                              day: "numeric", 
+                              year: "numeric",
+                            }),
+                          }}
+                      />
                     ))
                   )}
               </div>
