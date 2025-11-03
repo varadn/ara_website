@@ -2,15 +2,8 @@
 
 import { useState, useEffect } from "react";
 import { supabase } from "@/utils/supabase/supabaseClient";
+import { WikiEntry } from "@/utils/types";
 import WikiEntryCard from "@/components/WikiArticleCard";
-
-interface WikiEntry {
-  id: number;
-  articleName: string;
-  Content: string;
-  created_at: string;
-
-}
 
 export default function WikiPage() {
   const [searchTerm, setSearchTerm] = useState("");
