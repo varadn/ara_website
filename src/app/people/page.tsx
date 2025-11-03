@@ -1,63 +1,52 @@
-import Image from "next/image";
+"use client";
 
+import React, { useState, useEffect } from 'react';
+import { Person } from "@/utils/types";
 import PersonCard from "@/components/PersonCard";
 
-const currentLabMembers = [
-  {
-    name: "Ethan Kittell",
-    title: "The boss",
-
-    description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. A eaque fugit similique. Unde iste quam perferendis natus vel soluta sapiente facere ratione cum expedita, consectetur, magnam eos excepturi deleniti quis! Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus illum officia commodi aspernatur ipsam consequatur fuga, ex maxime magni dolore quas dolorum, hic voluptatibus pariatur perferendis. Facere a sequi ad?",
-    imageSrc: "/me.jpg",
-    imageAlt: "Ethan Kittell portrait",
-    projects: ["Robot project #1", "Some other robot project type stuff lol"],
-    website: "https://ethankittell.com",
-  },
-  {
-    name: "Varad",
-    title: "Grad research person",
-    description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi at facere pariatur necessitatibus, inventore odit aliquam dignissimos consequatur veritatis beatae magnam enim amet neque, asperiores esse nam cum et dolores.",
-    imageSrc: "/anotherPic.jpg",
-    imageAlt: "Varad portrait",
-    projects: ["ARA Lab stuff"], 
-  },
-  {
-    name: "Dan",
-    title: "The goat engineer", 
-    description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque numquam corporis nisi minima fuga quisquam quo possimus et nulla nemo error nihil voluptates, excepturi placeat obcaecati nesciunt sunt similique enim?",
-    imageSrc: "/rageBait.jpg",
-    imageAlt: "Dan portrait",
-    projects: ["This website"],
-    website: "https://danIsTheGOAT.com",
-  },
-];
-
-const alumni = [
-  {
-    name: "Ryhan", 
-    title: "Grad from Umass lowell",
-    description: 
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
-    imageSrc: "/something.jpg", 
-    imageAlt: "Ryhan protrait", 
-    projects: ["First ARA robot"], 
-    website: "https://google.com",
-  },
-  {
-    name: "Xander",
-    title: "Alum from Umass Lowell", 
-    description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
-    imageSrc: "/blahblahblahgfiuheiohfuihwihuowaweiawe.jpg",
-    imageAlt: "Xander protrait",
-    projects: ["First ARA robot"], 
-  },
-];
-
 export default function People() {
+    const [labMembers, setLabMembers] = useState<Person[]>([]);
+    const [alumni, setAlumni] = useState<Person[]>([]);
+    const [loading, setLoading] = useState<boolean>(true);
+    const [error, setError] = useState<string | null>(null);
+
+    useEffect(() => {
+        const getPeople = async () => {
+            try {
+                const response = await fetch('/api/people'); // Replace with your API endpoint
+                if (!response.ok) {
+                    throw new Error('Failed to fetch users');
+                }
+                const data: Person[] = (await response.json())['people'].map((item: any) => {
+                    return {
+                        id: item.id,
+                        name: item.name,
+                        title: item.title,
+                        description: item.description,
+                        imageSrc: item.image,
+                        imageAlt: item.image_alt,
+                        website: item.website,
+                        projects: item.projects.map((project: any) => project.title),
+                        active: item.active
+                    }
+                });
+
+                const lab: Person[] = data.filter((person) => person.active);
+                setLabMembers(lab)
+                
+                const alum: Person[] = data.filter((person) => !person.active);
+                setAlumni(alum)
+                
+            } catch (err: any) {
+                setError(err.message);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        getPeople();
+    }, []);
+
     return (
         <div className="min-h-screen flex flex-col bg-gray-50 text-gray-900">
             <main className="flex-grow mt-24 flex flex-col items-center text-center px-6">
@@ -72,30 +61,37 @@ export default function People() {
                       Current Lab Members
                     </h2>
                       <div className="space-y-10"> 
-                          {currentLabMembers.map((person, index) => (
-                          <PersonCard 
-                              key={index} 
-                              name={person.name} 
-                              title={person.title} 
-                              description={person.description}
-                              imageSrc={person.imageSrc}
-                              imageAlt={person.imageAlt}
-                              projects={person.projects}
-                              website={person.website}  
-                          />
-                          ))}
+                          { loading ? ( 
+                                <p className="text-gray-500 italic">Loading lab members...</p>
+                            ) : labMembers.length === 0 ? (
+                                <p className="text-gray-500 italic">No lab members : (</p>
+                            ) : ( labMembers.map((person, index) => (
+                                    <PersonCard 
+                                        key={index}
+                                        name={person.name}  
+                                        title={person.title}
+                                        description={person.description}
+                                        imageSrc={person.imageSrc} 
+                                        imageAlt={person.imageAlt} 
+                                        projects={person.projects}
+                                        website={person.website} 
+                                    />
+                                )))}
                       </div>
                     </div>
 
-
                     {/*All alumni members*/}
                     <div>
-                      <h2 className="text-2xl font-semibold text-gray-800 mb-8">
-                        Alumni Lab Members
-                      </h2>
-                          <div className="space-y-10"> 
-                            {alumni.map((person, index) => (
-                              <PersonCard 
+                    <h2 className="text-2xl font-semibold text-gray-800 mb-8">
+                    Alumni Lab Members
+                    </h2>
+                        <div className="space-y-10">
+                        { loading ? ( 
+                            <p className="text-gray-500 italic">Loading alumni...</p>
+                        ) : alumni.length === 0 ? (
+                            <p className="text-gray-500 italic">No alumni :(</p>
+                        ) : ( alumni.map((person, index) => (
+                            <PersonCard 
                                 key={index}
                                 name={person.name}  
                                 title={person.title}
@@ -104,10 +100,10 @@ export default function People() {
                                 imageAlt={person.imageAlt} 
                                 projects={person.projects}
                                 website={person.website} 
-                              />
-                            ))}
-                          </div>
+                            />
+                            )))}
                     </div>
+                </div>
                 </section>
             </main>
         </div>  
