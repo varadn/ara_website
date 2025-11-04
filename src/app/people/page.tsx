@@ -17,9 +17,8 @@ export default function People() {
                 if (!response.ok) {
                     throw new Error('Failed to fetch users');
                 }
-                const data: Person[] = (await response.json())['people'].map((item: any) => {
+                const data: Person[] = (await response.json())['data'].map((item: any) => {
                     return {
-                        id: item.id,
                         name: item.name,
                         title: item.title,
                         description: item.description,

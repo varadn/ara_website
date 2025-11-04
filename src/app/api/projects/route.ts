@@ -4,16 +4,13 @@ import { supabase } from "@/utils/supabase/supabaseClient";
 export async function GET() {
     // Fetch user data from a database or external API
     const { data, error } = await supabase
-      .from('people')
+      .from('projects')
       .select(`
-        name,
         title,
         description,
         image,
         image_alt,
-        website,
-        active,
-        projects ( title )
+        date,
         `)
 
     if (error){
