@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import NewsCard from "@/components/NewsCard";
 import { News } from '@/utils/types';
+import { convertDateToText } from '@/utils/convertToDateString';
 
 const newsItems = [
   {
@@ -34,8 +35,39 @@ const newsItems = [
 ];
 
 export default function NewsPage() {
+    const [newsItems, setNewsItems] = useState<News[]>([]);
+    const [loading, setLoading] = useState<boolean>(true);
+    const [error, setError] = useState<string | null>(null);
 
+    useEffect(() => {
+        const getNews = async () => {
+            try {
+                const response = await fetch('/api/news'); // Replace with your API endpoint
+                if (!response.ok) {
+                    throw new Error('Failed to fetch users');
+                }
+                const data: News[] = (await response.json())['data'].map((item: any) => {
+                    return {
+                        title: item.title,
+                        date: convertDateToText(item.date),
+                        location: item.location,
+                        imageSrc: item.image,
+                        imageAlt: item.image_alt,
+                        description: item.description,
+                        writtenBy: item.people[0].name
+                    }
+                });
 
+                setNewsItems(data)
+            } catch (err: any) {
+                setError(err.message);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        getNews();
+    }, []);
 
 
     return (
@@ -44,16 +76,22 @@ export default function NewsPage() {
                 <section className="w-full max-w-5xl text-center bg-white shadow-md rounded-2xl p-8 mb-16">
                     <h1 className="text-3xl font-bold mb-8 text-gray-800">ARA Lab recent News/events/activities</h1>
                     <div className="space-y-10">
-                        {newsItems.map((item, index) => (
-                        <NewsCard 
-                            key={index}
-                            title={item.title}
-                            date={item.date}
-                            description={item.description}
-                            imageSrc={item.imageSrc} 
-                            imageAlt={item.imageAlt}
-                        />
-                        ))}
+                        { loading ? ( 
+                            <p className="text-gray-500 italic">Loading news..</p>
+                        ) : newsItems.length === 0 ? (
+                            <p className="text-gray-500 italic">No news : (</p>
+                        ) : (newsItems.map((item, index) => (
+                                <NewsCard 
+                                    key={index}
+                                    title={item.title}
+                                    location={item.location}
+                                    date={item.date}
+                                    description={item.description}
+                                    imageSrc={item.imageSrc} 
+                                    imageAlt={item.imageAlt}
+                                    writtenBy={item.writtenBy}
+                                />
+                        )))}
                     </div>
                 </section>
             </main>

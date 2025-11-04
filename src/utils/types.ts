@@ -26,3 +26,14 @@ export interface Project {
     imageAlt: string;
     people: string[]
 }
+
+export interface News {
+    id: number;
+    title: string;
+    date: string;
+    location: string;
+    imageSrc: string;
+    imageAlt: string;
+    description: string;
+    writtenBy: string;
+}
