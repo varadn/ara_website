@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { Person } from "@/utils/types";
 import PersonCard from "@/components/PersonCard";
 
-export default function People() {
+export default function PeoplePage() {
     const [labMembers, setLabMembers] = useState<Person[]>([]);
     const [alumni, setAlumni] = useState<Person[]>([]);
     const [loading, setLoading] = useState<boolean>(true);

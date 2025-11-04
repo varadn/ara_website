@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { Project } from '@/utils/types';
 import ProjectCard from "@/components/ProjectCard"
 
-export default function Home() {
+export default function HomePage() {
         const [projects, setProjects] = useState<Project[]>([]);
         const [loading, setLoading] = useState<boolean>(true);
         const [error, setError] = useState<string | null>(null);

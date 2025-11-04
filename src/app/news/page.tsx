@@ -1,6 +1,8 @@
-import Image from "next/image";
+"use client";
 
+import React, { useState, useEffect } from 'react';
 import NewsCard from "@/components/NewsCard";
+import { News } from '@/utils/types';
 
 const newsItems = [
   {
@@ -31,7 +33,11 @@ const newsItems = [
   },
 ];
 
-export default function News() {
+export default function NewsPage() {
+
+
+
+
     return (
         <div className="min-h-screen flex flex-col bg-gray-50 text-gray-900">
             <main className="flex-grow mt-24 flex flex-col items-center text-center px-6">
