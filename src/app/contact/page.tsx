@@ -1,4 +1,4 @@
-export default function Contact() {
+export default function ContactPage() {
     return (
         <div className="min-h-screen flex flex-col bg-gray-100 text-gray-900">
             <main className="flex-grow mt-24 flex flex-col items-center text-center px-6">
