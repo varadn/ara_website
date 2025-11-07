@@ -37,3 +37,9 @@ export interface News {
     description: string;
     writtenBy: string;
 }
+
+export interface WeatherData {
+    temp: number;
+    condition: string;
+    location: string;
+}
