@@ -123,17 +123,19 @@ export default function Navbar() {
             <div className="flex justify-between items-center">
             <h1 className="text-2xl font-bold text-gray-700">Umass Lowell Robotics Research</h1>
             <ul className="flex space-x-6 text-sm font-medium">
-                {routes.map((route) => (
-                    <Link
-                      key={route.key}
-                      href={route.path}
-                      className={clsx('text-gray-500 hover:text-gray-900 cursor-pointer transition-colors', {
-                        'bg-gray-200 px-3 py-1 rounded-md hover:bg-gray-300 text-gray-900': pathname === route.path,
-                      })}
-                    >
-                        <li>{route.name}</li>
-                    </Link>
-                ))}
+                {routes
+                    .filter((route) => route.key !== 'wiki' || user)
+                    .map((route) => (
+                        <Link
+                        key={route.key}
+                        href={route.path}
+                        className={clsx('text-gray-500 hover:text-gray-900 cursor-pointer transition-colors', {
+                            'bg-gray-200 px-3 py-1 rounded-md hover:bg-gray-300 text-gray-900': pathname === route.path,
+                        })}
+                        >
+                            <li>{route.name}</li>
+                        </Link>
+                    ))}
             </ul>  
             {/*All the authentication buttons we need*/}
             <div className="flex space-x-3">
