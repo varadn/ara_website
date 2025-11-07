@@ -3,9 +3,25 @@ import { routes } from "./routes"
 import Link from 'next/link';
 import { usePathname } from "next/navigation";
 import clsx from 'clsx'
+import { useAuth } from "@/contexts/AuthContext";
+import { supabase } from "@/utils/supabase/supabaseClient";
+import { redirect } from 'next/navigation'
 
 export default function Navbar() {
     const pathname = usePathname();
+
+    const {session, user} = useAuth();
+
+    const handleLogout = async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+            event.preventDefault()
+            const { error } = await supabase.auth.signOut();
+
+            if (error) {
+                console.error('Error signing out:', error.message);
+            } else {
+                redirect('/');
+            }
+        }
 
     return(
     <nav className="w-full bg-white shadow-md fixed top-0 left-0 z-10"> 
@@ -26,18 +42,20 @@ export default function Navbar() {
             </ul>  
             {/*All the authentication buttons we need*/}
             <div className="flex space-x-3">
-            <Link
+            {user ? (
+                <button
+                className="px-4 py-2 text-sm font-semibold bg-gray-800 text-white border border-gray-300 rounded-md hover:bg-gray-700 transition"
+                onClick={handleLogout}>
+                    Sign out
+                </button>
+            ) : (
+                <Link
                 href="/login"
-                className="px-4 py-2 text-sm font-semibold text-gray-700 border border-gray-300 rounded-md hover:bg-gray-100 transition"
-                >
-                Login
-            </Link>
-            <Link
-                href="/register" 
-                className="px-4 py-2 text-sm font-semibold text-white bg-gray-800 rounded-md hover:bg-blue-500 transition"
-            > 
-                Register 
-            </Link>
+                className="px-4 py-2 text-sm font-semibold text-gray-700 border border-gray-300 rounded-md hover:bg-gray-100 transition">
+                    Login
+                </Link>
+            )}
+            
             </div>
         </div>
     </nav>
