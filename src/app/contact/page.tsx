@@ -1,7 +1,7 @@
 export default function ContactPage() {
     return (
         <div className="min-h-screen flex flex-col bg-gray-100 text-gray-900">
-            <main className="flex-grow mt-32 flex flex-col items-center text-center px-6">
+            <main className="flex-grow mt-40 flex flex-col items-center text-center px-6">
                 <section className="w-full max-w-2xl bg-white shadow-lg rounded-2xl p-10 mb-16">
                     <h1 className="text-4xl font-bold text-gray-800 mb-8">
                         Contact Us

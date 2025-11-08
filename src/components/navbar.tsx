@@ -141,7 +141,7 @@ export default function Navbar() {
             <div className="flex space-x-3">
                 {user ? (
                     <button
-                    className="px-4 py-2 text-sm font-semibold bg-gray-800 text-white border border-gray-300 rounded-md hover:bg-gray-700 transition"
+                    className="px-4 py-2 text-sm font-semibold bg-gray-800 text-white border border-gray-300 rounded-md hover:bg-blue-500 transition"
                     onClick={handleLogout}>
                         Sign out
                     </button>

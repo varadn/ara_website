@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { convertGoogleDriveUrl } from '@/utils/helpers';
 
 interface NewsCardProps {
   title: string; 
@@ -23,14 +24,14 @@ export default function NewsCard({
     let dateLocation: string = date;
 
     if (location){
-        dateLocation = date + " — " + location
+      dateLocation = date + " — " + location
     }
 
   return (
     <div className="flex flex-col sm:flex-row items-center sm:items-start bg-gray-100 rounded-xl p-6 shadow-sm">
         <div className="flex-shrink-0 mb-4 sm:mb-0 sm:mr-6">
             <Image
-            src={imageSrc}
+            src={convertGoogleDriveUrl(imageSrc)}
             alt={imageAlt}
             width={300}
             height={200}
