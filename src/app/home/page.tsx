@@ -41,7 +41,7 @@ export default function HomePage() {
     return (
     <div className="min-h-screen flex flex-col bg-gray-50 text-gray-900">
         {/*All the content  */}
-        <main className="flex-grow mt-24 flex flex-col items-center text-center px-6">
+        <main className="flex-grow mt-30 flex flex-col items-center text-center px-6">
         {/*"hero" part of page */} 
         <section className="flex flex-col items-center justify-center text-center w-full
             h-[90vh] bg-gradient-to-b from-white to-gray-100">
