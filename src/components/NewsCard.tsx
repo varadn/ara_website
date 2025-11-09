@@ -1,7 +1,9 @@
 import Image from "next/image";
 import { convertGoogleDriveUrl } from '@/utils/helpers';
+import { useAuth } from '@/contexts/AuthContext';
 
 interface NewsCardProps {
+  id: number;
   title: string; 
   location: string;
   date: string;
@@ -9,6 +11,7 @@ interface NewsCardProps {
   imageSrc: string;
   imageAlt?: string;
   writtenBy: string;
+  onDelete?: () => void;
 }
 
 export default function NewsCard({
@@ -18,8 +21,10 @@ export default function NewsCard({
   description, 
   imageSrc,
   imageAlt = "News image",
-  writtenBy
+  writtenBy,
+  onDelete
 }: NewsCardProps) {
+  const { user } = useAuth();
 
     let dateLocation: string = date;
 
@@ -39,11 +44,19 @@ export default function NewsCard({
             />
         </div> 
 
-      <div className="text-left">
+      <div className="text-left relative w-full">
         <h2 className="text-xl font-semibold text-gray-800 mb-1">{title}</h2>
         <p className="text-md text-gray-600 mb-2 font-semibold">{dateLocation}</p>
         <p className="text-sm text-gray-600 mb-2 font-semibold">Author: {writtenBy}</p>
         <p className="text-gray-700">{description}</p>
+        {user && onDelete && (
+          <button
+            onClick={onDelete}
+            className="absolute top-0 right-0 bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 transition-colors"
+          >
+            Delete
+          </button>
+        )}
       </div>
     </div>
   );

@@ -37,7 +37,7 @@ const newsItems = [
 ];*/
 
 export default function NewsPage() {
-    const { user } = useAuth();
+    const { user, session } = useAuth();
     const [newsItems, setNewsItems] = useState<News[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
@@ -51,6 +51,37 @@ export default function NewsPage() {
     })
 
     
+    const handleDeleteArticle = async (id: number) => {
+        if (!confirm('Are you sure you want to delete this article?')) {
+            return;
+        }
+
+        try {
+            console.log('Attempting to delete article with ID:', id);
+            
+            const response = await fetch(`/api/news?id=${id}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            const data = await response.json();
+            
+            if (!response.ok) {
+                console.error('Delete failed:', data);
+                throw new Error(data.message || 'Failed to delete article');
+            }
+
+            console.log('Delete response:', data);
+            await getNews();
+            alert('Article deleted successfully!');
+        } catch (err: any) {
+            console.error('Error deleting article:', err);
+            alert(err.message || 'Failed to delete article. Please try again.');
+        }
+    };
+
     const getNews = async () => {
         try {
             const response = await fetch('/api/news');
@@ -59,6 +90,7 @@ export default function NewsPage() {
             }
             const data: News[] = (await response.json())['data'].map((item: any) => {
                 return {
+                    id: item.id,
                     title: item.title,
                     date: convertDateToText(item.date),
                     location: item.location,
@@ -224,6 +256,7 @@ export default function NewsPage() {
                         ) : (newsItems.map((item, index) => (
                                 <NewsCard 
                                     key={index}
+                                    id={item.id}
                                     title={item.title}
                                     location={item.location}
                                     date={item.date}
@@ -231,6 +264,7 @@ export default function NewsPage() {
                                     imageSrc={item.imageSrc} 
                                     imageAlt={item.imageAlt}
                                     writtenBy={item.writtenBy || 'No Author'}
+                                    onDelete={() => handleDeleteArticle(item.id)}
                                 />
                         )))}
                     </div>
