@@ -19,9 +19,13 @@ export const routes = [
         path: '/contact',
         name: 'Contact',
     },
+
+];
+
+export const protectedRotues = [
     {
         key: 'wiki',
         path: '/wiki',
         name: 'Wiki',
-    },
-];
+    }
+]

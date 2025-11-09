@@ -1,0 +1,27 @@
+//Weather code mapping
+export const weatherCodes: { [key: number]: string } = {
+    0: 'Clear',
+    1: 'Mainly Clear',
+    2: 'Partly Cloudy',
+    3: 'Overcast',
+    45: 'Foggy',
+    48: 'Foggy', 
+    51: 'Light Drizzle',
+    53: 'Drizzle',
+    55: 'Heavy Drizzle', 
+    61: 'Light Rain',
+    63: 'Rain',
+    65: 'Heavy Rain',
+    71: 'Light Snow', 
+    73: 'Snow',
+    75: 'Heavy Snow',
+    77: 'Snow Grains',
+    80: 'Light Showers',
+    81: 'Showers', 
+    82: 'Heavy Showers',
+    85: 'Light Snow Showers',
+    86: 'Snow Showers',
+    95: 'Thunderstorm',
+    96: 'Thunderstorm with Hail',
+    99: 'Thunderstorm with Hail'
+};

@@ -1,5 +1,5 @@
 'use client'
-import { routes } from "./routes"
+import { routes, protectedRotues } from "./routes"
 import Link from 'next/link';
 import { usePathname } from "next/navigation";
 import clsx from 'clsx'
@@ -8,6 +8,7 @@ import { supabase } from "@/utils/supabase/supabaseClient";
 import { redirect } from 'next/navigation'
 import { useEffect, useState } from 'react';
 import { WeatherData } from '@/utils/types';
+import { weatherCodes } from "@/utils/weatherCodes";
 
 
 export default function Navbar() {
@@ -58,35 +59,6 @@ export default function Navbar() {
                 
                 const data = await response.json();
                 
-
-                //Weather code mapping
-                const weatherCodes: { [key: number]: string } = {
-                    0: 'Clear',
-                    1: 'Mainly Clear',
-                    2: 'Partly Cloudy',
-                    3: 'Overcast',
-                    45: 'Foggy',
-                    48: 'Foggy', 
-                    51: 'Light Drizzle',
-                    53: 'Drizzle',
-                    55: 'Heavy Drizzle', 
-                    61: 'Light Rain',
-                    63: 'Rain',
-                    65: 'Heavy Rain',
-                    71: 'Light Snow', 
-                    73: 'Snow',
-                    75: 'Heavy Snow',
-                    77: 'Snow Grains',
-                    80: 'Light Showers',
-                    81: 'Showers', 
-                    82: 'Heavy Showers',
-                    85: 'Light Snow Showers',
-                    86: 'Snow Showers',
-                    95: 'Thunderstorm',
-                    96: 'Thunderstorm with Hail',
-                    99: 'Thunderstorm with Hail'
-                };
-                
                 setWeather({
                     temp: Math.round(data.current.temperature_2m),
                     condition: weatherCodes[data.current.weather_code] || 'Unknown',
@@ -124,7 +96,19 @@ export default function Navbar() {
             <h1 className="text-2xl font-bold text-gray-700">Umass Lowell Robotics Research</h1>
             <ul className="flex space-x-6 text-sm font-medium">
                 {routes
-                    .filter((route) => route.key !== 'wiki' || user)
+                    .map((route) => (
+                        <Link
+                        key={route.key}
+                        href={route.path}
+                        className={clsx('text-gray-500 hover:text-gray-900 cursor-pointer transition-colors', {
+                            'bg-gray-200 px-3 py-1 rounded-md hover:bg-gray-300 text-gray-900': pathname === route.path,
+                        })}
+                        >
+                            <li>{route.name}</li>
+                        </Link>
+                    ))}
+                {user && 
+                protectedRotues
                     .map((route) => (
                         <Link
                         key={route.key}

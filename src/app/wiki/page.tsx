@@ -4,12 +4,20 @@ import { useState, useEffect } from "react";
 import { supabase } from "@/utils/supabase/supabaseClient";
 import { WikiEntry } from "@/utils/types";
 import WikiEntryCard from "@/components/WikiArticleCard";
+import { useAuth } from "@/contexts/AuthContext";
+import { notFound } from 'next/navigation'
 
 export default function WikiPage() {
   const [searchTerm, setSearchTerm] = useState("");
   const [entries, setEntries] = useState<WikiEntry[]>([]);
   const [loading, setLoading] = useState(true);
   const [newEntry, setNewEntry] = useState({ title: "", content: "" });
+
+  const {session, user} = useAuth();
+
+  if (!user || !session) {
+        notFound();
+  }
     
   //getting wiki article from supabase
   useEffect(() => {
