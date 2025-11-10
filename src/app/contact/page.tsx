@@ -1,45 +1,57 @@
 export default function ContactPage() {
     return (
-        <div className="min-h-screen flex flex-col bg-gray-100 text-gray-900">
-            <main className="flex-grow mt-40 flex flex-col items-center text-center px-6">
-                <section className="w-full max-w-2xl bg-white shadow-lg rounded-2xl p-10 mb-16">
-                    <h1 className="text-4xl font-bold text-gray-800 mb-8">
-                        Contact Us
-                    </h1>
-                    <form className="flex flex-col space-y-6">
-                        {/*Inputs for the first and last name of person who wants to contact the ARA lab*/}
-                            <div className="flex flex-col sm:flex-row sm:space-x-4 space-y-4 sm:space-y-0">
-                            <input
-                                type="text" 
-                                placeholder="First Name"
-                                className="flex-1 border border-gray-300 rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-gray-500"
-                            />
-                            <input
-                                type="text"
-                                placeholder="Last Name" 
-                                className="flex-1 border border-gray-300 rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-gray-500"
-                            />
+        <div className="min-h-screen flex flex-col bg-slate-50 text-slate-900">
+            <main className="flex-grow mt-32 flex flex-col items-center text-center px-6 pb-20">
+                <section className="w-full max-w-2xl">
+                    {/* Header */}
+                    <div className="mb-12">
+                        <h1 className="text-5xl sm:text-6xl font-black mb-4 text-slate-900">
+                            Get In Touch
+                        </h1>
+                        <div className="h-1 w-32 bg-gradient-to-r from-blue-600 to-rose-500 rounded-full mx-auto"></div>
+                        <p className="text-lg text-slate-600 mt-4">
+                            We'd love to hear from you!
+                        </p>
+                    </div>
+
+                    {/* Contact Form */}
+                    <form className="modern-card bg-white border-l-4 border-l-blue-600">
+                        <div className="space-y-5">
+                            {/*Inputs for the first and last name of person who wants to contact the ARA lab*/}
+                            <div className="grid sm:grid-cols-2 gap-4">
+                                <input
+                                    type="text" 
+                                    placeholder="First Name"
+                                    className="w-full px-4 py-3 border border-slate-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white transition-all"
+                                />
+                                <input
+                                    type="text"
+                                    placeholder="Last Name" 
+                                    className="w-full px-4 py-3 border border-slate-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white transition-all"
+                                />
                             </div>
 
-                        {/*Contacting person's email*/}
-                        <input
-                        type="email"
-                        placeholder="Email"
-                        className="border border-gray-300 rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-gray-500"
-                        />
+                            {/*Contacting person's email*/}
+                            <input
+                            type="email"
+                            placeholder="Your Email Address"
+                            className="w-full px-4 py-3 border border-slate-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white transition-all"
+                            />
 
-                        {/*Contact message*/}
-                        <textarea
-                        placeholder="Put your message here :D"
-                        rows={5} 
-                        className="border border-gray-300 rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-gray-500 resize-none"
-                        ></textarea>
+                            {/*Contact message*/}
+                            <textarea
+                            placeholder="Tell us what's on your mind..."
+                            rows={6} 
+                            className="w-full px-4 py-3 border border-slate-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white resize-none transition-all"
+                            ></textarea>
+                        </div>
 
                         {/*Button to submit the form*/}
                         <button
                         type="submit"
-                        className="bg-gray-800 text-white py-3 rounded-md font-medium hover:bg-blue-500 transition-colors"
-                        >Submit
+                        className="mt-6 w-full px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-bold rounded-lg hover:shadow-lg hover:from-blue-700 hover:to-blue-800 transition-all"
+                        >
+                        Send Message
                         </button> 
                     </form>
                 </section>

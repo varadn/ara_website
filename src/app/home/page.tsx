@@ -93,93 +93,41 @@ export default function HomePage() {
     };
 
     return (
-    <div className="min-h-screen flex flex-col bg-gray-50 text-gray-900">
+    <div className="min-h-screen flex flex-col bg-white text-slate-900">
         {/*All the content  */}
-        <main className="flex-grow mt-30 flex flex-col items-center text-center px-6">
+        <main className="flex-grow flex flex-col items-center text-center">
         {/*"hero" part of page */} 
         <section className="flex flex-col items-center justify-center text-center w-full
-            h-[90vh] bg-gradient-to-b from-white to-gray-100">
-            <h1 className="text-7xl sm:text-8xl font-extrabold mb-6 text-gray-900 tracking-tight">
-            ARA Lab Home
-            </h1>
-        <p className="text-2xl sm:text-3xl text-gray-600 max-w-2xl">
-            Assistive Robots & Accessibility 
-        </p>
+            h-screen gradient-primary relative overflow-hidden">
+            {/* Decorative elements - contained within section */}
+            <div className="absolute inset-0 top-20 right-20 w-72 h-72 bg-white opacity-5 rounded-full blur-3xl pointer-events-none"></div>
+            <div className="absolute inset-0 bottom-40 left-10 w-96 h-96 bg-black opacity-5 rounded-full blur-3xl pointer-events-none"></div>
+            
+            <div className="relative z-10">
+              <h1 className="text-7xl sm:text-8xl font-black mb-6 text-white tracking-tight drop-shadow-lg">
+                ARA Lab
+              </h1>
+              <p className="text-2xl sm:text-3xl text-blue-100 max-w-2xl font-light">
+                Assistive Robots & Accessibility 
+              </p>
+              <div className="mt-8 h-1 w-24 bg-white mx-auto opacity-60"></div>
+            </div>
         </section> 
 
         {/*Section for showing off projects on mainpage*/}
-        <section className="w-full max-w-5xl text-left bg-white shadow-md rounded-2xl p-8 mb-16">
-            <h3 className="text-2xl font-semibold mb-6 border-b pb-2">
-            Projects
-            </h3>
+        <section className="w-full max-w-6xl px-6 py-20">
+            <div className="mb-16">
+              <h2 className="text-5xl font-black mb-4 text-slate-900">
+                Featured Projects
+              </h2>
+              <div className="h-1 w-32 bg-gradient-to-r from-blue-600 to-rose-500"></div>
+            </div>
 
-            {/*Project form for logged in people*/}
-            {user && (
-                <form
-                    onSubmit={handleAddProject}
-                    className="w-full mx-auto text-left bg-gray-50 border border-gray-200 rounded-2xl p-6 mb-10 shadow-sm"
-                >
-                    <h2 className="text-xl font-semibold mb-4 text-gray-800">
-                        Add New Project
-                    </h2>
-
-                    <div className="space-y-3"> 
-                        <input
-                            type="text"
-                            placeholder="Project Title *" 
-                            value={newProject.title} 
-                            onChange={(e) =>
-                                setNewProject({ ...newProject, title: e.target.value }) 
-                            }
-                            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-300"
-                            required
-                        />
-
-                        <textarea
-                            placeholder="Project Description *" 
-                            value={newProject.description}
-                            onChange={(e) => 
-                                setNewProject({ ...newProject, description: e.target.value })
-                            }
-                            className="w-full px-3 py-2 border border-gray-300 rounded-lg h-32 focus:ring-2 focus:ring-blue-300"
-                            required
-                        />
-
-                        <input
-                            type="text"
-                            placeholder="Image URL (for google drive images set share to allow anyone to access with link)"
-                            value={newProject.image} 
-                            onChange={(e) =>
-                                setNewProject({ ...newProject, image: e.target.value })
-                            } 
-                            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-300"
-                        />
-
-                        <input
-                            type="text"
-                            placeholder="Image Alt Text"
-                            value={newProject.image_alt}
-                            onChange={(e) =>
-                                setNewProject({ ...newProject, image_alt: e.target.value })
-                            }
-                            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-300"
-                        />
-                    </div>
-
-                    <button
-                        type="submit"
-                        className="mt-4 px-4 py-2 bg-gray-800 text-white font-semibold rounded-xl hover:bg-blue-500 transition"
-                    >
-                        Add Project
-                    </button>
-                </form>
-            )}
-
-            <div className="space-y-8">
+            <div className="space-y-12">
             { loading ? ( 
-                    <p className="text-gray-500 italic">Loading projects..</p>
+                    <p className="text-slate-500 italic text-lg">Loading projects..</p>
                 ) : projects.length === 0 ? (
-                    <p className="text-gray-500 italic">No projects : (</p>
+                    <p className="text-slate-500 italic text-lg">No projects yet</p>
                 ) : (projects.map((project, index) => (
                         <ProjectCard
                             key={index}

@@ -15,20 +15,20 @@ export default function ProjectCard({
   imageAlt = "Image of a project",
 }: ProjectCardProps) {
   return (
-    <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6">
-        <div className="w-full sm:w-1/3">
+    <div className="modern-card bg-white flex flex-col sm:flex-row items-center sm:items-start gap-8 border-l-4 border-l-blue-600">
+        <div className="w-full sm:w-2/5">
             <Image
             src={convertGoogleDriveUrl(imageSrc)} 
             alt={imageAlt}
             width={400}
             height={300}
-            className="rounded-xl object-cover w-full h-auto shadow-sm"
+            className="rounded-lg object-cover w-full h-64 sm:h-56"
             />
         </div> 
 
-      <div className="w-full sm:w-2/3 text-left">
-        <h4 className="font-bold text-lg mb-2">{title}</h4>
-        <p className="text-gray-600">{description}</p>
+      <div className="w-full sm:w-3/5 text-left">
+        <h3 className="font-black text-3xl text-slate-900 mb-4">{title}</h3>
+        <p className="text-slate-700 leading-relaxed text-base">{description}</p>
       </div>
     </div>
   );

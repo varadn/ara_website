@@ -108,63 +108,72 @@ export default function PeoplePage() {
     };
 
     return (
-        <div className="min-h-screen flex flex-col bg-gray-50 text-gray-900">
-            <main className="flex-grow mt-40 flex flex-col items-center text-center px-6">
-                <section className="w-full max-w-5xl text-center bg-white shadow-md rounded-2xl p-8 mb-16">
-                    <h1 className="text-3xl font-bold mb-8 text-gray-800">
-                      ARA Lab People
-                    </h1>
+        <div className="min-h-screen flex flex-col bg-slate-50 text-slate-900">
+            <main className="flex-grow mt-32 flex flex-col items-center px-6 pb-20">
+                <section className="w-full max-w-5xl">
+                    {/* Header Section */}
+                    <div className="mb-16">
+                        <h1 className="text-5xl sm:text-6xl font-black mb-4 text-slate-900">
+                            Our Team
+                        </h1>
+                        <div className="h-1 w-32 bg-gradient-to-r from-blue-600 to-rose-500 rounded-full"></div>
+                        <p className="text-lg text-slate-600 mt-4">
+                            Meet the brilliant minds behind ARA Lab
+                        </p>
+                    </div>
 
                     {/*Adding a person form*/}
                     {user && (
                         <form
                             onSubmit={handleAddPerson}
-                            className="w-full max-w-2xl mx-auto text-left bg-gray-50 border border-gray-200 rounded-2xl p-6 mb-10 shadow-sm"
+                            className="w-full modern-card bg-white mb-12 border-l-4 border-l-rose-500"
                         >
-                            <h2 className="text-xl font-semibold mb-4 text-gray-800">
-                                Add New Person
+                            <h2 className="text-2xl font-bold mb-6 text-slate-900">
+                                Add New Team Member
                             </h2>
 
-                            <div className="space-y-3">
-                                <input
-                                    type="text"
-                                    placeholder="Name *"
-                                    value={newPerson.name}
-                                    onChange={(e) =>
-                                        setNewPerson({ ...newPerson, name: e.target.value })
-                                    }
-                                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-300"
-                                    required
-                                />
+                            <div className="space-y-4">
+                                <div className="grid sm:grid-cols-2 gap-4">
+                                    <input
+                                        type="text"
+                                        placeholder="Full Name *"
+                                        value={newPerson.name}
+                                        onChange={(e) =>
+                                            setNewPerson({ ...newPerson, name: e.target.value })
+                                        }
+                                        className="w-full px-4 py-3 border border-slate-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white"
+                                        required
+                                    />
 
-                                <input
-                                    type="text"
-                                    placeholder="Title *"
-                                    value={newPerson.title}
-                                    onChange={(e) =>
-                                        setNewPerson({ ...newPerson, title: e.target.value })
-                                    }
-                                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-300"
-                                    required
-                                />
+                                    <input
+                                        type="text"
+                                        placeholder="Title/Role *"
+                                        value={newPerson.title}
+                                        onChange={(e) =>
+                                            setNewPerson({ ...newPerson, title: e.target.value })
+                                        }
+                                        className="w-full px-4 py-3 border border-slate-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white"
+                                        required
+                                    />
+                                </div>
 
                                 <textarea
-                                    placeholder="Description"
+                                    placeholder="Bio/Description"
                                     value={newPerson.description}
                                     onChange={(e) =>
                                         setNewPerson({ ...newPerson, description: e.target.value })
                                     }
-                                    className="w-full px-3 py-2 border border-gray-300 rounded-lg h-24 focus:ring-2 focus:ring-blue-300"
+                                    className="w-full px-4 py-3 border border-slate-200 rounded-lg h-24 focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white resize-none"
                                 />
 
                                 <input
                                     type="text"
-                                    placeholder="Image URL (for google drive images set share to allow anyone to access with link)"
+                                    placeholder="Profile Image URL"
                                     value={newPerson.image}
                                     onChange={(e) =>
                                         setNewPerson({ ...newPerson, image: e.target.value })
                                     }
-                                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-300"
+                                    className="w-full px-4 py-3 border border-slate-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white"
                                 />
 
                                 <input
@@ -174,20 +183,20 @@ export default function PeoplePage() {
                                     onChange={(e) =>
                                         setNewPerson({ ...newPerson, image_alt: e.target.value })
                                     }
-                                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-300"
+                                    className="w-full px-4 py-3 border border-slate-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white"
                                 />
 
                                 <input
                                     type="url"
-                                    placeholder="Website URL"
+                                    placeholder="Personal Website (optional)"
                                     value={newPerson.website}
                                     onChange={(e) =>
                                         setNewPerson({ ...newPerson, website: e.target.value })
                                     }
-                                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-300"
+                                    className="w-full px-4 py-3 border border-slate-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white"
                                 />
 
-                                <div className="flex items-center space-x-2">
+                                <div className="flex items-center space-x-3 bg-slate-50 p-4 rounded-lg">
                                     <input
                                         type="checkbox"
                                         id="active"
@@ -195,19 +204,19 @@ export default function PeoplePage() {
                                         onChange={(e) =>
                                             setNewPerson({ ...newPerson, active: e.target.checked })
                                         }
-                                        className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                                        className="w-5 h-5 text-blue-600 border-slate-300 rounded focus:ring-blue-500 cursor-pointer"
                                     />
-                                    <label htmlFor="active" className="text-sm text-gray-700">
-                                        Current Lab Member
+                                    <label htmlFor="active" className="text-sm font-medium text-slate-700 cursor-pointer">
+                                        Currently Active Member
                                     </label>
                                 </div>
                             </div>
 
                             <button
                                 type="submit"
-                                className="mt-4 px-4 py-2 bg-gray-800 text-white font-semibold rounded-xl hover:bg-blue-500 transition"
+                                className="mt-6 px-6 py-3 bg-gradient-to-r from-rose-500 to-rose-600 text-white font-bold rounded-lg hover:shadow-lg hover:from-rose-600 hover:to-rose-700 transition-all"
                             >
-                                Add Person
+                                Add Member
                             </button>
                         </form>
                     )}
@@ -215,14 +224,21 @@ export default function PeoplePage() {
 
                     {/*All current members*/}
                     <div className="mb-16">
-                    <h2 className="text-2xl font-semibold text-gray-800 mb-8">
+                    <h2 className="text-3xl font-bold text-slate-900 mb-8">
                       Current Lab Members
                     </h2>
-                      <div className="space-y-10"> 
+                      <div className="space-y-6"> 
                           { loading ? ( 
-                                <p className="text-gray-500 italic">Loading lab members...</p>
+                                <div className="text-center py-12">
+                                    <div className="inline-block animate-spin">
+                                        <div className="w-8 h-8 border-4 border-blue-200 border-t-blue-600 rounded-full"></div>
+                                    </div>
+                                    <p className="text-slate-500 italic mt-4">Loading team members...</p>
+                                </div>
                             ) : labMembers.length === 0 ? (
-                                <p className="text-gray-500 italic">No lab members : (</p>
+                                <div className="text-center py-12 modern-card">
+                                    <p className="text-slate-500 text-lg">No active members yet</p>
+                                </div>
                             ) : ( labMembers.map((person, index) => (
                                     <PersonCard 
                                         key={index}
@@ -240,14 +256,21 @@ export default function PeoplePage() {
 
                     {/*All alumni members*/}
                     <div>
-                    <h2 className="text-2xl font-semibold text-gray-800 mb-8">
-                    Alumni Lab Members
+                    <h2 className="text-3xl font-bold text-slate-900 mb-8">
+                    Alumni
                     </h2>
-                        <div className="space-y-10">
+                        <div className="space-y-6">
                         { loading ? ( 
-                            <p className="text-gray-500 italic">Loading alumni...</p>
+                            <div className="text-center py-12">
+                                <div className="inline-block animate-spin">
+                                    <div className="w-8 h-8 border-4 border-blue-200 border-t-blue-600 rounded-full"></div>
+                                </div>
+                                <p className="text-slate-500 italic mt-4">Loading alumni...</p>
+                            </div>
                         ) : alumni.length === 0 ? (
-                            <p className="text-gray-500 italic">No alumni :(</p>
+                            <div className="text-center py-12 modern-card">
+                                <p className="text-slate-500 text-lg">No alumni yet</p>
+                            </div>
                         ) : ( alumni.map((person, index) => (
                             <PersonCard 
                                 key={index}

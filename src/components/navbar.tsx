@@ -1,6 +1,7 @@
 'use client'
 import { routes, protectedRotues } from "./routes"
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from "next/navigation";
 import clsx from 'clsx'
 import { useAuth } from "@/contexts/AuthContext";
@@ -90,18 +91,27 @@ export default function Navbar() {
         }
 
     return(
-    <nav className="w-full bg-white shadow-md fixed top-0 left-0 z-10"> 
-        <div className="max-w-6xl mx-auto px-6 py-4">
+    <nav className="w-full bg-white shadow-md fixed top-0 left-0 z-50"> 
+        <div className="max-w-full mx-auto px-6 py-4">
             <div className="flex justify-between items-center">
-            <h1 className="text-2xl font-bold text-gray-700">Umass Lowell Robotics Research</h1>
+            <Link href="/" className="flex items-center space-x-3 hover:opacity-80 transition-opacity">
+                <Image 
+                    src="/logo.png" 
+                    alt="ARA Lab Logo"
+                    width={50}
+                    height={50}
+                    className="h-12 w-auto"
+                />
+                <h1 className="text-2xl font-bold text-slate-900">UMass Lowell Robotics</h1>
+            </Link>
             <ul className="flex space-x-6 text-sm font-medium">
                 {routes
                     .map((route) => (
                         <Link
                         key={route.key}
                         href={route.path}
-                        className={clsx('text-gray-500 hover:text-gray-900 cursor-pointer transition-colors', {
-                            'bg-gray-200 px-3 py-1 rounded-md hover:bg-gray-300 text-gray-900': pathname === route.path,
+                        className={clsx('text-slate-600 hover:text-slate-900 cursor-pointer transition-colors', {
+                            'bg-blue-100 px-3 py-1 rounded-md hover:bg-blue-200 text-blue-900': pathname === route.path,
                         })}
                         >
                             <li>{route.name}</li>
@@ -113,8 +123,8 @@ export default function Navbar() {
                         <Link
                         key={route.key}
                         href={route.path}
-                        className={clsx('text-gray-500 hover:text-gray-900 cursor-pointer transition-colors', {
-                            'bg-gray-200 px-3 py-1 rounded-md hover:bg-gray-300 text-gray-900': pathname === route.path,
+                        className={clsx('text-slate-600 hover:text-slate-900 cursor-pointer transition-colors', {
+                            'bg-blue-100 px-3 py-1 rounded-md hover:bg-blue-200 text-blue-900': pathname === route.path,
                         })}
                         >
                             <li>{route.name}</li>
@@ -125,14 +135,14 @@ export default function Navbar() {
             <div className="flex space-x-3">
                 {user ? (
                     <button
-                    className="px-4 py-2 text-sm font-semibold bg-gray-800 text-white border border-gray-300 rounded-md hover:bg-blue-500 transition"
+                    className="px-4 py-2 text-sm font-semibold bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-lg hover:shadow-lg hover:from-blue-700 hover:to-blue-800 transition-all"
                     onClick={handleLogout}>
                         Sign out
                     </button>
                 ) : (
                     <Link
                     href="/login"
-                    className="px-4 py-2 text-sm font-semibold text-gray-700 border border-gray-300 rounded-md hover:bg-gray-100 transition">
+                    className="px-4 py-2 text-sm font-semibold text-blue-600 border-2 border-blue-600 rounded-lg hover:bg-blue-50 transition">
                         Login
                     </Link>
                 )}
@@ -141,27 +151,27 @@ export default function Navbar() {
         </div>
 
         {/*weather date and time*/}
-                <div className="mt-3 pt-3 border-t border-gray-200 flex justify-between items-center text-sm text-gray-600">
+                <div className="mt-3 pt-3 border-t border-slate-200 flex justify-between items-center text-sm text-slate-600">
                     <div className="flex items-center space-x-6">
                         {/* Weather */}
                         {loading ? (
-                            <div className="text-gray-400">Loading weather...</div>
+                            <div className="text-slate-400">Loading weather...</div>
                         ) : weather ? (
                         <div className="flex items-center space-x-2">
                             <span className="font-medium">{weather.location}:</span>
                             <span>{weather.temp}°F</span>
-                            <span className="text-gray-400">-</span>
+                            <span className="text-slate-400">-</span>
                             <span>{weather.condition}</span>
                         </div>
                         ) : (
-                            <div className="text-gray-400">Weather unavailable!</div>
+                            <div className="text-slate-400">Weather unavailable!</div>
                         )}
                     </div>
                     
                     {/*date and time*/}
                     <div className="flex items-center space-x-4">
                         <span>{currentDate}</span>
-                        <span className="text-gray-400">-</span>
+                        <span className="text-slate-400">-</span>
                         <span className="font-mono font-medium">{currentTime}</span>
                     </div>
                 </div>

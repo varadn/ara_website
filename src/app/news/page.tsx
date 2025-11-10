@@ -131,53 +131,64 @@ export default function NewsPage() {
 
 
     return (
-        <div className="min-h-screen flex flex-col bg-gray-50 text-gray-900">
-            <main className="flex-grow mt-40 flex flex-col items-center text-center px-6">
-                <section className="w-full max-w-5xl text-center bg-white shadow-md rounded-2xl p-8 mb-16">
-                    <h1 className="text-3xl font-bold mb-8 text-gray-800">ARA Lab recent News/events/activities</h1>
+        <div className="min-h-screen flex flex-col bg-slate-50 text-slate-900">
+            <main className="flex-grow mt-32 flex flex-col items-center px-6 pb-20">
+                <section className="w-full max-w-4xl">
+                    {/* Header Section */}
+                    <div className="mb-16">
+                        <h1 className="text-5xl sm:text-6xl font-black mb-4 text-slate-900">
+                            News & Events
+                        </h1>
+                        <div className="h-1 w-32 bg-gradient-to-r from-blue-600 to-rose-500 rounded-full"></div>
+                        <p className="text-lg text-slate-600 mt-4">
+                            Stay updated with the latest from ARA Lab
+                        </p>
+                    </div>
 
                     {/*Adding more Article Form*/}
                     {user && (
                         <form
                             onSubmit={handleAddArticle}
-                            className="w-full max-w-2xl mx-auto text-left bg-gray-50 border border-gray-200 rounded-2xl p-6 mb-10 shadow-sm"
+                            className="w-full modern-card bg-white mb-12 border-l-4 border-l-blue-600"
                         >
-                        <h2 className="text-xl font-semibold mb-4 text-gray-800">
+                        <h2 className="text-2xl font-bold mb-6 text-slate-900">
                             Add New Article
                         </h2>
 
-                        <div className="space-y-3">
+                        <div className="space-y-4">
                             <input
                                 type="text" 
-                                placeholder="Title *" 
+                                placeholder="Article Title *" 
                                 value={newArticle.title}
                                 onChange={(e) =>
                                     setNewArticle({ ...newArticle, title: e.target.value })
                                 }
-                                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-300"
+                                className="w-full px-4 py-3 border border-slate-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white"
                                 required
                             />
 
-                            <input
-                                type="date"
-                                placeholder="Date *"
-                                value={newArticle.date}
-                                onChange={(e) =>
-                                    setNewArticle({ ...newArticle, date: e.target.value })
-                                }
-                                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-300"
-                                required
-                            />
+                            <div className="grid sm:grid-cols-2 gap-4">
+                                <input
+                                    type="date"
+                                    placeholder="Date *"
+                                    value={newArticle.date}
+                                    onChange={(e) =>
+                                        setNewArticle({ ...newArticle, date: e.target.value })
+                                    }
+                                    className="w-full px-4 py-3 border border-slate-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white"
+                                    required
+                                />
 
-                            <input
-                                type="text"  
-                                placeholder="Location"
-                                value={newArticle.location}
-                                onChange={(e) =>
-                                    setNewArticle({ ...newArticle, location: e.target.value })
-                                }
-                                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-300"
-                            />
+                                <input
+                                    type="text"  
+                                    placeholder="Location"
+                                    value={newArticle.location}
+                                    onChange={(e) =>
+                                        setNewArticle({ ...newArticle, location: e.target.value })
+                                    }
+                                    className="w-full px-4 py-3 border border-slate-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white"
+                                />
+                            </div>
 
                             <textarea
                                 placeholder="Description *"
@@ -185,7 +196,7 @@ export default function NewsPage() {
                                 onChange={(e) =>
                                     setNewArticle({ ...newArticle, description: e.target.value })
                                 }
-                                className="w-full px-3 py-2 border border-gray-300 rounded-lg h-32 focus:ring-2 focus:ring-blue-300"
+                                className="w-full px-4 py-3 border border-slate-200 rounded-lg h-32 focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white resize-none"
                                 required
                             />
 
@@ -196,7 +207,7 @@ export default function NewsPage() {
                                 onChange={(e) =>
                                     setNewArticle({ ...newArticle, image: e.target.value })
                                 }
-                                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-300"
+                                className="w-full px-4 py-3 border border-slate-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white"
                             />
 
                             <input
@@ -206,26 +217,33 @@ export default function NewsPage() {
                                 onChange={(e) =>
                                     setNewArticle({ ...newArticle, image_alt: e.target.value })
                                 }
-                                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-300"
+                                className="w-full px-4 py-3 border border-slate-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white"
                             />
 
                         </div> 
 
                         <button
                             type="submit"
-                            className="mt-4 px-4 py-2 bg-gray-800 text-white font-semibold rounded-xl hover:bg-blue-500 transition"
+                            className="mt-6 px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-bold rounded-lg hover:shadow-lg hover:from-blue-700 hover:to-blue-800 transition-all"
                         >
-                            Add Article
+                            Publish Article
                         </button>
                         </form>
                     )}
 
 
-                    <div className="space-y-10">
+                    <div className="space-y-6">
                         { loading ? ( 
-                            <p className="text-gray-500 italic">Loading news..</p>
+                            <div className="text-center py-12">
+                                <div className="inline-block animate-spin">
+                                    <div className="w-8 h-8 border-4 border-blue-200 border-t-blue-600 rounded-full"></div>
+                                </div>
+                                <p className="text-slate-500 italic mt-4">Loading news..</p>
+                            </div>
                         ) : newsItems.length === 0 ? (
-                            <p className="text-gray-500 italic">No news : (</p>
+                            <div className="text-center py-12 modern-card">
+                                <p className="text-slate-500 text-lg">No news yet</p>
+                            </div>
                         ) : (newsItems.map((item, index) => (
                                 <NewsCard 
                                     key={index}
