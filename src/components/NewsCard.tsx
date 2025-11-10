@@ -8,7 +8,6 @@ interface NewsCardProps {
   description: string;
   imageSrc: string;
   imageAlt?: string;
-  writtenBy: string;
 }
 
 export default function NewsCard({
@@ -18,7 +17,6 @@ export default function NewsCard({
   description, 
   imageSrc,
   imageAlt = "News image",
-  writtenBy
 }: NewsCardProps) {
 
     let dateLocation: string = date;
@@ -42,7 +40,6 @@ export default function NewsCard({
       <div className="text-left">
         <h2 className="text-xl font-semibold text-gray-800 mb-1">{title}</h2>
         <p className="text-md text-gray-600 mb-2 font-semibold">{dateLocation}</p>
-        <p className="text-sm text-gray-600 mb-2 font-semibold">Author: {writtenBy}</p>
         <p className="text-gray-700">{description}</p>
       </div>
     </div>

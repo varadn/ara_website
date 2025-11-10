@@ -11,8 +11,7 @@ export async function GET() {
         location,
         image,
         image_alt,
-        description,
-        people ( name )
+        description
         `)
 
     if (error){

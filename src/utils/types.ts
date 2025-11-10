@@ -35,7 +35,6 @@ export interface News {
     imageSrc: string;
     imageAlt: string;
     description: string;
-    writtenBy: string;
 }
 
 export interface WeatherData {

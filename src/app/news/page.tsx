@@ -65,7 +65,6 @@ export default function NewsPage() {
                     imageSrc: item.image,
                     imageAlt: item.image_alt,
                     description: item.description,
-                    writtenBy: item.people[0].name || 'No Author'
                 }
             });
 
@@ -230,7 +229,6 @@ export default function NewsPage() {
                                     description={item.description}
                                     imageSrc={item.imageSrc} 
                                     imageAlt={item.imageAlt}
-                                    writtenBy={item.writtenBy || 'No Author'}
                                 />
                         )))}
                     </div>
