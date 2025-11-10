@@ -37,7 +37,7 @@ const newsItems = [
 ];*/
 
 export default function NewsPage() {
-    const { user } = useAuth();
+    const { user, session } = useAuth();
     const [newsItems, setNewsItems] = useState<News[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
@@ -55,21 +55,28 @@ export default function NewsPage() {
         try {
             const response = await fetch('/api/news');
             if (!response.ok) {
-                throw new Error('Failed to fetch users');
+                throw new Error('Failed to fetch news');
             }
-            const data: News[] = (await response.json())['data'].map((item: any) => {
+            
+            const responseData = await response.json();
+            if (!responseData.data) {
+                throw new Error('No data in response');
+            }
+
+            const data: News[] = responseData.data.map((item: any) => {
                 return {
+                    id: item.id,
                     title: item.title,
                     date: convertDateToText(item.date),
-                    location: item.location,
-                    imageSrc: item.image,
-                    imageAlt: item.image_alt,
-                    description: item.description,
-                    writtenBy: item.people[0].name || 'No Author'
+                    location: item.location || '',
+                    imageSrc: item.image || '',
+                    imageAlt: item.image_alt || '',
+                    description: item.description || '',
+                    writtenBy: item.people?.[0]?.name || 'No Author'
                 }
             });
 
-            setNewsItems(data)
+            setNewsItems(data);
         } catch (err: any) {
             setError(err.message);
         } finally {
@@ -80,6 +87,47 @@ export default function NewsPage() {
     useEffect(() => {
         getNews();
     }, []);
+
+    const handleDeleteArticle = async (id: number) => {
+        if (!confirm('Are you sure you want to delete this article?')) {
+            return;
+        }
+
+        try {
+            console.log('Attempting to delete article:', id);
+            const response = await fetch(`/api/news?id=${id}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            });
+
+            const data = await response.json();
+            console.log('Delete response:', { status: response.status, data });
+            
+            if (!response.ok) {
+                throw new Error(data.message || 'Failed to delete article');
+            }
+
+            // Optimistically update the UI
+            setNewsItems(prevItems => prevItems.filter(item => item.id !== id));
+            
+            // Double check the deletion worked by fetching latest data
+            const checkResponse = await fetch('/api/news');
+            const checkData = await checkResponse.json();
+            
+            if (checkData.data.some((item: any) => item.id === id)) {
+                // If article still exists, refresh the list and show error
+                await getNews();
+                throw new Error('Article appears to still exist after deletion');
+            }
+
+            alert('Article deleted successfully!');
+        } catch (err: any) {
+            console.error('Delete error:', err);
+            alert(err.message || 'Failed to delete article. Please try again.');
+        }
+    };
 
     const handleAddArticle = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -224,6 +272,7 @@ export default function NewsPage() {
                         ) : (newsItems.map((item, index) => (
                                 <NewsCard 
                                     key={index}
+                                    id={item.id}
                                     title={item.title}
                                     location={item.location}
                                     date={item.date}
@@ -231,6 +280,7 @@ export default function NewsPage() {
                                     imageSrc={item.imageSrc} 
                                     imageAlt={item.imageAlt}
                                     writtenBy={item.writtenBy || 'No Author'}
+                                    onDelete={user ? () => handleDeleteArticle(item.id) : undefined}
                                 />
                         )))}
                     </div>

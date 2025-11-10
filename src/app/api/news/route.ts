@@ -6,6 +6,7 @@ export async function GET() {
     const { data, error } = await supabase
       .from('news')
       .select(`
+        id,
         title,
         date,
         location,
@@ -13,14 +14,56 @@ export async function GET() {
         image_alt,
         description,
         people ( name )
-        `)
+        `);
 
-    if (error){
-        console.log(error)
-        return NextResponse.json({ message: error.message}, { status: 400})
+    if (error) {
+        return NextResponse.json({ message: error.message }, { status: 400 });
     }
-    else{  
-        return NextResponse.json({ data: data }, { status: 200 });
+
+    return NextResponse.json({ data: data }, { status: 200 });
+}
+
+export async function DELETE(request: NextRequest) {
+    try {
+        const { searchParams } = new URL(request.url);
+        const id = searchParams.get('id');
+
+        if (!id) {
+            return NextResponse.json(
+                { message: 'Article ID is required' },
+                { status: 400 }
+            );
+        }
+
+        // Delete from junction table first
+        await supabase
+            .from('people_news')
+            .delete()
+            .eq('news_id', id);
+
+        // Delete the article
+        const { error: deleteError } = await supabase
+            .from('news')
+            .delete()
+            .eq('id', id);
+
+        if (deleteError) {
+            return NextResponse.json(
+                { message: 'Failed to delete article', error: deleteError.message },
+                { status: 500 }
+            );
+        }
+
+        return NextResponse.json(
+            { message: 'Article deleted successfully' },
+            { status: 200 }
+        );
+    } catch (error: any) {
+        console.error('Error in DELETE route:', error);
+        return NextResponse.json(
+            { message: 'Internal server error', error: error.message },
+            { status: 500 }
+        );
     }
 }
 

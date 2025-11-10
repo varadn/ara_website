@@ -2,6 +2,7 @@ import Image from "next/image";
 import { convertGoogleDriveUrl } from '@/utils/helpers';
 
 interface NewsCardProps {
+  id: number;
   title: string; 
   location: string;
   date: string;
@@ -9,16 +10,19 @@ interface NewsCardProps {
   imageSrc: string;
   imageAlt?: string;
   writtenBy: string;
+  onDelete?: () => void;
 }
 
 export default function NewsCard({
+  id,
   title,
   location,
   date,
   description, 
   imageSrc,
   imageAlt = "News image",
-  writtenBy
+  writtenBy,
+  onDelete
 }: NewsCardProps) {
 
     let dateLocation: string = date;
@@ -44,6 +48,15 @@ export default function NewsCard({
         <p className="text-md text-gray-600 mb-2 font-semibold">{dateLocation}</p>
         <p className="text-sm text-gray-600 mb-2 font-semibold">Author: {writtenBy}</p>
         <p className="text-gray-700">{description}</p>
+        {onDelete && (
+          <button
+            onClick={onDelete}
+            className="mt-4 px-4 py-2 bg-red-500 text-white font-semibold rounded-lg hover:bg-red-600 transition-colors"
+            aria-label="Delete article"
+          >
+            Delete
+          </button>
+        )}
       </div>
     </div>
   );
