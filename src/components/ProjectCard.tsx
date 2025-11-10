@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { convertGoogleDriveUrl } from "@/utils/helpers";
 
 interface ProjectCardProps {
   title: string;
@@ -17,7 +18,7 @@ export default function ProjectCard({
     <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6">
         <div className="w-full sm:w-1/3">
             <Image
-            src={imageSrc} 
+            src={convertGoogleDriveUrl(imageSrc)} 
             alt={imageAlt}
             width={400}
             height={300}

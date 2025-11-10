@@ -88,13 +88,19 @@ export default function NewsPage() {
             return;
         }
 
+        const articleData = {
+            ...newArticle,
+            image: newArticle.image.trim() || '/placeholder.jpg',
+            image_alt: newArticle.image_alt.trim() || newArticle.title
+        };
+
         try {
             const response = await fetch('/api/news', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(newArticle),
+                body: JSON.stringify(articleData),
             });
 
             if (!response.ok) {
@@ -185,7 +191,7 @@ export default function NewsPage() {
 
                             <input
                                 type="text" 
-                                placeholder="Image URL (Google Drive link)"
+                                placeholder="Image URL (for google drive images set share to allow anyone to access with link)"
                                 value={newArticle.image} 
                                 onChange={(e) =>
                                     setNewArticle({ ...newArticle, image: e.target.value })

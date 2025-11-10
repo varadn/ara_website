@@ -25,7 +25,7 @@ export default function PeoplePage() {
 
     const getPeople = async () => { 
         try {
-            const response = await fetch('/api/people'); //Replace with your API endpoint
+            const response = await fetch('/api/people');
             if (!response.ok) {
                 throw new Error('Failed to fetch users'); 
             }
@@ -67,13 +67,19 @@ export default function PeoplePage() {
             return;
         }
 
+        const personData = {
+            ...newPerson,
+            image: newPerson.image.trim() || '/placeholder.jpg',
+            image_alt: newPerson.image_alt.trim() || newPerson.name
+        };
+
         try { 
             const response = await fetch('/api/people', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(newPerson),
+                body: JSON.stringify(personData),
             });
 
             if (!response.ok) {
@@ -109,7 +115,7 @@ export default function PeoplePage() {
                       ARA Lab People
                     </h1>
 
-                    {/* Add Person Form - Only visible when user is logged in */}
+                    {/*Adding a person form*/}
                     {user && (
                         <form
                             onSubmit={handleAddPerson}
