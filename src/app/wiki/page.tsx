@@ -62,64 +62,88 @@ export default function WikiPage() {
 
   return (
     
-      <div className="min-h-screen flex flex-col bg-gray-50 text-gray-900">
-        <main className="flex-grow mt-40 flex flex-col items-center text-center px-6">
-          <section className="w-full max-w-5xl text-center bg-white shadow-md rounded-2xl p-8 mb-16">
-            <h1 className="text-3xl font-bold mb-8 text-gray-800"> 
-              ARA Lab Wiki
-            </h1>
+      <div className="min-h-screen flex flex-col bg-slate-50 text-slate-900">
+        <main className="flex-grow mt-48 flex flex-col items-center px-6 pb-20">
+          <section className="w-full max-w-5xl">
+            {/* Header Section */}
+            <div className="mb-20">
+              <h1 className="text-6xl sm:text-7xl font-black mb-6 text-slate-900 tracking-tight uppercase"> 
+                ARA Lab Wiki
+              </h1>
+              <div className="flex gap-3 mb-6">
+                <div className="h-3 w-40 bg-blue-600 rounded-full"></div>
+                <div className="h-3 w-20 bg-rose-500 rounded-full"></div>
+              </div>
+              <p className="text-xl text-slate-600 font-bold">
+                Collaborative knowledge base for the lab
+              </p>
+            </div>
 
-            {/*search for articles*/}
-            <input
-              type="text"
-              placeholder="Search wiki articles..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full max-w-2xl px-4 py-2 mb-10 border border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
-            />
+            {/*Entry for an article - Only visible when user is logged in*/}
+            {user && (
+              <form
+                onSubmit={handleAddEntry} 
+                className="w-full modern-card bg-white mb-16 border-l-4 border-l-blue-600 comic-outline"
+              > 
+                <h2 className="text-3xl font-black mb-8 text-slate-900 tracking-tight uppercase">
+                  Add New Wiki Article
+                </h2>
 
-            {/*Entry for an article*/}
-            
-            <form
-              onSubmit={handleAddEntry} 
-              className="w-full max-w-2xl mx-auto text-left bg-gray-50 border border-gray-200 rounded-2xl p-6 mb-10 shadow-sm"
-            > 
-              <h2 className="text-xl font-semibold mb-4 text-gray-800">
-                Append new wiki article
-              </h2>
+                <div className="space-y-4">
+                  <input 
+                    type="text"
+                    placeholder="Article title *"
+                    value={newEntry.title}
+                    onChange={(e) =>
+                      setNewEntry({ ...newEntry, title: e.target.value })
+                    }
+                    className="w-full px-4 py-3 border-2 border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-600 bg-white font-semibold"
+                    required
+                  />
+                  <textarea
+                    placeholder="Article content *"
+                    value={newEntry.content}
+                    onChange={(e) =>
+                      setNewEntry({ ...newEntry, content: e.target.value })
+                    }
+                    className="w-full px-4 py-3 border-2 border-slate-300 rounded-lg h-24 focus:ring-2 focus:ring-blue-500 focus:border-blue-600 bg-white resize-none font-semibold"
+                    required
+                  />
+                </div>
 
-
-              <input 
-                type="text"
-                placeholder="Article title"
-                value={newEntry.title}
-                onChange={(e) =>
-                  setNewEntry({ ...newEntry, title: e.target.value })
-                }
-                className="w-full px-3 py-2 mb-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-300"
-              />
-                <textarea
-                  placeholder="Wiki article content"
-                  value={newEntry.content}
-                  onChange={(e) =>
-                    setNewEntry({ ...newEntry, content: e.target.value })
-                  }
-                  className="w-full px-3 py-2 mb-3 border border-gray-300 rounded-lg h-24 focus:ring-2 focus:ring-blue-300"
-                />
                 <button
                   type="submit" 
-                  className="px-4 py-2 bg-gray-800 text-white font-semibold rounded-xl hover:bg-blue-500 transition"
+                  className="mt-8 px-8 py-4 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-black rounded-lg hover:shadow-lg hover:from-blue-700 hover:to-blue-800 transition-all uppercase tracking-wide text-lg"
                 >
-                Add Entry
-              </button>
-            </form>
- 
+                  Add Article
+                </button>
+              </form>
+            )}
+
+            {/*Search and all wiki articles*/}
+            <div>
+              {/*search for articles*/}
+              <input
+                type="text"
+                placeholder="Search wiki articles..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-full px-4 py-3 mb-8 border-2 border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-600 bg-white font-semibold"
+              />
+     
               {/*All the wiki articles using the component */} 
-              <div className="space-y-10">
+              <div className="space-y-8">
                   {loading ? (
-                    <p className="text-gray-500 italic">Loading articles...</p>
+                    <div className="text-center py-16">
+                      <div className="inline-block animate-spin mb-4">
+                        <div className="w-12 h-12 border-4 border-blue-200 border-t-blue-600 rounded-full"></div>
+                      </div>
+                      <p className="text-slate-500 italic text-lg font-bold">Loading articles...</p>
+                    </div>
                     ) : filteredEntries.length === 0 ? (
-                      <p className="text-gray-500 italic">No articles found.</p>
+                      <div className="text-center py-16 pop-content">
+                        <p className="text-slate-700 text-lg font-bold p-8">No articles found</p>
+                      </div>
                     ) : (
                     filteredEntries.map((entry) => (
                       <WikiEntryCard
@@ -138,7 +162,8 @@ export default function WikiPage() {
                     ))
                   )}
               </div>
-            </section>
+            </div>
+          </section>
       </main>
     </div>
   );

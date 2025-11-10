@@ -109,15 +109,18 @@ export default function PeoplePage() {
 
     return (
         <div className="min-h-screen flex flex-col bg-slate-50 text-slate-900">
-            <main className="flex-grow mt-32 flex flex-col items-center px-6 pb-20">
+            <main className="flex-grow mt-48 flex flex-col items-center px-6 pb-20">
                 <section className="w-full max-w-5xl">
                     {/* Header Section */}
-                    <div className="mb-16">
-                        <h1 className="text-5xl sm:text-6xl font-black mb-4 text-slate-900">
+                    <div className="mb-20">
+                        <h1 className="text-6xl sm:text-7xl font-black mb-6 text-slate-900 tracking-tight uppercase">
                             Our Team
                         </h1>
-                        <div className="h-1 w-32 bg-gradient-to-r from-blue-600 to-rose-500 rounded-full"></div>
-                        <p className="text-lg text-slate-600 mt-4">
+                        <div className="flex gap-3 mb-6">
+                            <div className="h-3 w-40 bg-blue-600 rounded-full"></div>
+                            <div className="h-3 w-20 bg-rose-500 rounded-full"></div>
+                        </div>
+                        <p className="text-xl text-slate-600 font-bold">
                             Meet the brilliant minds behind ARA Lab
                         </p>
                     </div>
@@ -126,9 +129,9 @@ export default function PeoplePage() {
                     {user && (
                         <form
                             onSubmit={handleAddPerson}
-                            className="w-full modern-card bg-white mb-12 border-l-4 border-l-rose-500"
+                            className="w-full modern-card bg-white mb-16 border-l-4 border-l-rose-500 comic-outline"
                         >
-                            <h2 className="text-2xl font-bold mb-6 text-slate-900">
+                            <h2 className="text-3xl font-black mb-8 text-slate-900 tracking-tight uppercase">
                                 Add New Team Member
                             </h2>
 
@@ -141,7 +144,7 @@ export default function PeoplePage() {
                                         onChange={(e) =>
                                             setNewPerson({ ...newPerson, name: e.target.value })
                                         }
-                                        className="w-full px-4 py-3 border border-slate-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white"
+                                        className="w-full px-4 py-3 border-2 border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-600 bg-white font-semibold"
                                         required
                                     />
 
@@ -152,7 +155,7 @@ export default function PeoplePage() {
                                         onChange={(e) =>
                                             setNewPerson({ ...newPerson, title: e.target.value })
                                         }
-                                        className="w-full px-4 py-3 border border-slate-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white"
+                                        className="w-full px-4 py-3 border-2 border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-600 bg-white font-semibold"
                                         required
                                     />
                                 </div>
@@ -163,7 +166,7 @@ export default function PeoplePage() {
                                     onChange={(e) =>
                                         setNewPerson({ ...newPerson, description: e.target.value })
                                     }
-                                    className="w-full px-4 py-3 border border-slate-200 rounded-lg h-24 focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white resize-none"
+                                    className="w-full px-4 py-3 border-2 border-slate-300 rounded-lg h-24 focus:ring-2 focus:ring-blue-500 focus:border-blue-600 bg-white resize-none"
                                 />
 
                                 <input
@@ -173,7 +176,7 @@ export default function PeoplePage() {
                                     onChange={(e) =>
                                         setNewPerson({ ...newPerson, image: e.target.value })
                                     }
-                                    className="w-full px-4 py-3 border border-slate-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white"
+                                    className="w-full px-4 py-3 border-2 border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-600 bg-white"
                                 />
 
                                 <input
@@ -183,7 +186,7 @@ export default function PeoplePage() {
                                     onChange={(e) =>
                                         setNewPerson({ ...newPerson, image_alt: e.target.value })
                                     }
-                                    className="w-full px-4 py-3 border border-slate-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white"
+                                    className="w-full px-4 py-3 border-2 border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-600 bg-white"
                                 />
 
                                 <input
@@ -193,10 +196,10 @@ export default function PeoplePage() {
                                     onChange={(e) =>
                                         setNewPerson({ ...newPerson, website: e.target.value })
                                     }
-                                    className="w-full px-4 py-3 border border-slate-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white"
+                                    className="w-full px-4 py-3 border-2 border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-600 bg-white"
                                 />
 
-                                <div className="flex items-center space-x-3 bg-slate-50 p-4 rounded-lg">
+                                <div className="flex items-center space-x-3 bg-slate-100 p-4 rounded-lg border-2 border-slate-300">
                                     <input
                                         type="checkbox"
                                         id="active"
@@ -206,7 +209,7 @@ export default function PeoplePage() {
                                         }
                                         className="w-5 h-5 text-blue-600 border-slate-300 rounded focus:ring-blue-500 cursor-pointer"
                                     />
-                                    <label htmlFor="active" className="text-sm font-medium text-slate-700 cursor-pointer">
+                                    <label htmlFor="active" className="text-sm font-bold text-slate-900 cursor-pointer uppercase">
                                         Currently Active Member
                                     </label>
                                 </div>
@@ -214,7 +217,7 @@ export default function PeoplePage() {
 
                             <button
                                 type="submit"
-                                className="mt-6 px-6 py-3 bg-gradient-to-r from-rose-500 to-rose-600 text-white font-bold rounded-lg hover:shadow-lg hover:from-rose-600 hover:to-rose-700 transition-all"
+                                className="mt-8 px-8 py-4 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-black rounded-lg hover:shadow-lg hover:from-rose-600 hover:to-rose-700 transition-all uppercase tracking-wide text-lg"
                             >
                                 Add Member
                             </button>
@@ -223,65 +226,67 @@ export default function PeoplePage() {
 
 
                     {/*All current members*/}
-                    <div className="mb-16">
-                    <h2 className="text-3xl font-bold text-slate-900 mb-8">
+                    <div className="mb-20">
+                    <h2 className="text-4xl font-black text-slate-900 mb-10 tracking-tight uppercase">
                       Current Lab Members
                     </h2>
-                      <div className="space-y-6"> 
+                      <div className="space-y-8"> 
                           { loading ? ( 
-                                <div className="text-center py-12">
-                                    <div className="inline-block animate-spin">
-                                        <div className="w-8 h-8 border-4 border-blue-200 border-t-blue-600 rounded-full"></div>
+                                <div className="text-center py-16">
+                                    <div className="inline-block animate-spin mb-4">
+                                        <div className="w-12 h-12 border-4 border-blue-200 border-t-blue-600 rounded-full"></div>
                                     </div>
-                                    <p className="text-slate-500 italic mt-4">Loading team members...</p>
+                                    <p className="text-slate-500 italic text-lg font-bold">Loading team members...</p>
                                 </div>
                             ) : labMembers.length === 0 ? (
-                                <div className="text-center py-12 modern-card">
-                                    <p className="text-slate-500 text-lg">No active members yet</p>
+                                <div className="text-center py-16 pop-content">
+                                    <p className="text-slate-700 text-lg font-bold p-8">No active members yet</p>
                                 </div>
                             ) : ( labMembers.map((person, index) => (
-                                    <PersonCard 
-                                        key={index}
-                                        name={person.name}  
-                                        title={person.title}
-                                        description={person.description}
-                                        imageSrc={person.imageSrc} 
-                                        imageAlt={person.imageAlt} 
-                                        projects={person.projects}
-                                        website={person.website} 
-                                    />
+                                    <div key={index} className="card-lift">
+                                        <PersonCard 
+                                            name={person.name}  
+                                            title={person.title}
+                                            description={person.description}
+                                            imageSrc={person.imageSrc} 
+                                            imageAlt={person.imageAlt} 
+                                            projects={person.projects}
+                                            website={person.website} 
+                                        />
+                                    </div>
                                 )))}
                       </div>
                     </div>
 
                     {/*All alumni members*/}
                     <div>
-                    <h2 className="text-3xl font-bold text-slate-900 mb-8">
+                    <h2 className="text-4xl font-black text-slate-900 mb-10 tracking-tight uppercase">
                     Alumni
                     </h2>
-                        <div className="space-y-6">
+                        <div className="space-y-8">
                         { loading ? ( 
-                            <div className="text-center py-12">
-                                <div className="inline-block animate-spin">
-                                    <div className="w-8 h-8 border-4 border-blue-200 border-t-blue-600 rounded-full"></div>
+                            <div className="text-center py-16">
+                                <div className="inline-block animate-spin mb-4">
+                                    <div className="w-12 h-12 border-4 border-blue-200 border-t-blue-600 rounded-full"></div>
                                 </div>
-                                <p className="text-slate-500 italic mt-4">Loading alumni...</p>
+                                <p className="text-slate-500 italic text-lg font-bold">Loading alumni...</p>
                             </div>
                         ) : alumni.length === 0 ? (
-                            <div className="text-center py-12 modern-card">
-                                <p className="text-slate-500 text-lg">No alumni yet</p>
+                            <div className="text-center py-16 pop-content">
+                                <p className="text-slate-700 text-lg font-bold p-8">No alumni yet</p>
                             </div>
                         ) : ( alumni.map((person, index) => (
-                            <PersonCard 
-                                key={index}
-                                name={person.name}  
-                                title={person.title}
-                                description={person.description}
-                                imageSrc={person.imageSrc} 
-                                imageAlt={person.imageAlt} 
-                                projects={person.projects}
-                                website={person.website} 
-                            />
+                            <div key={index} className="card-lift">
+                                <PersonCard 
+                                    name={person.name}  
+                                    title={person.title}
+                                    description={person.description}
+                                    imageSrc={person.imageSrc} 
+                                    imageAlt={person.imageAlt} 
+                                    projects={person.projects}
+                                    website={person.website} 
+                                />
+                            </div>
                             )))}
                     </div>
                 </div>

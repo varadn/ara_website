@@ -132,15 +132,18 @@ export default function NewsPage() {
 
     return (
         <div className="min-h-screen flex flex-col bg-slate-50 text-slate-900">
-            <main className="flex-grow mt-32 flex flex-col items-center px-6 pb-20">
+            <main className="flex-grow mt-48 flex flex-col items-center px-6 pb-20">
                 <section className="w-full max-w-4xl">
                     {/* Header Section */}
-                    <div className="mb-16">
-                        <h1 className="text-5xl sm:text-6xl font-black mb-4 text-slate-900">
+                    <div className="mb-20">
+                        <h1 className="text-6xl sm:text-7xl font-black mb-6 text-slate-900 tracking-tight uppercase">
                             News & Events
                         </h1>
-                        <div className="h-1 w-32 bg-gradient-to-r from-blue-600 to-rose-500 rounded-full"></div>
-                        <p className="text-lg text-slate-600 mt-4">
+                        <div className="flex gap-3 mb-6">
+                            <div className="h-3 w-40 bg-blue-600 rounded-full"></div>
+                            <div className="h-3 w-20 bg-rose-500 rounded-full"></div>
+                        </div>
+                        <p className="text-xl text-slate-600 font-bold">
                             Stay updated with the latest from ARA Lab
                         </p>
                     </div>
@@ -149,9 +152,9 @@ export default function NewsPage() {
                     {user && (
                         <form
                             onSubmit={handleAddArticle}
-                            className="w-full modern-card bg-white mb-12 border-l-4 border-l-blue-600"
+                            className="w-full modern-card bg-white mb-16 border-l-4 border-l-blue-600 comic-outline"
                         >
-                        <h2 className="text-2xl font-bold mb-6 text-slate-900">
+                        <h2 className="text-3xl font-black mb-8 text-slate-900 tracking-tight uppercase">
                             Add New Article
                         </h2>
 
@@ -163,7 +166,7 @@ export default function NewsPage() {
                                 onChange={(e) =>
                                     setNewArticle({ ...newArticle, title: e.target.value })
                                 }
-                                className="w-full px-4 py-3 border border-slate-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white"
+                                className="w-full px-4 py-3 border-2 border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-600 bg-white font-semibold"
                                 required
                             />
 
@@ -175,7 +178,7 @@ export default function NewsPage() {
                                     onChange={(e) =>
                                         setNewArticle({ ...newArticle, date: e.target.value })
                                     }
-                                    className="w-full px-4 py-3 border border-slate-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white"
+                                    className="w-full px-4 py-3 border-2 border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-600 bg-white"
                                     required
                                 />
 
@@ -186,7 +189,7 @@ export default function NewsPage() {
                                     onChange={(e) =>
                                         setNewArticle({ ...newArticle, location: e.target.value })
                                     }
-                                    className="w-full px-4 py-3 border border-slate-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white"
+                                    className="w-full px-4 py-3 border-2 border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-600 bg-white"
                                 />
                             </div>
 
@@ -196,7 +199,7 @@ export default function NewsPage() {
                                 onChange={(e) =>
                                     setNewArticle({ ...newArticle, description: e.target.value })
                                 }
-                                className="w-full px-4 py-3 border border-slate-200 rounded-lg h-32 focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white resize-none"
+                                className="w-full px-4 py-3 border-2 border-slate-300 rounded-lg h-32 focus:ring-2 focus:ring-blue-500 focus:border-blue-600 bg-white resize-none"
                                 required
                             />
 
@@ -207,7 +210,7 @@ export default function NewsPage() {
                                 onChange={(e) =>
                                     setNewArticle({ ...newArticle, image: e.target.value })
                                 }
-                                className="w-full px-4 py-3 border border-slate-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white"
+                                className="w-full px-4 py-3 border-2 border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-600 bg-white"
                             />
 
                             <input
@@ -217,14 +220,14 @@ export default function NewsPage() {
                                 onChange={(e) =>
                                     setNewArticle({ ...newArticle, image_alt: e.target.value })
                                 }
-                                className="w-full px-4 py-3 border border-slate-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white"
+                                className="w-full px-4 py-3 border-2 border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-600 bg-white"
                             />
 
                         </div> 
 
                         <button
                             type="submit"
-                            className="mt-6 px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-bold rounded-lg hover:shadow-lg hover:from-blue-700 hover:to-blue-800 transition-all"
+                            className="mt-8 px-8 py-4 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-black rounded-lg hover:shadow-lg hover:from-blue-700 hover:to-blue-800 transition-all uppercase tracking-wide text-lg"
                         >
                             Publish Article
                         </button>
@@ -232,28 +235,29 @@ export default function NewsPage() {
                     )}
 
 
-                    <div className="space-y-6">
+                    <div className="space-y-8">
                         { loading ? ( 
-                            <div className="text-center py-12">
-                                <div className="inline-block animate-spin">
-                                    <div className="w-8 h-8 border-4 border-blue-200 border-t-blue-600 rounded-full"></div>
+                            <div className="text-center py-16">
+                                <div className="inline-block animate-spin mb-4">
+                                    <div className="w-12 h-12 border-4 border-blue-200 border-t-blue-600 rounded-full"></div>
                                 </div>
-                                <p className="text-slate-500 italic mt-4">Loading news..</p>
+                                <p className="text-slate-500 italic text-lg font-bold">Loading news..</p>
                             </div>
                         ) : newsItems.length === 0 ? (
-                            <div className="text-center py-12 modern-card">
-                                <p className="text-slate-500 text-lg">No news yet</p>
+                            <div className="text-center py-16 pop-content">
+                                <p className="text-slate-700 text-lg font-bold p-8">No news yet</p>
                             </div>
                         ) : (newsItems.map((item, index) => (
-                                <NewsCard 
-                                    key={index}
-                                    title={item.title}
-                                    location={item.location}
-                                    date={item.date}
-                                    description={item.description}
-                                    imageSrc={item.imageSrc} 
-                                    imageAlt={item.imageAlt}
-                                />
+                                <div key={index} className="card-lift">
+                                    <NewsCard 
+                                        title={item.title}
+                                        location={item.location}
+                                        date={item.date}
+                                        description={item.description}
+                                        imageSrc={item.imageSrc} 
+                                        imageAlt={item.imageAlt}
+                                    />
+                                </div>
                         )))}
                     </div>
                 </section>

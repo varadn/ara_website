@@ -99,43 +99,63 @@ export default function HomePage() {
         {/*"hero" part of page */} 
         <section className="flex flex-col items-center justify-center text-center w-full
             h-screen gradient-primary relative overflow-hidden">
-            {/* Decorative elements - contained within section */}
-            <div className="absolute inset-0 top-20 right-20 w-72 h-72 bg-white opacity-5 rounded-full blur-3xl pointer-events-none"></div>
-            <div className="absolute inset-0 bottom-40 left-10 w-96 h-96 bg-black opacity-5 rounded-full blur-3xl pointer-events-none"></div>
+            <div className="absolute -top-20 -right-32 w-96 h-96 bg-white opacity-[0.03] rounded-full blur-3xl pointer-events-none transform rotate-45"></div>
+            <div className="absolute -bottom-32 -left-40 w-full h-96 bg-black opacity-[0.05] rounded-full blur-3xl pointer-events-none"></div>
+            
+            <div className="absolute top-32 right-16 w-32 h-32 border-4 border-white opacity-10 rounded-3xl transform rotate-12 pointer-events-none"></div>
+            <div className="absolute bottom-40 left-20 w-40 h-40 border-4 border-white opacity-10 rounded-full transform -rotate-12 pointer-events-none"></div>
             
             <div className="relative z-10">
-              <h1 className="text-7xl sm:text-8xl font-black mb-6 text-white tracking-tight drop-shadow-lg">
+              <h1 className="text-8xl sm:text-9xl font-black mb-6 text-white tracking-tighter drop-shadow-lg leading-none">
                 ARA Lab
               </h1>
-              <p className="text-2xl sm:text-3xl text-blue-100 max-w-2xl font-light">
+              <p className="text-3xl sm:text-4xl text-blue-100 max-w-3xl font-black tracking-wide mb-8">
                 Assistive Robots & Accessibility 
               </p>
-              <div className="mt-8 h-1 w-24 bg-white mx-auto opacity-60"></div>
+              <div className="flex justify-center gap-4 mb-8">
+                <div className="h-2 w-16 bg-white opacity-70 rounded-full"></div>
+                <div className="h-2 w-16 bg-rose-300 opacity-70 rounded-full"></div>
+                <div className="h-2 w-16 bg-white opacity-70 rounded-full"></div>
+              </div>
             </div>
         </section> 
 
         {/*Section for showing off projects on mainpage*/}
-        <section className="w-full max-w-6xl px-6 py-20">
-            <div className="mb-16">
-              <h2 className="text-5xl font-black mb-4 text-slate-900">
+        <section className="w-full max-w-6xl px-6 py-24">
+            <div className="mb-20">
+              <h2 className="text-6xl font-black mb-6 text-slate-900 tracking-tight">
                 Featured Projects
               </h2>
-              <div className="h-1 w-32 bg-gradient-to-r from-blue-600 to-rose-500"></div>
+              <div className="flex gap-3 mb-4">
+                <div className="h-3 w-48 bg-blue-600 rounded-full"></div>
+                <div className="h-3 w-24 bg-rose-500 rounded-full"></div>
+              </div>
+              <p className="text-lg text-slate-600 max-w-2xl">
+                Cutting-edge research pushing the boundaries of assistive technology
+              </p>
             </div>
 
-            <div className="space-y-12">
+            <div className="space-y-16">
             { loading ? ( 
-                    <p className="text-slate-500 italic text-lg">Loading projects..</p>
+                    <div className="text-center py-16">
+                        <div className="inline-block animate-spin mb-4">
+                            <div className="w-12 h-12 border-4 border-blue-200 border-t-blue-600 rounded-full"></div>
+                        </div>
+                        <p className="text-slate-500 italic text-lg">Loading projects..</p>
+                    </div>
                 ) : projects.length === 0 ? (
-                    <p className="text-slate-500 italic text-lg">No projects yet</p>
+                    <div className="text-center py-16 pop-content">
+                        <p className="text-slate-500 text-lg font-bold">No projects yet</p>
+                    </div>
                 ) : (projects.map((project, index) => (
-                        <ProjectCard
-                            key={index}
-                            title={project.title} 
-                            description={project.description}
-                            imageSrc={project.imageSrc}
-                            imageAlt={project.imageAlt}
-                        />
+                        <div key={index} className="card-lift">
+                            <ProjectCard
+                                title={project.title} 
+                                description={project.description}
+                                imageSrc={project.imageSrc}
+                                imageAlt={project.imageAlt}
+                            />
+                        </div>
                 )))}
             </div>
         </section>

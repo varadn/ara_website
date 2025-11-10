@@ -21,32 +21,33 @@ export default function PersonCard({
   website,
 }: PersonCardProps) { 
   return (
-    <div className="modern-card bg-white flex flex-col sm:flex-row items-center sm:items-start gap-6 border-l-4 border-l-rose-500">
-        <div className="flex-shrink-0 w-full sm:w-40">
+    <div className="modern-card bg-white flex flex-col sm:flex-row items-center sm:items-start gap-6 border-l-4 border-l-rose-500 card-lift">
+        <div className="flex-shrink-0 w-full sm:w-40 relative">
+            <div className="absolute -inset-3 bg-black opacity-20 rounded-lg blur-md"></div>
             <Image
             src={convertGoogleDriveUrl(imageSrc)}
             alt={imageAlt}
             width={160}
             height={160} 
-            className="rounded-lg object-cover w-full h-40 sm:w-40 sm:h-40"
+            className="rounded-lg object-cover w-full h-40 sm:w-40 sm:h-40 relative z-10 border-4 border-slate-900"
             />
         </div>
 
       <div className="text-left flex-1">
-        <h2 className="text-2xl font-bold text-slate-900">{name}</h2>
-        <p className="text-base text-blue-600 font-semibold mb-3">{title}</p>
-        <p className="text-slate-700 mb-4 leading-relaxed">{description}</p>
+        <h2 className="text-2xl font-black text-slate-900 tracking-tight uppercase">{name}</h2>
+        <p className="text-base font-black text-rose-600 mb-4 uppercase tracking-wide">{title}</p>
+        <p className="text-slate-700 mb-4 leading-relaxed font-medium">{description}</p>
 
         {/* Projects Section */} 
         {projects && projects.length > 0 && (
-          <div className="mb-4 bg-slate-50 p-3 rounded-lg">
-            <h3 className="text-sm font-bold text-slate-900 mb-2">
-              Projects:
+          <div className="mb-4 bg-slate-100 p-4 rounded-lg border-2 border-slate-300">
+            <h3 className="text-sm font-black text-slate-900 mb-3 uppercase">
+              Projects
             </h3>
-            <ul className="text-slate-700 text-sm space-y-1">
+            <ul className="text-slate-700 text-sm space-y-2">
               {projects.map((project, i) => (
-                <li key={i} className="flex items-center">
-                  <span className="w-1.5 h-1.5 bg-blue-600 rounded-full mr-2"></span>
+                <li key={i} className="flex items-center font-semibold">
+                  <span className="w-2 h-2 bg-blue-600 rounded-full mr-3"></span>
                   {project}
                 </li> 
               ))}
@@ -60,7 +61,7 @@ export default function PersonCard({
             href={website} 
             target="_blank"
             rel="noopener noreferrer" 
-            className="inline-block px-4 py-2 bg-gradient-to-r from-blue-600 to-blue-700 text-white text-sm font-semibold rounded-lg hover:shadow-lg hover:from-blue-700 hover:to-blue-800 transition-all"
+            className="inline-block px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-black rounded-lg hover:shadow-lg hover:from-blue-700 hover:to-blue-800 transition-all uppercase tracking-wide text-sm"
           > 
             Visit Website 
           </a>
