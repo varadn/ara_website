@@ -61,7 +61,7 @@ export default function PersonCard({
             href={website} 
             target="_blank"
             rel="noopener noreferrer" 
-            className="inline-block px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-black rounded-lg hover:shadow-lg hover:from-blue-700 hover:to-blue-800 transition-all uppercase tracking-wide text-sm"
+            className="inline-block px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-700 font-black rounded-lg hover:shadow-lg hover:from-blue-700 hover:to-blue-800 transition-all uppercase tracking-wide text-sm !text-white"
           > 
             Visit Website 
           </a>
