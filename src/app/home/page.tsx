@@ -135,7 +135,69 @@ export default function HomePage() {
               </p>
             </div>
 
-            <div className="space-y-16">
+             {/*Project form for logged in people*/}
+            {user && (
+                <form
+                    onSubmit={handleAddProject}
+                    className="w-full modern-card bg-white mb-16 border-l-4 border-l-blue-600 comic-outline text-left"
+                >
+                    <h2 className="text-3xl font-black mb-8 text-slate-900 tracking-tight uppercase">
+                        Add New Project
+                    </h2>
+
+                    <div className="space-y-4"> 
+                        <input
+                            type="text"
+                            placeholder="Project Title *" 
+                            value={newProject.title} 
+                            onChange={(e) =>
+                                setNewProject({ ...newProject, title: e.target.value }) 
+                            }
+                            className="w-full px-4 py-3 border-2 border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-600 bg-white font-semibold"
+                            required
+                        />
+
+                        <textarea
+                            placeholder="Project Description *" 
+                            value={newProject.description}
+                            onChange={(e) => 
+                                setNewProject({ ...newProject, description: e.target.value })
+                            }
+                            className="w-full px-4 py-3 border-2 border-slate-300 rounded-lg h-24 focus:ring-2 focus:ring-blue-500 focus:border-blue-600 bg-white resize-none font-semibold"
+                            required
+                        />
+
+                        <input
+                            type="text"
+                            placeholder="Image URL (Google Drive link)"
+                            value={newProject.image} 
+                            onChange={(e) =>
+                                setNewProject({ ...newProject, image: e.target.value })
+                            } 
+                            className="w-full px-4 py-3 border-2 border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-600 bg-white font-semibold"
+                        />
+
+                        <input
+                            type="text"
+                            placeholder="Image Alt Text"
+                            value={newProject.image_alt}
+                            onChange={(e) =>
+                                setNewProject({ ...newProject, image_alt: e.target.value })
+                            }
+                            className="w-full px-4 py-3 border-2 border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-600 bg-white font-semibold"
+                        />
+                    </div>
+
+                    <button
+                        type="submit"
+                        className="mt-8 px-8 py-4 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-black rounded-lg hover:shadow-lg hover:from-blue-700 hover:to-blue-800 transition-all uppercase tracking-wide text-lg"
+                    >
+                        Add Project
+                    </button>
+                </form>
+            )}
+
+            <div className="space-y-12">
             { loading ? ( 
                     <div className="text-center py-16">
                         <div className="inline-block animate-spin mb-4">
