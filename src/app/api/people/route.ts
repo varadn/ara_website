@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { supabase } from "@/utils/supabase/supabaseClient";
+import { createClient } from '@/utils/supabase/server';
 
 export async function GET() {
     // Fetch user data from a database or external API
@@ -27,6 +28,17 @@ export async function GET() {
 
 export async function POST(request: NextRequest) {
     try {
+        const supabaseAuth = await createClient();
+
+        const claims = await supabaseAuth.auth.getClaims();
+
+        if (!claims.data) {
+            return NextResponse.json(
+                { message: 'You are not authorized to perform this action.' }, 
+                { status: 403 }
+            );
+        }
+        
         const body = await request.json();
         const { name, title, description, image, image_alt, website, active } = body;
 
