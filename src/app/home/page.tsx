@@ -93,37 +93,59 @@ export default function HomePage() {
     };
 
     return (
-    <div className="min-h-screen flex flex-col bg-gray-50 text-gray-900">
+    <div className="min-h-screen flex flex-col bg-white text-slate-900">
         {/*All the content  */}
-        <main className="flex-grow mt-30 flex flex-col items-center text-center px-6">
+        <main className="flex-grow flex flex-col items-center text-center">
         {/*"hero" part of page */} 
         <section className="flex flex-col items-center justify-center text-center w-full
-            h-[90vh] bg-gradient-to-b from-white to-gray-100">
-            <h1 className="text-7xl sm:text-8xl font-extrabold mb-6 text-gray-900 tracking-tight">
-            ARA Lab Home
-            </h1>
-        <p className="text-2xl sm:text-3xl text-gray-600 max-w-2xl">
-            Assistive Robots & Accessibility 
-        </p>
+            h-screen gradient-primary relative overflow-hidden">
+            <div className="absolute -top-20 -right-32 w-96 h-96 bg-white opacity-[0.03] rounded-full blur-3xl pointer-events-none transform rotate-45"></div>
+            <div className="absolute -bottom-32 -left-40 w-full h-96 bg-black opacity-[0.05] rounded-full blur-3xl pointer-events-none"></div>
+            
+            <div className="absolute top-32 right-16 w-32 h-32 border-4 border-white opacity-10 rounded-3xl transform rotate-12 pointer-events-none"></div>
+            <div className="absolute bottom-40 left-20 w-40 h-40 border-4 border-white opacity-10 rounded-full transform -rotate-12 pointer-events-none"></div>
+            
+            <div className="relative z-10">
+              <h1 className="text-8xl sm:text-9xl font-black mb-6 text-white tracking-tighter drop-shadow-lg leading-none">
+                ARA Lab
+              </h1>
+              <p className="text-3xl sm:text-4xl text-blue-100 max-w-3xl font-black tracking-wide mb-8">
+                Assistive Robots & Accessibility 
+              </p>
+              <div className="flex justify-center gap-4 mb-8">
+                <div className="h-2 w-16 bg-white opacity-70 rounded-full"></div>
+                <div className="h-2 w-16 bg-rose-300 opacity-70 rounded-full"></div>
+                <div className="h-2 w-16 bg-white opacity-70 rounded-full"></div>
+              </div>
+            </div>
         </section> 
 
         {/*Section for showing off projects on mainpage*/}
-        <section className="w-full max-w-5xl text-left bg-white shadow-md rounded-2xl p-8 mb-16">
-            <h3 className="text-2xl font-semibold mb-6 border-b pb-2">
-            Projects
-            </h3>
+        <section className="w-full max-w-6xl px-6 py-24">
+            <div className="mb-20">
+              <h2 className="text-6xl font-black mb-6 text-slate-900 tracking-tight">
+                Featured Projects
+              </h2>
+              <div className="flex gap-3 mb-4">
+                <div className="h-3 w-48 bg-blue-600 rounded-full"></div>
+                <div className="h-3 w-24 bg-rose-500 rounded-full"></div>
+              </div>
+              <p className="text-lg text-slate-600 max-w-2xl">
+                Cutting-edge research pushing the boundaries of assistive technology
+              </p>
+            </div>
 
-            {/*Project form for logged in people*/}
+             {/*Project form for logged in people*/}
             {user && (
                 <form
                     onSubmit={handleAddProject}
-                    className="w-full mx-auto text-left bg-gray-50 border border-gray-200 rounded-2xl p-6 mb-10 shadow-sm"
+                    className="w-full modern-card bg-white mb-16 border-l-4 border-l-blue-600 comic-outline text-left"
                 >
-                    <h2 className="text-xl font-semibold mb-4 text-gray-800">
+                    <h2 className="text-3xl font-black mb-8 text-slate-900 tracking-tight uppercase">
                         Add New Project
                     </h2>
 
-                    <div className="space-y-3"> 
+                    <div className="space-y-4"> 
                         <input
                             type="text"
                             placeholder="Project Title *" 
@@ -131,7 +153,7 @@ export default function HomePage() {
                             onChange={(e) =>
                                 setNewProject({ ...newProject, title: e.target.value }) 
                             }
-                            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-300"
+                            className="w-full px-4 py-3 border-2 border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-600 bg-white font-semibold"
                             required
                         />
 
@@ -141,18 +163,18 @@ export default function HomePage() {
                             onChange={(e) => 
                                 setNewProject({ ...newProject, description: e.target.value })
                             }
-                            className="w-full px-3 py-2 border border-gray-300 rounded-lg h-32 focus:ring-2 focus:ring-blue-300"
+                            className="w-full px-4 py-3 border-2 border-slate-300 rounded-lg h-24 focus:ring-2 focus:ring-blue-500 focus:border-blue-600 bg-white resize-none font-semibold"
                             required
                         />
 
                         <input
                             type="text"
-                            placeholder="Image URL (for google drive images set share to allow anyone to access with link)"
+                            placeholder="Image URL (Google Drive link)"
                             value={newProject.image} 
                             onChange={(e) =>
                                 setNewProject({ ...newProject, image: e.target.value })
                             } 
-                            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-300"
+                            className="w-full px-4 py-3 border-2 border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-600 bg-white font-semibold"
                         />
 
                         <input
@@ -162,32 +184,40 @@ export default function HomePage() {
                             onChange={(e) =>
                                 setNewProject({ ...newProject, image_alt: e.target.value })
                             }
-                            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-300"
+                            className="w-full px-4 py-3 border-2 border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-600 bg-white font-semibold"
                         />
                     </div>
 
                     <button
                         type="submit"
-                        className="mt-4 px-4 py-2 bg-gray-800 text-white font-semibold rounded-xl hover:bg-blue-500 transition"
+                        className="mt-8 px-8 py-4 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-black rounded-lg hover:shadow-lg hover:from-blue-700 hover:to-blue-800 transition-all uppercase tracking-wide text-lg"
                     >
                         Add Project
                     </button>
                 </form>
             )}
 
-            <div className="space-y-8">
+            <div className="space-y-12">
             { loading ? ( 
-                    <p className="text-gray-500 italic">Loading projects..</p>
+                    <div className="text-center py-16">
+                        <div className="inline-block animate-spin mb-4">
+                            <div className="w-12 h-12 border-4 border-blue-200 border-t-blue-600 rounded-full"></div>
+                        </div>
+                        <p className="text-slate-500 italic text-lg">Loading projects..</p>
+                    </div>
                 ) : projects.length === 0 ? (
-                    <p className="text-gray-500 italic">No projects : (</p>
+                    <div className="text-center py-16 pop-content">
+                        <p className="text-slate-500 text-lg font-bold">No projects yet</p>
+                    </div>
                 ) : (projects.map((project, index) => (
-                        <ProjectCard
-                            key={index}
-                            title={project.title} 
-                            description={project.description}
-                            imageSrc={project.imageSrc}
-                            imageAlt={project.imageAlt}
-                        />
+                        <div key={index} className="card-lift">
+                            <ProjectCard
+                                title={project.title} 
+                                description={project.description}
+                                imageSrc={project.imageSrc}
+                                imageAlt={project.imageAlt}
+                            />
+                        </div>
                 )))}
             </div>
         </section>

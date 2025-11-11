@@ -26,21 +26,24 @@ export default function NewsCard({
     }
 
   return (
-    <div className="flex flex-col sm:flex-row items-center sm:items-start bg-gray-100 rounded-xl p-6 shadow-sm">
-        <div className="flex-shrink-0 mb-4 sm:mb-0 sm:mr-6">
+    <div className="modern-card bg-white flex flex-col sm:flex-row items-center sm:items-start gap-6 border-l-4 border-l-blue-600 card-lift">
+        <div className="flex-shrink-0 w-full sm:w-1/3 relative">
+            <div className="absolute -inset-3 bg-black opacity-20 rounded-lg blur-md"></div>
             <Image
             src={convertGoogleDriveUrl(imageSrc)}
             alt={imageAlt}
             width={300}
             height={200}
-            className="rounded-lg object-cover"
+            className="rounded-lg object-cover w-full h-48 sm:h-40 relative z-10 border-4 border-slate-900"
             />
         </div> 
 
-      <div className="text-left">
-        <h2 className="text-xl font-semibold text-gray-800 mb-1">{title}</h2>
-        <p className="text-md text-gray-600 mb-2 font-semibold">{dateLocation}</p>
-        <p className="text-gray-700">{description}</p>
+      <div className="text-left flex-1">
+        <h2 className="text-2xl font-black text-slate-900 mb-3 tracking-tight uppercase">{title}</h2>
+        <p className="text-sm font-black text-slate-600 mb-4 uppercase">
+          {dateLocation}
+        </p>
+        <p className="text-slate-700 leading-relaxed font-medium">{description}</p>
       </div>
     </div>
   );

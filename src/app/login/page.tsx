@@ -47,39 +47,45 @@ export default function LoginPage() {
     }
 
     return (
-    <div className="min-h-screen flex flex-col bg-gray-100 text-gray-900">
-        <main className="flex-grow mt-40 flex flex-col items-center text-center px-6">
-        <section className="w-full max-w-2xl bg-white shadow-lg rounded-2xl p-10 mb-16">
-            <h1 className="text-4xl font-bold text-gray-800 mb-8">
-            Login
-            </h1>
+    <div className="min-h-screen flex flex-col bg-slate-50 text-slate-900">
+        <main className="flex-grow mt-48 flex flex-col items-center text-center px-6 pb-20">
+        <section className="w-full max-w-2xl">
+            <div className="bg-white shadow-lg rounded-2xl p-10 mb-16 modern-card border-l-4 border-l-blue-600 comic-outline">
+                <h1 className="text-6xl font-black text-slate-900 mb-4 tracking-tight uppercase">
+                Login
+                </h1>
+                <div className="flex gap-3 mb-8 justify-center">
+                  <div className="h-3 w-40 bg-blue-600 rounded-full"></div>
+                  <div className="h-3 w-20 bg-rose-500 rounded-full"></div>
+                </div>
 
-            <form className="flex flex-col space-y-6">
-                <input 
-                    type="email"
-                    name="email"
-                    placeholder="Email"
-                    onChange={handleInput}
-                    className="border border-gray-300 rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-gray-500"
-                />
-                <input
-                    type="password"
-                    name="password"
-                    placeholder="Password"
-                    onChange={handleInput}
-                    className="border border-gray-300 rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-gray-500"
-                />
-                <button
-                    type="submit"
-                    className="bg-gray-800 text-white py-3 rounded-md font-medium enabled:hover:bg-blue-500 enabled:transition-colors disabled:opacity-50 disabled:text-neutral-500" 
-                    onClick={handleLogin}
-                    disabled={loading}
-                >
-                    {loading ? "Signing in, please wait..." : "Sign in"}
-                </button>
-                {errorMsg.length !== 0 && 
-                  <p className="text-red-700">{errorMsg}</p>}
-            </form>
+                <form className="flex flex-col space-y-6">
+                    <input 
+                        type="email"
+                        name="email"
+                        placeholder="Email"
+                        onChange={handleInput}
+                        className="border-2 border-slate-300 rounded-lg p-4 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-600 bg-white font-semibold"
+                    />
+                    <input
+                        type="password"
+                        name="password"
+                        placeholder="Password"
+                        onChange={handleInput}
+                        className="border-2 border-slate-300 rounded-lg p-4 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-600 bg-white font-semibold"
+                    />
+                    <button
+                        type="submit"
+                        className="bg-gradient-to-r from-blue-600 to-blue-700 text-white py-4 rounded-lg font-black enabled:hover:shadow-lg enabled:hover:from-blue-700 enabled:hover:to-blue-800 enabled:transition-all disabled:opacity-50 disabled:text-slate-400 uppercase tracking-wide text-lg" 
+                        onClick={handleLogin}
+                        disabled={loading}
+                    >
+                        {loading ? "Signing in, please wait..." : "Sign In"}
+                    </button>
+                    {errorMsg.length !== 0 && 
+                      <p className="text-red-600 font-bold text-lg">{errorMsg}</p>}
+                </form>
+            </div>
         </section>
         </main>
     </div>
