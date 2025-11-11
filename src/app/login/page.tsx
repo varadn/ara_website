@@ -1,12 +1,14 @@
 "use client";
 import React, {useState} from 'react';
-import { supabase } from '@/utils/supabase/supabaseClient';
 import { redirect } from 'next/navigation'
+import { createClient } from '@/utils/supabase/client';
 
 export default function LoginPage() {
     const [loginInfo, setLoginInfo] = useState({email: "", password: ""})
     const [errorMsg, setErrorMsg] = useState("")
     const [loading, setLoading] = useState(false)
+
+    const supabaseAuth = createClient();
 
     const handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = event.target;
@@ -20,7 +22,7 @@ export default function LoginPage() {
         event.preventDefault();
         setLoading(true);
 
-        const { data, error } = await supabase.auth.signInWithPassword(loginInfo)
+        const { data, error } = await supabaseAuth.auth.signInWithPassword(loginInfo)
 
         if (error) {
             switch(error.code){

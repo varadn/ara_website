@@ -10,6 +10,7 @@ import { redirect } from 'next/navigation'
 import { useEffect, useState } from 'react';
 import { WeatherData } from '@/utils/types';
 import { weatherCodes } from "@/utils/weatherCodes";
+import { createClient } from '@/utils/supabase/client';
 
 
 export default function Navbar() {
@@ -21,6 +22,8 @@ export default function Navbar() {
     const [currentDate, setCurrentDate] = useState<string>('');
     const [weather, setWeather] = useState<WeatherData | null>(null);
     const [loading, setLoading] = useState(true);
+
+    const supabaseAuth = createClient()
 
     //Update time every second
     useEffect(() => {
@@ -81,7 +84,7 @@ export default function Navbar() {
 
     const handleLogout = async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
             event.preventDefault()
-            const { error } = await supabase.auth.signOut();
+            const { error } = await supabaseAuth.auth.signOut();
 
             if (error) {
                 console.error('Error signing out:', error.message);
