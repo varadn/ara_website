@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { supabase } from '@/utils/supabase/supabaseClient';
 import { createClient } from '@/utils/supabase/server';
+import { PostAction } from '@/utils/types';
 
 export async function GET() {
     // Fetch user data from a database or external API
@@ -38,42 +39,28 @@ export async function POST(request: NextRequest) {
         }
 
         const body = await request.json();
-        const { title, date, location, image, image_alt, description } = body;
+        
+        const { action } = body;
 
-        // Validate required fields
-        if (!title || !date || !description) {
-            return NextResponse.json(
-                { message: 'Title, date, and description are required' }, 
-                { status: 400 }
-            );
+        let response;
+
+        switch(action) {
+            case PostAction.Create:
+                response = await createPost(body);
+                break;
+            case PostAction.Update:
+                response = await updatePost(body);
+                break;
+            case PostAction.Delete:
+                response = await deletePost(body);
+                break;
+            default:
+                response = NextResponse.json(
+                            { message: 'Unknown POST action.' }, 
+                            { status: 400 }
+                        );
         }
-
-        // Insert the new news article into the database
-        const { data, error } = await supabase
-            .from('news')
-            .insert([{
-                title,
-                date,
-                location: location || '',
-                image: image || '',
-                image_alt: image_alt || title,
-                description
-            }])
-            .select();
-
-        if (error) {
-            console.error('Error adding news article:', error);
-            return NextResponse.json(
-                { message: error.message }, 
-                { status: 400 }
-            );
-        }
-
-        return NextResponse.json(
-            { message: 'News article added successfully', data: data }, 
-            { status: 201 }
-        );
-
+        return response;
     } catch (error: any) {
         console.error('Server error:', error);
         return NextResponse.json(
@@ -81,4 +68,56 @@ export async function POST(request: NextRequest) {
             { status: 500 }
         );
     }
+}
+
+async function createPost(body: any){
+    const { title, date, location, image, image_alt, description } = body;
+
+    // Validate required fields
+    if (!title || !date || !description) {
+        return NextResponse.json(
+            { message: 'Title, date, and description are required' }, 
+            { status: 400 }
+        );
+    }
+
+    // Insert the new news article into the database
+    const { data, error } = await supabase
+        .from('news')
+        .insert([{
+            title,
+            date,
+            location: location || '',
+            image: image || '',
+            image_alt: image_alt || title,
+            description
+        }])
+        .select();
+
+    if (error) {
+        console.error('Error adding news article:', error);
+        return NextResponse.json(
+            { message: error.message }, 
+            { status: 400 }
+        );
+    }
+
+    return NextResponse.json(
+        { message: 'News article added successfully', data: data }, 
+        { status: 201 }
+    );
+}
+
+async function updatePost(body: any){
+    return NextResponse.json(
+        { message: 'person update not implemented' }, 
+        { status: 501 }
+    )
+}
+
+async function deletePost(body: any){
+    return NextResponse.json(
+        { message: 'person delete not implemented' }, 
+        { status: 501 }
+    )
 }

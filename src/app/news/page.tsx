@@ -2,39 +2,9 @@
 
 import React, { useState, useEffect } from 'react';
 import NewsCard from "@/components/NewsCard";
-import { News } from '@/utils/types';
+import { News, PostAction} from '@/utils/types';
 import { convertDateToText } from '@/utils/convertToDateString';
 import { useAuth } from "@/contexts/AuthContext";
-
-/* COMMENTING THIS OUT FOR NOW 
-const newsItems = [
-  {
-    title: "ARA Lab open house!",
-    date: "October 11, 2025 — Somewhere on Umass Lowell",
-    description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure consequuntur minus fugit alias at sunt beatae! Commodi, placeat suscipit alias hic aliquam ducimus deserunt, porro eum asperiores, inventore sint maxime. Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore, dolorem pariatur consequuntur ad nam eveniet, facere quidem placeat asperiores magnam ullam error odit non explicabo recusandae? Neque porro dicta praesentium.",
-    imageSrc: "/placeholder.jpg",
-    imageAlt: "ARA Lab open house", 
-  },
-
-  {
-    title: "New Robotics Project!",
-    date: "October 11, 2025 — Somewhere on Umass Lowell",
-    description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure consequuntur minus fugit alias at sunt beatae! Commodi, placeat suscipit alias hic aliquam ducimus deserunt, porro eum asperiores, inventore sint maxime. Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore, dolorem pariatur consequuntur ad nam eveniet, facere quidem placeat asperiores magnam ullam error odit non explicabo recusandae? Neque porro dicta praesentium.",
-    imageSrc: "/placeholder.jpg",
-    imageAlt: "New robotics project image", 
-  },
-  {
-    title: "Some other event",
-    date: "October 11, 2025 — Somewhere on Umass Lowell",  
-    description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure consequuntur minus fugit alias at sunt beatae! Commodi, placeat suscipit alias hic aliquam ducimus deserunt, porro eum asperiores, inventore sint maxime. Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore, dolorem pariatur consequuntur ad nam eveniet, facere quidem placeat asperiores magnam ullam error odit non explicabo recusandae? Neque porro dicta praesentium.",
-    imageSrc: "/placeholder.jpg",
-
-    imageAlt: "Event photo", 
-  },
-];*/
 
 export default function NewsPage() {
     const { user } = useAuth();
@@ -91,7 +61,9 @@ export default function NewsPage() {
         const articleData = {
             ...newArticle,
             image: newArticle.image.trim() || '/placeholder.jpg',
-            image_alt: newArticle.image_alt.trim() || newArticle.title
+            image_alt: newArticle.image_alt.trim() || newArticle.title,
+            action: PostAction.Create
+
         };
 
         try {

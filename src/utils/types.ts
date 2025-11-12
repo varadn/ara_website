@@ -42,3 +42,9 @@ export interface WeatherData {
     condition: string;
     location: string;
 }
+
+export enum PostAction {
+  Create = "create",
+  Update = "update",
+  Delete = "delete"
+}
