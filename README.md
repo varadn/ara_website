@@ -1,36 +1,69 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+### ARA Lab Website
 
-## Getting Started
+Website for the Assistive Robots & Accessibility (ARA) Lab at UMass Lowell
 
-First, run the development server:
+New features for this milestone (M6):
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Authentication:
+-User authentication using the Supabase Auth
+-Protected routes and UI rendering dependent of if the user is signed in or not
+-Role-based content management (auth users can add content edit/delete coming soon)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Real Time Data:
+-Shows current weather for Lowell, MA in the nav bar using the Open-Meteo API
+-Date and time: Real-time clock displaying current date and time
+-refreshing weather data every 10 minutes
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Add new projects via form:
+-Upload project images (Google Drive image support)
+-create project descriptions
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+People Page (/people):
+-Display current lab members and separate alumni section
+-Admin Features (when you are logged in):
+    -Add new lab members mark them as active/alumni put profile images, titles, descriptions, and websites
 
-## Learn More
+News Page (/news):
+-Recent lab news, events, and activities
+-Date and location information
+-Admin Features (when logged in):
+    -Add news articles with event dates, locations, and images
 
-To learn more about Next.js, take a look at the following resources:
+Wiki Page (/wiki):
+-Internal lab member stuff (visible only to authenticated users)
+-Search functionality
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Contact Page (/contact)
+-Contact form for inquiries
+-First name, last name, email, and message fields
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Image Handling:
+-Google Drive Integration: Automatically converts Google Drive share links to direct image URLs
 
-## Deploy on Vercel
+UI/UX Features
+-New CSS look (looks more friendly i guess)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+To use Google Drive images:
+-Upload image to Google Drive
+-Set sharing on that image to "Anyone with the link can view"
+-Copy the share link
+-Paste into the image URL field in any form
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+API Routes (Currently set up with GET and POST for both)
+All API routes:
+
+GET /api/people
+-Returns all people with their associated projects
+POST /api/people
+-Makes a new person entry
+
+GET /api/projects
+-Returns all projects
+POST /api/projects
+-Makes a new project entry
+
+GET /api/news
+-Returns all news articles sorted by date
+POST /api/news
+-Makes a new news article
