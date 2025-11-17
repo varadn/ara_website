@@ -7,7 +7,7 @@ export interface WikiEntry {
 }
 
 export interface Person {
-    id: number;
+    id?: number;
     name: string;
     title: string;
     description: string;

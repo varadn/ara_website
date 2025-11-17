@@ -11,6 +11,7 @@ export default function PeoplePage() {
     const [alumni, setAlumni] = useState<Person[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
+    const [editingPerson, setEditingPerson] = useState<Person | null>(null);
     const [newPerson, setNewPerson] = useState({
         name: '',
         title: '',
@@ -31,6 +32,7 @@ export default function PeoplePage() {
             }
             const data: Person[] = (await response.json())['data'].map((item: any) => {
                 return {
+                    id: item.id,
                     name: item.name,
                     title: item.title,
                     description: item.description, 
@@ -108,6 +110,74 @@ export default function PeoplePage() {
         }
     };
 
+    const handleEditPerson = async (e: React.FormEvent) => {
+        e.preventDefault();
+        
+        if (!editingPerson) return;
+
+        const personData = {
+            id: editingPerson.id, 
+            name: editingPerson.name,
+            title: editingPerson.title,
+            description: editingPerson.description,
+            image: editingPerson.imageSrc || '/placeholder.jpg',
+            image_alt: editingPerson.imageAlt || editingPerson.name,
+            website: editingPerson.website, 
+            active: editingPerson.active
+        };
+
+        try {
+            const response = await fetch('/api/people', {
+                method: 'PUT',
+                headers: { 
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(personData),
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to update person'); 
+            }
+
+            setEditingPerson(null);
+            await getPeople();
+            alert('Person updated successfully!');
+        } catch (err: any) {
+            console.error('Error updating person:', err);
+            alert('Failed to update person. Please try again.');
+        }
+    };
+
+    const handleDeletePerson = async (id: number) => {
+        if (!confirm('Are you sure you want to delete this person?')) {
+            return;
+        } 
+
+        try {
+            const response = await fetch(`/api/people?id=${id}`, {
+                method: 'DELETE',
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to delete person'); 
+            }
+
+            await getPeople();
+            alert('Person deleted successfully!');
+        } catch (err: any) {
+            console.error('Error deleting person:', err); 
+            alert('Failed to delete person. Please try again.');
+        }
+    };
+
+    const startEdit = (person: Person) => {
+        setEditingPerson({ ...person });
+    };
+
+    const cancelEdit = () => {
+        setEditingPerson(null); 
+    };
+
     return (
         <div className="min-h-screen flex flex-col bg-slate-50 text-slate-900">
             <main className="flex-grow mt-48 flex flex-col items-center px-6 pb-20">
@@ -127,7 +197,7 @@ export default function PeoplePage() {
                     </div>
 
                     {/*Adding a person form*/}
-                    {user && (
+                    {user && !editingPerson &&(
                         <form
                             onSubmit={handleAddPerson}
                             className="w-full modern-card bg-white mb-16 border-l-4 border-l-rose-500 comic-outline"
@@ -225,6 +295,111 @@ export default function PeoplePage() {
                         </form>
                     )}
 
+                    {/*Edit Person Form*/}
+                    {user && editingPerson && (
+                        <form
+                            onSubmit={handleEditPerson}
+                            className="w-full max-w-2xl mx-auto text-left bg-blue-50 border-2 border-blue-300 rounded-2xl p-6 mb-10 shadow-sm"
+                        >
+                            <h2 className="text-xl font-semibold mb-4 text-gray-800">
+                                Edit Person
+                            </h2>
+
+                            <div className="space-y-3">
+                                <input
+                                    type="text" 
+                                    placeholder="Name *"
+                                    value={editingPerson.name}
+                                    onChange={(e) =>
+                                        setEditingPerson({ ...editingPerson, name: e.target.value })
+                                    }
+                                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-300"
+                                    required
+                                />
+
+                                <input
+                                    type="text"
+                                    placeholder="Title *" 
+                                    value={editingPerson.title}
+                                    onChange={(e) =>
+                                        setEditingPerson({ ...editingPerson, title: e.target.value })
+                                    }
+                                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-300"
+                                    required
+                                />
+
+                                <textarea
+                                    placeholder="Description"
+                                    value={editingPerson.description}
+                                    onChange={(e) =>
+                                        setEditingPerson({ ...editingPerson, description: e.target.value })
+                                    }
+                                    className="w-full px-3 py-2 border border-gray-300 rounded-lg h-24 focus:ring-2 focus:ring-blue-300"
+                                />
+
+                                <input
+                                    type="text"
+                                    placeholder="Image URL"
+                                    value={editingPerson.imageSrc}
+                                    onChange={(e) =>
+                                        setEditingPerson({ ...editingPerson, imageSrc: e.target.value })
+                                    }
+                                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-300"
+                                />
+
+                                <input
+                                    type="text"
+                                    placeholder="Image Alt Text"
+                                    value={editingPerson.imageAlt}
+                                    onChange={(e) =>
+                                        setEditingPerson({ ...editingPerson, imageAlt: e.target.value })
+                                    } 
+                                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-300"
+                                />
+
+                                <input
+                                    type="url"
+                                    placeholder="Website URL"
+                                    value={editingPerson.website}
+                                    onChange={(e) =>
+                                        setEditingPerson({ ...editingPerson, website: e.target.value })
+                                    }
+                                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-300"
+                                />
+
+                                <div className="flex items-center space-x-2">
+                                    <input
+                                        type="checkbox"
+                                        id="edit-active" 
+                                        checked={editingPerson.active}
+                                        onChange={(e) => 
+                                            setEditingPerson({ ...editingPerson, active: e.target.checked })
+                                        }
+                                        className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                                    />
+                                    <label htmlFor="edit-active" className="text-sm text-gray-700">
+                                        Active Lab Member
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div className="flex space-x-3 mt-4">
+                                <button
+                                    type="submit"
+                                    className="px-4 py-2 bg-blue-600 text-white font-semibold rounded-xl hover:bg-blue-700 transition"
+                                >
+                                    Save Changes
+                                </button> 
+                                <button
+                                    type="button"
+                                    onClick={cancelEdit}
+                                    className="px-4 py-2 bg-gray-500 text-white font-semibold rounded-xl hover:bg-gray-600 transition"
+                                >
+                                    Cancel
+                                </button>
+                            </div>
+                        </form>
+                    )}
 
                     {/*All current members*/}
                     <div className="mb-20">
@@ -254,6 +429,22 @@ export default function PeoplePage() {
                                             projects={person.projects}
                                             website={person.website} 
                                         />
+                                        {user && (
+                                            <div className="flex justify-end space-x-2 mt-3"> 
+                                                <button
+                                                    onClick={() => startEdit(person)}
+                                                    className="px-3 py-1 bg-blue-600 text-white text-sm font-semibold rounded-lg hover:bg-blue-700 transition"
+                                                > 
+                                                    Edit Person?
+                                                </button>
+                                                <button 
+                                                    onClick={() => handleDeletePerson(person.id!)}
+                                                    className="px-3 py-1 bg-red-600 text-white text-sm font-semibold rounded-lg hover:bg-red-700 transition"
+                                                >
+                                                    Delete Person?
+                                                </button>
+                                            </div>
+                                        )}
                                     </div>
                                 )))}
                       </div>
@@ -287,6 +478,22 @@ export default function PeoplePage() {
                                     projects={person.projects}
                                     website={person.website} 
                                 />
+                                {user && (
+                                        <div className="flex justify-end space-x-2 mt-3">
+                                            <button 
+                                                onClick={() => startEdit(person)}
+                                                className="px-3 py-1 bg-blue-600 text-white text-sm font-semibold rounded-lg hover:bg-blue-700 transition"
+                                            >
+                                                Edit Person?
+                                            </button> 
+                                            <button
+                                                onClick={() => handleDeletePerson(person.id!)}
+                                                className="px-3 py-1 bg-red-600 text-white text-sm font-semibold rounded-lg hover:bg-red-700 transition"
+                                            >
+                                                Delete Person?
+                                            </button>
+                                        </div>
+                                    )}
                             </div>
                             )))}
                     </div>
