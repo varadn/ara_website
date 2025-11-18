@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Person, PostAction } from "@/utils/types";
 import PersonCard from "@/components/PersonCard";
 import { useAuth } from "@/contexts/AuthContext";
@@ -22,7 +22,7 @@ export default function PeoplePage() {
         active: true
     });
 
-        
+    const editFormRef = useRef<HTMLFormElement>(null); 
 
     const getPeople = async () => { 
         try {
@@ -60,6 +60,20 @@ export default function PeoplePage() {
     useEffect(() => {
         getPeople();
     }, []);
+    
+
+    useEffect(() => {
+        if (editingPerson && editFormRef.current) {
+            //Smoothly scrolls to the form for editing since Dan couldn't find it in his testing
+            editFormRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            
+            //Focuses on the first input field
+            const firstInput = editFormRef.current.querySelector('input');
+            if (firstInput) {
+                setTimeout(() => firstInput.focus(), 300);
+            }
+        }
+    }, [editingPerson]); //Triggers this when editingPerson changes!
 
     const handleAddPerson = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -298,6 +312,7 @@ export default function PeoplePage() {
                     {/*Edit Person Form*/}
                     {user && editingPerson && (
                         <form
+                            ref={editFormRef}
                             onSubmit={handleEditPerson}
                             className="w-full max-w-2xl mx-auto text-left bg-blue-50 border-2 border-blue-300 rounded-2xl p-6 mb-10 shadow-sm"
                         >
