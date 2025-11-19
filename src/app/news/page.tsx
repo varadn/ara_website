@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import NewsCard from "@/components/NewsCard";
-import { News, PostAction} from '@/utils/types';
+import { News } from '@/utils/types';
 import { convertDateToText } from '@/utils/convertToDateString';
 import { useAuth } from "@/contexts/AuthContext";
 
@@ -62,7 +62,6 @@ export default function NewsPage() {
             ...newArticle,
             image: newArticle.image.trim() || '/placeholder.jpg',
             image_alt: newArticle.image_alt.trim() || newArticle.title,
-            action: PostAction.Create
 
         };
 

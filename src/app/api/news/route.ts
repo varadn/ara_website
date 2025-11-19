@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { supabase } from '@/utils/supabase/supabaseClient';
 import { createClient } from '@/utils/supabase/server';
-import { PostAction } from '@/utils/types';
 
 export async function GET() {
     // Fetch user data from a database or external API
@@ -40,49 +39,18 @@ export async function POST(request: NextRequest) {
 
         const body = await request.json();
         
-        const { action } = body;
+        const { title, date, location, image, image_alt, description } = body;
 
-        let response;
-
-        switch(action) {
-            case PostAction.Create:
-                response = await createPost(body);
-                break;
-            case PostAction.Update:
-                response = await updatePost(body);
-                break;
-            case PostAction.Delete:
-                response = await deletePost(body);
-                break;
-            default:
-                response = NextResponse.json(
-                            { message: 'Unknown POST action.' }, 
-                            { status: 400 }
-                        );
-        }
-        return response;
-    } catch (error: any) {
-        console.error('Server error:', error);
-        return NextResponse.json(
-            { message: 'Internal server error' }, 
-            { status: 500 }
-        );
-    }
-}
-
-async function createPost(body: any){
-    const { title, date, location, image, image_alt, description } = body;
-
-    // Validate required fields
-    if (!title || !date || !description) {
+        // Validate required fields
+        if (!title || !date || !description) {
         return NextResponse.json(
             { message: 'Title, date, and description are required' }, 
             { status: 400 }
         );
-    }
+        }
 
-    // Insert the new news article into the database
-    const { data, error } = await supabase
+        // Insert the new news article into the database
+        const { data, error } = await supabase
         .from('news')
         .insert([{
             title,
@@ -94,30 +62,23 @@ async function createPost(body: any){
         }])
         .select();
 
-    if (error) {
-        console.error('Error adding news article:', error);
+        if (error) {
+            console.error('Error adding news article:', error);
+            return NextResponse.json(
+                { message: error.message }, 
+                { status: 400 }
+            );
+        }
+
         return NextResponse.json(
-            { message: error.message }, 
-            { status: 400 }
+            { message: 'News article added successfully', data: data }, 
+            { status: 201 }
+        );
+    } catch (error: any) {
+        console.error('Server error:', error);
+        return NextResponse.json(
+            { message: 'Internal server error' }, 
+            { status: 500 }
         );
     }
-
-    return NextResponse.json(
-        { message: 'News article added successfully', data: data }, 
-        { status: 201 }
-    );
-}
-
-async function updatePost(body: any){
-    return NextResponse.json(
-        { message: 'person update not implemented' }, 
-        { status: 501 }
-    )
-}
-
-async function deletePost(body: any){
-    return NextResponse.json(
-        { message: 'person delete not implemented' }, 
-        { status: 501 }
-    )
 }

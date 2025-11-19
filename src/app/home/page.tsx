@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
-import { Project, PostAction } from '@/utils/types';
+import { Project } from '@/utils/types';
 import ProjectCard from "@/components/ProjectCard"
 import { useAuth } from "@/contexts/AuthContext";
 import { POST } from '../api/news/route';
@@ -60,7 +60,6 @@ export default function HomePage() {
             ...newProject,
             image: newProject.image.trim() || '/placeholder.jpg',
             image_alt: newProject.image_alt.trim() || newProject.title,
-            action: PostAction.Create
         };
 
         try {

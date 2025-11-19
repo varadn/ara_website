@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from 'react';
-import { Person, PostAction } from "@/utils/types";
+import { Person } from "@/utils/types";
 import PersonCard from "@/components/PersonCard";
 import { useAuth } from "@/contexts/AuthContext";
 
@@ -87,7 +87,6 @@ export default function PeoplePage() {
             ...newPerson,
             image: newPerson.image.trim() || '/placeholder.jpg',
             image_alt: newPerson.image_alt.trim() || newPerson.name,
-            action: PostAction.Create
         };
 
         try { 
