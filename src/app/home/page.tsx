@@ -12,6 +12,7 @@ export default function HomePage() {
         const [loading, setLoading] = useState<boolean>(true);
         const [error, setError] = useState<string | null>(null);
         const [editingProject, setEditingProject] = useState<Project | null>(null);
+        const [isInitialEdit, setIsInitialEdit] = useState(false); //Have to add this to fix stupid focus issue
         const [newProject, setNewProject] = useState({
             title: '',
             description: '',
@@ -51,15 +52,16 @@ export default function HomePage() {
         }, []);  
 
         useEffect(() => {
-            if (editingProject && editFormRef.current) {
+            if (editingProject && editFormRef.current && isInitialEdit) {
                 editFormRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
                 //focus to first input field
                 const firstInput = editFormRef.current.querySelector('input');
                 if (firstInput) {
                     setTimeout(() => firstInput.focus(), 300);
                 }
+                setIsInitialEdit(false); //reset flag after focus
             }
-        }, [editingProject]);  
+        }, [editingProject, isInitialEdit]);  
 
 
         const handleAddProject = async (e: React.FormEvent) => {
@@ -166,6 +168,7 @@ export default function HomePage() {
     
         const startEdit = (project: Project) => {
             setEditingProject({ ...project });
+            setIsInitialEdit(true);//set flag when starting to edit
         };
     
         const cancelEdit = () => {

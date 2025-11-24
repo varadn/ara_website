@@ -13,6 +13,7 @@ export default function WikiPage() {
   const [entries, setEntries] = useState<WikiEntry[]>([]);
   const [loading, setLoading] = useState(true);
   const [editingEntry, setEditingEntry] = useState<WikiEntry | null>(null);
+  const [isInitialEdit, setIsInitialEdit] = useState(false); //Have to add this to fix stupid focus issue
   const [newEntry, setNewEntry] = useState({ title: "", content: "" });
 
   const editFormRef = useRef<HTMLFormElement>(null); 
@@ -42,14 +43,15 @@ export default function WikiPage() {
   }, []);
 
   useEffect(() => {
-    if (editingEntry && editFormRef.current) {
+    if (editingEntry && editFormRef.current && isInitialEdit) {
       editFormRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
       const firstInput = editFormRef.current.querySelector('input');
       if (firstInput) {
         setTimeout(() => firstInput.focus(), 300);
       }
+      setIsInitialEdit(false); //reset flag after focus
     }
-  }, [editingEntry]);
+  }, [editingEntry, isInitialEdit]);
 
   const handleAddEntry = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -137,6 +139,7 @@ export default function WikiPage() {
 
   const startEdit = (article: WikiEntry) => {
       setEditingEntry({ ...article });
+      setIsInitialEdit(true);//set flag when starting to edit
   };
 
   const cancelEdit = () => {

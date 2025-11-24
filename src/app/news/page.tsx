@@ -12,6 +12,7 @@ export default function NewsPage() {
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
     const [editingNews, setEditingNews] = useState<News | null>(null);
+    const [isInitialEdit, setIsInitialEdit] = useState(false); //Have to add this to fix stupid focus issue
     const [newArticle, setNewArticle] = useState({
         title: '',
         date: '',
@@ -54,14 +55,15 @@ export default function NewsPage() {
     }, []);
 
     useEffect(() => {
-        if (editingNews && editFormRef.current) {
+        if (editingNews && editFormRef.current && isInitialEdit) {
             editFormRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
             const firstInput = editFormRef.current.querySelector('input');
             if (firstInput) {
                 setTimeout(() => firstInput.focus(), 300);
             }
+            setIsInitialEdit(false); //reset flag after focus
         }
-    }, [editingNews]);
+    }, [editingNews, isInitialEdit]);
 
     const handleAddArticle = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -172,6 +174,7 @@ export default function NewsPage() {
 
     const startEdit = (news: News) => {
         setEditingNews({ ...news });
+        setIsInitialEdit(true);//set flag when starting to edit
     };
 
     const cancelEdit = () => {
