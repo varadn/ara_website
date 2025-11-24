@@ -2,22 +2,22 @@ export const routes = [
     {
         key: 'home',
         path: '/home',
-        name: 'Home',
+        name: 'nav.home',
     },
     {
         key: 'news',
         path: '/news',
-        name: 'News',
+        name: 'nav.news',
     },
     {
         key: 'people',
         path: '/people',
-        name: 'People',
+        name: 'nav.people',
     },
     {
         key: 'contact',
         path: '/contact',
-        name: 'Contact',
+        name: 'nav.contact',
     },
 
 ];
@@ -26,6 +26,6 @@ export const protectedRotues = [
     {
         key: 'wiki',
         path: '/wiki',
-        name: 'Wiki',
+        name: 'nav.wiki',
     }
 ]

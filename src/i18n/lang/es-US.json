@@ -1,4 +1,9 @@
 {
+    "nav.home": "Hogar",
+    "nav.news": "Noticias",
+    "nav.people": "Gente",
+    "nav.contact": "Contacto",
+    "nav.wiki": "Wiki",
     "project.title": "Proyectos Destacados",
     "project.headline": "Investigación de vanguardia que amplía los límites de la tecnología de asistencia"
 }

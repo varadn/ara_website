@@ -1,4 +1,9 @@
 {
+    "nav.home": "Home",
+    "nav.news": "News",
+    "nav.people": "People",
+    "nav.contact": "Contact",
+    "nav.wiki": "Wiki",
     "project.title": "Featured Projects",
     "project.headline": "Cutting-edge research pushing the boundaries of assistive technology"
 }

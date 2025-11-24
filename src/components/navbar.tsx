@@ -11,6 +11,7 @@ import { useEffect, useState } from 'react';
 import { WeatherData } from '@/utils/types';
 import { weatherCodes } from "@/utils/weatherCodes";
 import { createClient } from '@/utils/supabase/client';
+import { FormattedMessage } from "react-intl";
 import LangSwitcher from "./LangSwitcher";
 
 
@@ -121,7 +122,7 @@ export default function Navbar() {
                                 'text-slate-700 hover:bg-slate-100': pathname !== route.path,
                             })}
                             >
-                                <li>{route.name}</li>
+                                <li><FormattedMessage id={route.name} /></li>
                             </Link>
                         ))}
                     {user && 
@@ -135,7 +136,7 @@ export default function Navbar() {
                                 'text-slate-700 hover:bg-slate-100': pathname !== route.path,
                             })}
                             >
-                                <li>{route.name}</li>
+                                <li><FormattedMessage id={route.name} /></li>
                             </Link>
                         ))}
                 </ul>
