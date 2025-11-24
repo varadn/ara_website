@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { Project } from '@/utils/types';
 import ProjectCard from "@/components/ProjectCard"
 import { useAuth } from "@/contexts/AuthContext";
-import { POST } from '../api/news/route';
+import { FormattedMessage } from "react-intl";
 
 export default function HomePage() {
         const { user } = useAuth();
@@ -125,14 +125,14 @@ export default function HomePage() {
         <section className="w-full max-w-6xl px-6 py-24">
             <div className="mb-20">
               <h2 className="text-6xl font-black mb-6 text-slate-900 tracking-tight">
-                Featured Projects
+                <FormattedMessage id="project.title" />
               </h2>
               <div className="flex gap-3 mb-4">
                 <div className="h-3 w-48 bg-blue-600 rounded-full"></div>
                 <div className="h-3 w-24 bg-rose-500 rounded-full"></div>
               </div>
               <p className="text-lg text-slate-600 max-w-2xl">
-                Cutting-edge research pushing the boundaries of assistive technology
+                <FormattedMessage id="project.headline" />
               </p>
             </div>
 
