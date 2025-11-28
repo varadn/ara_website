@@ -13,6 +13,7 @@ export default function LangSwitcher() {
         // Whenever the user selects a locale, update the
         // top-level active locale.
         onChange={(e) => setLocale(e.target.value)}
+        className="hover:shadow-lg hover:from-blue-700 hover:to-blue-800 transition-all tracking-wide hover:cursor-pointer"
       >
         {Object.keys(locales).map((loc) => (
           <option value={loc} key={loc}>

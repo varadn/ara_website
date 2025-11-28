@@ -114,7 +114,7 @@ export default function Navbar() {
             </Link>
             </div>
 
-            <div className="flex-1 flex justify-center transform translate-x-15 space-x-4 text-sm font-black uppercase tracking-wide" >
+            <div className="flex-1 flex transform space-x-4 text-sm font-black uppercase tracking-wide" >
                 <ul className="flex-1 flex justify-center transform translate-x-18">
                 {routes
                 .map((route) => (
@@ -147,8 +147,6 @@ export default function Navbar() {
             </div>
 
             <div className="flex-shrink-0 flex space-x-4 items-center ml-8">
-            {/* Language Switcher */}
-            <LangSwitcher />
 
             {/* Authentication Buttons */}
             {user ? (
@@ -164,6 +162,9 @@ export default function Navbar() {
                 <FormattedMessage id="signIn" />
             </Link>
             )}
+
+            {/* Language Switcher */}
+            <LangSwitcher />
             </div>
             </div>
 
