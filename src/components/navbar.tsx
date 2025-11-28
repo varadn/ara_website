@@ -115,7 +115,7 @@ export default function Navbar() {
             </div>
 
             <div className="flex-1 flex transform space-x-4 text-sm font-black uppercase tracking-wide" >
-                <ul className="flex-1 flex justify-center transform translate-x-18">
+                <ul className="flex-1 flex justify-center space-x-4 transform translate-x-18">
                 {routes
                 .map((route) => (
                     <Link

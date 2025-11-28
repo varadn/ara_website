@@ -7,6 +7,7 @@
     "signIn": "Inicio sesión miembro",
     "signOut": "Cerrar sesión",
     "login": "Inicio sesión",
+    "login.wait": "Iniciando sesión, por favor espere...",
     "project.title": "Proyectos Destacados",
     "project.headline": "Investigación de vanguardia que amplía los límites de la tecnología de asistencia"
 }
