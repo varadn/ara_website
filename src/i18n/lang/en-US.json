@@ -4,6 +4,9 @@
     "nav.people": "People",
     "nav.contact": "Contact",
     "nav.wiki": "Wiki",
+    "signIn": "Member Sign in",
+    "signOut": "Sign out",
+    "login": "Login",
     "project.title": "Featured Projects",
     "project.headline": "Cutting-edge research pushing the boundaries of assistive technology"
 }

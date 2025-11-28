@@ -2,6 +2,7 @@
 import React, {useState} from 'react';
 import { redirect } from 'next/navigation'
 import { createClient } from '@/utils/supabase/client';
+import { FormattedMessage } from "react-intl";
 
 export default function LoginPage() {
     const [loginInfo, setLoginInfo] = useState({email: "", password: ""})
@@ -54,7 +55,7 @@ export default function LoginPage() {
         <section className="w-full max-w-2xl">
             <div className="bg-white shadow-lg rounded-2xl p-10 mb-16 modern-card border-l-4 border-l-blue-600 comic-outline">
                 <h1 className="text-6xl font-black text-slate-900 mb-4 tracking-tight uppercase">
-                Login
+                <FormattedMessage id="login" />
                 </h1>
                 <div className="flex gap-3 mb-8 justify-center">
                   <div className="h-3 w-40 bg-blue-600 rounded-full"></div>

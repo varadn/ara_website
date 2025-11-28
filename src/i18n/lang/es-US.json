@@ -4,6 +4,9 @@
     "nav.people": "Gente",
     "nav.contact": "Contacto",
     "nav.wiki": "Wiki",
+    "signIn": "Inicio sesión miembro",
+    "signOut": "Cerrar sesión",
+    "login": "Inicio sesión",
     "project.title": "Proyectos Destacados",
     "project.headline": "Investigación de vanguardia que amplía los límites de la tecnología de asistencia"
 }
