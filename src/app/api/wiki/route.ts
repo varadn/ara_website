@@ -3,16 +3,10 @@ import { supabase } from "@/utils/supabase/supabaseClient";
 import { createClient } from '@/utils/supabase/server';
 
 export async function GET() {
-    //Fetch user data from a database or external API
     const { data, error } = await supabase
-      .from('projects')
-      .select(`
-        id,
-        title,
-        description,
-        image,
-        image_alt
-        `)
+      .from('wikiArticles')
+      .select('*')
+      .order('id', { ascending: false });
 
     if (error){
         console.log(error)
@@ -37,50 +31,44 @@ export async function POST(request: NextRequest) {
         }
 
         const body = await request.json();
-        
-        const { title, description, image, image_alt } = body;
-
-        //validates required fields
-        if (!title || !description) {  
+        const { articleName, Content } = body;
+        //Validate required fields
+        if (!articleName || !Content) {
             return NextResponse.json(
-                { message: 'Title and description are required' }, 
+                { message: 'articleName and Content are required' }, 
                 { status: 400 }
             );
         }
 
-        //Inserts the new project into the database :)
+        //Inserts the new wiki article into the database
         const { data, error } = await supabase
-            .from('projects') 
+            .from('wikiArticles')
             .insert([{
-                title,
-                description, 
-                image: image || '',
-                image_alt: image_alt || title
+                articleName,
+                Content
             }])
             .select();
 
-            if (error) {
-                console.error('Error adding project:', error);
-                return NextResponse.json(
-                    { message: error.message }, 
-                    { status: 400 }
-                );
-            }
+        if (error) {
+            console.error('Error adding article:', error);
+            return NextResponse.json(
+                { message: error.message }, 
+                { status: 400 }
+            );
+        }
 
         return NextResponse.json(
-            { message: 'Project added successfully', data: data }, 
-            { status: 201 } 
+            { message: 'Article added successfully', data: data }, 
+            { status: 201 }
         );
-
     } catch (error: any) {
         console.error('Server error:', error);
-        return NextResponse.json( 
-            { message: 'Internal server error' },  
+        return NextResponse.json(
+            { message: 'Internal server error' }, 
             { status: 500 }
         );
     }
 }
-
 
 export async function PUT(request: NextRequest) {
     try {
@@ -96,30 +84,28 @@ export async function PUT(request: NextRequest) {
         }
 
         const body = await request.json();
-        const { id, title, description, image, image_alt } = body;
+        const { id, articleName, Content } = body;
 
         //Validates required fields
-        if (!id || !title || !description) {
+        if (!id || !articleName || !Content) {
             return NextResponse.json(
-                { message: 'ID, title, and description are required' },  
+                { message: 'ID, articleName, and Content are required' },  
                 { status: 400 }
             );
         }
 
-        //Updates that project in the database
+        //Updates that article in the database
         const { data, error } = await supabase
-            .from('projects')
+            .from('wikiArticles')
             .update({
-                title,
-                description, 
-                image: image || '',
-                image_alt: image_alt || title
+                articleName, 
+                Content
             })
             .eq('id', id)
             .select();
 
         if (error) {
-            console.error('Error updating project:', error);
+            console.error('Error updating article:', error);
             return NextResponse.json(
                 { message: error.message }, 
                 { status: 400 }
@@ -127,7 +113,7 @@ export async function PUT(request: NextRequest) {
         }
 
         return NextResponse.json(
-            { message: 'Project updated successfully', data: data }, 
+            { message: 'Article updated successfully', data: data }, 
             { status: 200 }
         );
 
@@ -165,12 +151,12 @@ export async function DELETE(request: NextRequest) {
 
         //Deletes that article from the database
         const { error } = await supabase
-            .from('projects') 
+            .from('wikiArticles') 
             .delete()
             .eq('id', id); 
 
         if (error) {
-            console.error('Error deleting project:', error);
+            console.error('Error deleting article:', error);
             return NextResponse.json( 
                 { message: error.message }, 
                 { status: 400 }
@@ -178,7 +164,7 @@ export async function DELETE(request: NextRequest) {
         }
 
         return NextResponse.json(
-            { message: 'Project deleted successfully' }, 
+            { message: 'Article deleted successfully' }, 
             { status: 200 }
         );
 

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Project } from '@/utils/types';
 import ProjectCard from "@/components/ProjectCard"
 import { useAuth } from "@/contexts/AuthContext";
@@ -11,6 +11,8 @@ export default function HomePage() {
         const [projects, setProjects] = useState<Project[]>([]);
         const [loading, setLoading] = useState<boolean>(true);
         const [error, setError] = useState<string | null>(null);
+        const [editingProject, setEditingProject] = useState<Project | null>(null);
+        const [isInitialEdit, setIsInitialEdit] = useState(false); //Have to add this to fix stupid focus issue
         const [newProject, setNewProject] = useState({
             title: '',
             description: '',
@@ -18,7 +20,8 @@ export default function HomePage() {
             image_alt: ''
         });
     
-        
+        const editFormRef = useRef<HTMLFormElement>(null);
+
         const getProjects = async () => {
             try {
                 const response = await fetch('/api/projects');
@@ -27,6 +30,7 @@ export default function HomePage() {
                 }
                 const data: Project[] = (await response.json())['data'].map((item: any) => {
                     return {
+                        id: item.id,
                         title: item.title,
                         description: item.description,
                         imageSrc: item.image,
@@ -43,55 +47,133 @@ export default function HomePage() {
             }
         };
     
-          useEffect(() => {
+        useEffect(() => {
             getProjects();
         }, []);  
 
+        useEffect(() => {
+            if (editingProject && editFormRef.current && isInitialEdit) {
+                editFormRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                //focus to first input field
+                const firstInput = editFormRef.current.querySelector('input');
+                if (firstInput) {
+                    setTimeout(() => firstInput.focus(), 300);
+                }
+                setIsInitialEdit(false); //reset flag after focus
+            }
+        }, [editingProject, isInitialEdit]);  
+
 
         const handleAddProject = async (e: React.FormEvent) => {
-        e.preventDefault();
-        
-        if (!newProject.title.trim() || !newProject.description.trim()) {
-            alert('Title and description are required!');
-            return;
-        }
-
-        const projectData = {
-            ...newProject,
-            image: newProject.image.trim() || '/placeholder.jpg',
-            image_alt: newProject.image_alt.trim() || newProject.title,
-        };
-
-        try {
-            const response = await fetch('/api/projects', {
-                method: 'POST', 
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(projectData),
-            });
-
-            if (!response.ok) { 
-                throw new Error('Failed to add project');
+            e.preventDefault();
+            
+            if (!newProject.title.trim() || !newProject.description.trim()) {
+                alert('Title and description are required!');
+                return;
             }
 
-            //Resets form
-            setNewProject({
-                title: '',
-                description: '',
-                image: '',
-                image_alt: ''
-            });
+            const projectData = {
+                ...newProject,
+                image: newProject.image.trim() || '/placeholder.jpg',
+                image_alt: newProject.image_alt.trim() || newProject.title,
+            };
 
-            //Refreshs the projects list :D
-            await getProjects();
+            try {
+                const response = await fetch('/api/projects', {
+                    method: 'POST', 
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(projectData),
+                });
+
+                if (!response.ok) { 
+                    throw new Error('Failed to add project');
+                }
+
+                //Resets form
+                setNewProject({
+                    title: '',
+                    description: '',
+                    image: '',
+                    image_alt: ''
+                });
+
+                //Refreshs the projects list :D
+                await getProjects();
+                
+                alert('Project added successfully!'); 
+            } catch (err: any) {
+                console.error('Error adding project:', err);
+                alert('Failed to add project. Please try again.'); 
+            }
+        };
+
+        const handleEditProject = async (e: React.FormEvent) => {
+            e.preventDefault();
             
-            alert('Project added successfully!'); 
-        } catch (err: any) {
-            console.error('Error adding project:', err);
-            alert('Failed to add project. Please try again.'); 
-        }
-    };
+            if (!editingProject) return;
+    
+            const projectData = {
+                id: editingProject.id, 
+                title: editingProject.title,
+                description: editingProject.description,
+                image: editingProject.imageSrc || '/placeholder.jpg',
+                image_alt: editingProject.imageAlt || editingProject.title
+            };
+    
+            try {
+                const response = await fetch('/api/projects', {
+                    method: 'PUT',
+                    headers: { 
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(projectData),
+                });
+    
+                if (!response.ok) {
+                    throw new Error('Failed to update project'); 
+                }
+    
+                setEditingProject(null);
+                await getProjects();
+                alert('Project updated successfully!');
+            } catch (err: any) {
+                console.error('Error updating project:', err);
+                alert('Failed to update project. Please try again.');
+            }
+        };
+    
+        const handleDeleteProject = async (id: number) => {
+            if (!confirm('Are you sure you want to delete this project?')) {
+                return;
+            } 
+    
+            try {
+                const response = await fetch(`/api/projects?id=${id}`, {
+                    method: 'DELETE',
+                });
+    
+                if (!response.ok) {
+                    throw new Error('Failed to delete project'); 
+                }
+    
+                await getProjects();
+                alert('Project deleted successfully!');
+            } catch (err: any) {
+                console.error('Error deleting project:', err); 
+                alert('Failed to delete project. Please try again.');
+            }
+        };
+    
+        const startEdit = (project: Project) => {
+            setEditingProject({ ...project });
+            setIsInitialEdit(true);//set flag when starting to edit
+        };
+    
+        const cancelEdit = () => {
+            setEditingProject(null); 
+        };
 
     return (
     <div className="min-h-screen flex flex-col bg-white text-slate-900">
@@ -137,7 +219,7 @@ export default function HomePage() {
             </div>
 
              {/*Project form for logged in people*/}
-            {user && (
+            {user && !editingProject && (
                 <form
                     onSubmit={handleAddProject}
                     className="w-full modern-card bg-white mb-16 border-l-4 border-l-blue-600 comic-outline text-left"
@@ -198,6 +280,78 @@ export default function HomePage() {
                 </form>
             )}
 
+            {/*Edit the Project Form*/}
+            {user && editingProject && (
+                <form
+                    ref={editFormRef} 
+                    onSubmit={handleEditProject}
+                    className="w-full modern-card bg-blue-50 mb-16 border-l-4 border-l-rose-500 comic-outline text-left"
+                >
+                    <h2 className="text-3xl font-black mb-8 text-slate-900 tracking-tight uppercase">
+                        Edit Project
+                    </h2>
+
+                    <div className="space-y-4">
+                        <input
+                            type="text"
+                            placeholder="Project Title *"
+                            value={editingProject.title} 
+                            onChange={(e) =>
+                                setEditingProject({ ...editingProject, title: e.target.value })
+                            }
+                            className="w-full px-4 py-3 border-2 border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-600 bg-white font-semibold"
+                            required
+                        />
+
+                        <textarea
+                            placeholder="Project Description *"
+                            value={editingProject.description} 
+                            onChange={(e) =>
+                                setEditingProject({ ...editingProject, description: e.target.value })
+                            }
+                            className="w-full px-4 py-3 border-2 border-slate-300 rounded-lg h-24 focus:ring-2 focus:ring-blue-500 focus:border-blue-600 bg-white resize-none font-semibold"
+                            required
+                        />
+
+                        <input
+                            type="text"
+                            placeholder="Image URL"
+                            value={editingProject.imageSrc}
+                            onChange={(e) =>
+                                setEditingProject({ ...editingProject, imageSrc: e.target.value })
+                            }
+                            className="w-full px-4 py-3 border-2 border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-600 bg-white font-semibold"
+                        />
+
+                        <input
+                            type="text"
+                            placeholder="Image Alt Text"
+                            value={editingProject.imageAlt} 
+                            onChange={(e) =>
+                                setEditingProject({ ...editingProject, imageAlt: e.target.value })
+                            }
+                            className="w-full px-4 py-3 border-2 border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-600 bg-white font-semibold"
+                        />
+                    </div>
+
+                    <div className="flex space-x-3 mt-8">
+                        <button
+                            type="submit"
+                            className="px-8 py-4 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-black rounded-lg hover:shadow-lg hover:from-blue-700 hover:to-blue-800 transition-all uppercase tracking-wide text-lg"
+                        >
+                            Save Changes
+                        </button>
+                        <button
+                            type="button"
+                            onClick={cancelEdit}
+                            className="px-8 py-4 bg-slate-500 text-white font-black rounded-lg hover:bg-slate-600 transition-all uppercase tracking-wide text-lg"
+                        >
+                            Cancel
+                        </button>
+                    </div>
+                </form>
+            )}
+
             <div className="space-y-12">
             { loading ? ( 
                     <div className="text-center py-16">
@@ -211,14 +365,30 @@ export default function HomePage() {
                         <p className="text-slate-500 text-lg font-bold">No projects yet</p>
                     </div>
                 ) : (projects.map((project, index) => (
-                        <div key={index} className="card-lift">
+                        <div key={project.id} className="card-lift">
                             <ProjectCard
                                 title={project.title} 
                                 description={project.description}
                                 imageSrc={project.imageSrc}
                                 imageAlt={project.imageAlt}
                             />
-                        </div>
+                        {user && (
+                            <div className="flex justify-end space-x-2 mt-3">
+                                <button
+                                    onClick={() => startEdit(project)}
+                                    className="px-4 py-2 bg-blue-600 text-white text-sm font-bold rounded-lg hover:bg-blue-700 transition uppercase"
+                                >
+                                    Edit
+                                </button> 
+                                <button
+                                    onClick={() => handleDeleteProject(project.id!)}
+                                    className="px-4 py-2 bg-red-600 text-white text-sm font-bold rounded-lg hover:bg-red-700 transition uppercase"
+                                >
+                                    Delete
+                                </button>
+                            </div>
+                        )}
+                    </div>
                 )))}
             </div>
         </section>

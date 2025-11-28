@@ -12,6 +12,7 @@ export default function PeoplePage() {
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
     const [editingPerson, setEditingPerson] = useState<Person | null>(null);
+    const [isInitialEdit, setIsInitialEdit] = useState(false); //Have to add this to fix stupid focus issue
     const [newPerson, setNewPerson] = useState({
         name: '',
         title: '',
@@ -63,7 +64,7 @@ export default function PeoplePage() {
     
 
     useEffect(() => {
-        if (editingPerson && editFormRef.current) {
+        if (editingPerson && editFormRef.current && isInitialEdit) {
             //Smoothly scrolls to the form for editing since Dan couldn't find it in his testing
             editFormRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
             
@@ -72,8 +73,9 @@ export default function PeoplePage() {
             if (firstInput) {
                 setTimeout(() => firstInput.focus(), 300);
             }
+            setIsInitialEdit(false); //reset flag after focus
         }
-    }, [editingPerson]); //Triggers this when editingPerson changes!
+    }, [editingPerson, isInitialEdit]); //Triggers this when editingPerson changes!
 
     const handleAddPerson = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -185,6 +187,7 @@ export default function PeoplePage() {
 
     const startEdit = (person: Person) => {
         setEditingPerson({ ...person });
+        setIsInitialEdit(true);//set flag when starting to edit
     };
 
     const cancelEdit = () => {
