@@ -8,6 +8,21 @@
     "signOut": "Cerrar sesión",
     "login": "Inicio sesión",
     "login.wait": "Iniciando sesión, por favor espere...",
+    "email": "Correo electrónico",
+    "password": "Contraseña",
     "project.title": "Proyectos Destacados",
-    "project.headline": "Investigación de vanguardia que amplía los límites de la tecnología de asistencia"
+    "project.headline": "Investigación de vanguardia que amplía los límites de la tecnología de asistencia",
+    "news.title": "Noticias y eventos",
+    "news.headline": "Manténgase actualizado con las últimas novedades de ARA Lab",
+    "people.title": "Nuestro equipo",
+    "people.headline": "Conozca las mentes brillantes detrás de ARA Lab",
+    "people.currentMembers": "Miembros actuales del laboratorio",
+    "people.alumni": "Antiguos alumnos",
+    "contact.title": "Ponte en contacto",
+    "contact.headline": "¡Nos encantaría saber de usted!",
+    "contact.firstName": "Nombre",
+    "contact.lastName": "Apellido",
+    "contact.email": "Su dirección de correo electrónico",
+    "contact.textBox": "Cuéntanos qué tienes en mente",
+    "contact.submit": "Enviar mensaje"
 }
