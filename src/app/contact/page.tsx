@@ -1,5 +1,5 @@
 "use client";
-
+import { FormEvent } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 
@@ -14,6 +14,26 @@ export default function ContactPage() {
         textBox: intl.formatMessage({id: "contact.textBox.placeholder"})
     }
 
+    //Doing all contact through a mailto since resend needed a purchased domain
+    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+
+        const form = e.currentTarget;
+
+        const first = (form.elements.namedItem("firstName") as HTMLInputElement).value;
+        const last = (form.elements.namedItem("lastName") as HTMLInputElement).value;
+        
+        const message = (form.elements.namedItem("message") as HTMLTextAreaElement).value;
+
+        const subject = encodeURIComponent(`Message from ${first} ${last}`);
+        const body = encodeURIComponent(
+        `${message}`
+        );
+
+        const mailto = `mailto:umlaralab@gmail.com?subject=${subject}&body=${body}`;
+
+        window.location.href = mailto;
+    };
 
     return (
         <div className="min-h-screen flex flex-col bg-slate-50 text-slate-900">
@@ -33,12 +53,11 @@ export default function ContactPage() {
                         </p>
                     </div>
 
-                    {/* Contact Form */}
-                    <form className="modern-card bg-white border-l-4 border-l-blue-600 comic-outline">
+                    {/*Contact Form*/}
+                    <form onSubmit={handleSubmit} className="modern-card bg-white border-l-4 border-l-blue-600 comic-outline">
                         <div className="space-y-5">
                             {/*Inputs for the first and last name of person who wants to contact the ARA lab*/}
                             <div className="grid sm:grid-cols-2 gap-4">
-                                {/* First Name Input */}
                                 <div>
                                     <label 
                                         htmlFor="firstName" 
@@ -48,12 +67,11 @@ export default function ContactPage() {
                                     </label>
                                     <input
                                         type="text" 
-                                        id="firstName"
+                                        name="firstName"
                                         placeholder={placeholderText.firstName}
                                         className="w-full px-4 py-3 border-2 border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-600 bg-white font-semibold"                                    />
                                 </div>
                                 
-                                {/* Last Name Input */}
                                 <div>
                                     <label 
                                         htmlFor="lastName" 
@@ -63,27 +81,11 @@ export default function ContactPage() {
                                     </label>
                                     <input
                                         type="text"
-                                        id="lastName"
+                                        name="lastName"
                                         placeholder={placeholderText.lastName}
                                         className="w-full px-4 py-3 border-2 border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-600 bg-white font-semibold"
                                     />
                                 </div>
-                            </div>
-
-                            {/*Contacting person's email*/}
-                            <div>
-                                <label 
-                                    htmlFor="emailAddress" 
-                                    className="block text-sm font-semibold text-gray-700 mb-1 text-left" 
-                                >
-                                    <FormattedMessage id="contact.email" />
-                                </label>
-                                <input
-                                    type="email"
-                                    id="emailAddress"
-                                    placeholder={placeholderText.email}
-                                    className="w-full px-4 py-3 border-2 border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-600 bg-white font-semibold"
-                                />
                             </div>
 
                             {/*Contact message*/}
@@ -95,7 +97,7 @@ export default function ContactPage() {
                                     <FormattedMessage id="contact.textBox" />
                                 </label>
                                 <textarea
-                                    id="message"
+                                    name="message"
                                     placeholder={placeholderText.textBox}
                                     rows={6} 
                                     className="w-full px-4 py-3 border-2 border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-600 bg-white resize-none font-medium"
