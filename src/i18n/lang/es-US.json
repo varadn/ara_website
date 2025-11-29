@@ -24,5 +24,6 @@
     "contact.lastName": "Apellido",
     "contact.email": "Su dirección de correo electrónico",
     "contact.textBox": "Cuéntanos qué tienes en mente",
+    "contact.textBox.placeholder": "Escribe aquí...",
     "contact.submit": "Enviar mensaje"
 }

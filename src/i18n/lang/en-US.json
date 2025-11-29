@@ -10,7 +10,7 @@
     "logout": "Logout",
     "login.wait": "Signing in, please wait...",
     "email": "Email",
-    "password": "Passw",
+    "password": "Password",
     "project.title": "Featured Projects",
     "project.headline": "Cutting-edge research pushing the boundaries of assistive technology",
     "news.title": "News & Events",
@@ -25,5 +25,6 @@
     "contact.lastName": "Last Name",
     "contact.email": "Your Email Address",
     "contact.textBox": "Tell us what's on your mind",
+    "contact.textBox.placeholder": "Type here...",
     "contact.submit": "Send message"
 }

@@ -2,7 +2,7 @@
 import React, {useState} from 'react';
 import { redirect } from 'next/navigation'
 import { createClient } from '@/utils/supabase/client';
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
 export default function LoginPage() {
     const [loginInfo, setLoginInfo] = useState({email: "", password: ""})
@@ -49,6 +49,13 @@ export default function LoginPage() {
         }
     }
 
+    const intl = useIntl()
+
+    const placeholderText = {
+        email: intl.formatMessage({id: "email"}),
+        password: intl.formatMessage({id: "password"})
+    }
+
     return (
     <div className="min-h-screen flex flex-col bg-slate-50 text-slate-900">
         <main className="flex-grow mt-48 flex flex-col items-center text-center px-6 pb-20">
@@ -75,6 +82,7 @@ export default function LoginPage() {
                             id="email" 
                             name="email"
                             onChange={handleInput}
+                            placeholder={placeholderText.email}
                             className="border-2 border-slate-300 rounded-lg p-4 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-600 bg-white font-semibold"
                         />
                     </div>
@@ -91,6 +99,7 @@ export default function LoginPage() {
                             id="password" 
                             name="password"
                             onChange={handleInput}
+                            placeholder={placeholderText.password}
                             className="border-2 border-slate-300 rounded-lg p-4 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-600 bg-white font-semibold"
                         />
                     </div>

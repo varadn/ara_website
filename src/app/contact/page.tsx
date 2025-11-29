@@ -1,8 +1,20 @@
 "use client";
 
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
+
 
 export default function ContactPage() {
+
+    const intl = useIntl()
+
+    const placeholderText = {
+        firstName: intl.formatMessage({id: "contact.firstName"}),
+        lastName: intl.formatMessage({id: "contact.lastName"}),
+        email: intl.formatMessage({id: "contact.email"}),
+        textBox: intl.formatMessage({id: "contact.textBox.placeholder"})
+    }
+
+
     return (
         <div className="min-h-screen flex flex-col bg-slate-50 text-slate-900">
             <main className="flex-grow mt-48 flex flex-col items-center text-center px-6 pb-20">
@@ -37,9 +49,8 @@ export default function ContactPage() {
                                     <input
                                         type="text" 
                                         id="firstName"
-                                        placeholder="First Name"
-                                        className="w-full px-4 py-3 border-2 border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-600 bg-white font-semibold"
-                                    />
+                                        placeholder={placeholderText.firstName}
+                                        className="w-full px-4 py-3 border-2 border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-600 bg-white font-semibold"                                    />
                                 </div>
                                 
                                 {/* Last Name Input */}
@@ -53,7 +64,7 @@ export default function ContactPage() {
                                     <input
                                         type="text"
                                         id="lastName"
-                                        placeholder="Last Name" 
+                                        placeholder={placeholderText.lastName}
                                         className="w-full px-4 py-3 border-2 border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-600 bg-white font-semibold"
                                     />
                                 </div>
@@ -70,7 +81,7 @@ export default function ContactPage() {
                                 <input
                                     type="email"
                                     id="emailAddress"
-                                    placeholder="Your Email Address"
+                                    placeholder={placeholderText.email}
                                     className="w-full px-4 py-3 border-2 border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-600 bg-white font-semibold"
                                 />
                             </div>
@@ -85,7 +96,7 @@ export default function ContactPage() {
                                 </label>
                                 <textarea
                                     id="message"
-                                    placeholder="Tell us what's on your mind..."
+                                    placeholder={placeholderText.textBox}
                                     rows={6} 
                                     className="w-full px-4 py-3 border-2 border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-600 bg-white resize-none font-medium"
                                 ></textarea>
