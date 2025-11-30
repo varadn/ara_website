@@ -3,6 +3,17 @@ import { supabase } from "@/utils/supabase/supabaseClient";
 import { createClient } from '@/utils/supabase/server';
 
 export async function GET() {
+    const supabaseAuth = await createClient();
+
+    const claims = await supabaseAuth.auth.getClaims();
+
+    if (!claims.data) {
+        return NextResponse.json(
+            { message: 'You are not authorized to perform this action.' }, 
+            { status: 403 }
+        );
+    }
+    
     const { data, error } = await supabase
       .from('wikiArticles')
       .select('*')
