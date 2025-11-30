@@ -4,6 +4,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Person } from "@/utils/types";
 import PersonCard from "@/components/PersonCard";
 import { useAuth } from "@/contexts/AuthContext";
+import { FormattedMessage } from "react-intl";
 
 export default function PeoplePage() {
     const { user } = useAuth();
@@ -201,14 +202,14 @@ export default function PeoplePage() {
                     {/* Header Section */}
                     <div className="mb-20">
                         <h1 className="text-6xl sm:text-7xl font-black mb-6 text-slate-900 tracking-tight uppercase">
-                            Our Team
+                            <FormattedMessage id="people.title" />
                         </h1>
                         <div className="flex gap-3 mb-6">
                             <div className="h-3 w-40 bg-blue-600 rounded-full"></div>
                             <div className="h-3 w-20 bg-rose-500 rounded-full"></div>
                         </div>
                         <p className="text-xl text-slate-600 font-bold">
-                            Meet the brilliant minds behind ARA Lab
+                            <FormattedMessage id="people.headline" />
                         </p>
                     </div>
 
@@ -421,7 +422,7 @@ export default function PeoplePage() {
                     {/*All current members*/}
                     <div className="mb-20">
                     <h2 className="text-4xl font-black text-slate-900 mb-10 tracking-tight uppercase">
-                      Current Lab Members
+                      <FormattedMessage id="people.currentMembers" />
                     </h2>
                       <div className="space-y-8"> 
                           { loading ? ( 
@@ -470,7 +471,7 @@ export default function PeoplePage() {
                     {/*All alumni members*/}
                     <div>
                     <h2 className="text-4xl font-black text-slate-900 mb-10 tracking-tight uppercase">
-                    Alumni
+                        <FormattedMessage id="people.alumni" />
                     </h2>
                         <div className="space-y-8">
                         { loading ? ( 

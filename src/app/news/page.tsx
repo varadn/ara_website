@@ -5,6 +5,7 @@ import NewsCard from "@/components/NewsCard";
 import { News } from '@/utils/types';
 import { convertDateToText } from '@/utils/convertToDateString';
 import { useAuth } from "@/contexts/AuthContext";
+import { FormattedMessage } from "react-intl";
 
 export default function NewsPage() {
     const { user } = useAuth();
@@ -189,14 +190,14 @@ export default function NewsPage() {
                     {/* Header Section */}
                     <div className="mb-20">
                         <h1 className="text-6xl sm:text-7xl font-black mb-6 text-slate-900 tracking-tight uppercase">
-                            News & Events
+                            <FormattedMessage id="news.title" />
                         </h1>
                         <div className="flex gap-3 mb-6">
                             <div className="h-3 w-40 bg-blue-600 rounded-full"></div>
                             <div className="h-3 w-20 bg-rose-500 rounded-full"></div>
                         </div>
                         <p className="text-xl text-slate-600 font-bold">
-                            Stay updated with the latest from ARA Lab
+                            <FormattedMessage id="news.headline" />
                         </p>
                     </div>
 

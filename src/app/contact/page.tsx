@@ -1,7 +1,18 @@
 "use client";
 import { FormEvent } from "react";
+import { FormattedMessage, useIntl } from "react-intl";
+
 
 export default function ContactPage() {
+
+    const intl = useIntl()
+
+    const placeholderText = {
+        firstName: intl.formatMessage({id: "contact.firstName"}),
+        lastName: intl.formatMessage({id: "contact.lastName"}),
+        email: intl.formatMessage({id: "contact.email"}),
+        textBox: intl.formatMessage({id: "contact.textBox.placeholder"})
+    }
 
     //Doing all contact through a mailto since resend needed a purchased domain
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
@@ -30,15 +41,15 @@ export default function ContactPage() {
                 <section className="w-full max-w-2xl">
                     {/* Header */}
                     <div className="mb-16">
-                        <h1 className="text-6xl sm:text-7xl font-black mb-6 text-slate-900 tracking-tight uppercase">
-                            Get In Touch
+                        <h1 className="text-6xl font-black mb-6 text-slate-900 tracking-tight uppercase">
+                            <FormattedMessage id="contact.title" />
                         </h1>
                         <div className="flex gap-3 mb-6 justify-center">
                             <div className="h-3 w-40 bg-blue-600 rounded-full"></div>
                             <div className="h-3 w-20 bg-rose-500 rounded-full"></div>
                         </div>
                         <p className="text-xl text-slate-600 font-bold">
-                            We'd love to hear from you!
+                            <FormattedMessage id="contact.headline" />
                         </p>
                     </div>
 
@@ -47,43 +58,59 @@ export default function ContactPage() {
                         <div className="space-y-5">
                             {/*Inputs for the first and last name of person who wants to contact the ARA lab*/}
                             <div className="grid sm:grid-cols-2 gap-4">
-                                <input
-                                    type="text" 
-                                    name="firstName"
-                                    placeholder="First Name"
-                                    className="w-full px-4 py-3 border-2 border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-600 bg-white font-semibold"
-                                />
-                                <input
-                                    type="text"
-                                    name="lastName"
-                                    placeholder="Last Name" 
-                                    className="w-full px-4 py-3 border-2 border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-600 bg-white font-semibold"
-                                />
+                                <div>
+                                    <label 
+                                        htmlFor="firstName" 
+                                        className="block text-sm font-semibold text-gray-700 mb-1 text-left"
+                                    >
+                                        <FormattedMessage id="contact.firstName" />
+                                    </label>
+                                    <input
+                                        type="text" 
+                                        name="firstName"
+                                        placeholder={placeholderText.firstName}
+                                        className="w-full px-4 py-3 border-2 border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-600 bg-white font-semibold"                                    />
+                                </div>
+                                
+                                <div>
+                                    <label 
+                                        htmlFor="lastName" 
+                                        className="block text-sm font-semibold text-gray-700 mb-1 text-left"
+                                    >
+                                        <FormattedMessage id="contact.lastName" />
+                                    </label>
+                                    <input
+                                        type="text"
+                                        name="lastName"
+                                        placeholder={placeholderText.lastName}
+                                        className="w-full px-4 py-3 border-2 border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-600 bg-white font-semibold"
+                                    />
+                                </div>
                             </div>
 
-                            {/*Contacting person's email*/}
-                            {/*<input
-                            type="email"
-                            name="email"
-                            placeholder="Your Email Address"
-                            className="w-full px-4 py-3 border-2 border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-600 bg-white font-semibold"
-                            /> DONT NEED THIS*/}
-
                             {/*Contact message*/}
-                            <textarea
-                            name="message"
-                            placeholder="Tell us what's on your mind..."
-                            rows={6} 
-                            className="w-full px-4 py-3 border-2 border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-600 bg-white resize-none font-medium"
-                            ></textarea>
+                            <div>
+                                <label 
+                                    htmlFor="message" 
+                                    className="block text-sm font-semibold text-gray-700 mb-1 text-left"
+                                >
+                                    <FormattedMessage id="contact.textBox" />
+                                </label>
+                                <textarea
+                                    name="message"
+                                    placeholder={placeholderText.textBox}
+                                    rows={6} 
+                                    className="w-full px-4 py-3 border-2 border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-600 bg-white resize-none font-medium"
+                                ></textarea>
+                            </div>
                         </div>
 
                         {/*Button to submit the form*/}
                         <button
-                        type="submit"
-                        className="mt-8 w-full px-8 py-4 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-black rounded-lg hover:shadow-lg hover:from-blue-700 hover:to-blue-800 transition-all uppercase tracking-wide text-lg"
+                            type="submit"
+                            className="mt-8 w-full px-8 py-4 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-black rounded-lg hover:shadow-lg hover:from-blue-700 hover:to-blue-800 transition-all uppercase tracking-wide text-lg"
                         >
-                        Send Message
+                            <FormattedMessage id="contact.submit" />
                         </button> 
                     </form>
                 </section>

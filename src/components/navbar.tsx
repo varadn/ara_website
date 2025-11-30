@@ -11,6 +11,8 @@ import { useEffect, useState } from 'react';
 import { WeatherData } from '@/utils/types';
 import { weatherCodes } from "@/utils/weatherCodes";
 import { createClient } from '@/utils/supabase/client';
+import { FormattedMessage } from "react-intl";
+import LangSwitcher from "./LangSwitcher";
 
 
 export default function Navbar() {
@@ -96,66 +98,75 @@ export default function Navbar() {
     return(
     <nav className="w-full bg-white shadow-lg fixed top-0 left-0 z-50 border-b-4 border-b-blue-600"> 
         <div className="max-w-full mx-auto px-6 py-4">
-            <div className="flex justify-between items-center">
+            <div className="flex items-center w-full">
+            <div className="flex-shrink-0">
             <Link href="/" className="flex items-center space-x-3 hover:opacity-80 transition-opacity group">
-                <Image 
-                    src="/logo.png" 
-                    alt="ARA Lab Logo"
-                    width={50}
-                    height={50}
-                    className="h-12 w-auto group-hover:scale-110 transition-transform"
-                />
-                <h1 className="text-xl font-black text-slate-900 tracking-tight uppercase">
-                    {/* ARA LAB */}
-                    </h1>
+            <Image 
+                src="/logo.png" 
+                alt="ARA Lab Logo"
+                width={50}
+                height={50}
+                className="h-12 w-auto group-hover:scale-110 transition-transform"
+            />
+            <h1 className="text-xl font-black text-slate-900 tracking-tight uppercase">
+                {/* ARA LAB */}
+            </h1>
             </Link>
-            <ul className="flex space-x-6 text-sm font-black uppercase tracking-wide">
+            </div>
+
+            <div className="flex-1 flex transform space-x-4 text-sm font-black uppercase tracking-wide" >
+                <ul className="flex-1 flex justify-center space-x-4 transform translate-x-18">
                 {routes
-                    .map((route) => (
-                        <Link
-                        key={route.key}
-                        href={route.path}
-                        className={clsx('px-4 py-2 rounded-lg transition-all transform hover:scale-105', {
-                            'bg-blue-100 text-blue-900 border-2 border-blue-600': pathname === route.path,
-                            'text-slate-700 hover:bg-slate-100': pathname !== route.path,
-                        })}
-                        >
-                            <li>{route.name}</li>
-                        </Link>
-                    ))}
+                .map((route) => (
+                    <Link
+                    key={route.key}
+                    href={route.path}
+                    className={clsx('px-4 py-2 rounded-lg transition-all transform hover:scale-105', {
+                    'bg-blue-100 text-blue-900 border-2 border-blue-600': pathname === route.path,
+                    'text-slate-700 hover:bg-slate-100': pathname !== route.path,
+                    })}
+                    >
+                    <li><FormattedMessage id={route.name} /></li>
+                    </Link>
+                ))}
                 {user && 
                 protectedRotues
-                    .map((route) => (
-                        <Link
-                        key={route.key}
-                        href={route.path}
-                        className={clsx('px-4 py-2 rounded-lg transition-all transform hover:scale-105', {
-                            'bg-rose-100 text-rose-900 border-2 border-rose-600': pathname === route.path,
-                            'text-slate-700 hover:bg-slate-100': pathname !== route.path,
-                        })}
-                        >
-                            <li>{route.name}</li>
-                        </Link>
-                    ))}
-            </ul>  
-            {/*All the authentication buttons we need*/}
-            <div className="flex space-x-3">
-                {user ? (
-                    <button
-                    className="px-6 py-2 text-sm font-black bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-lg hover:shadow-lg hover:from-blue-700 hover:to-blue-800 transition-all uppercase tracking-wide border-2 border-blue-800"
-                    onClick={handleLogout}>
-                        Sign out
-                    </button>
-                ) : (
+                .map((route) => (
                     <Link
-                    href="/login"
-                    className="px-6 py-2 text-sm font-black text-blue-600 border-2 border-blue-600 rounded-lg hover:bg-blue-50 transition-all uppercase tracking-wide hover:scale-105 transform">
-                        Login To Admin Portal
+                    key={route.key}
+                    href={route.path}
+                    className={clsx('px-4 py-2 rounded-lg transition-all transform hover:scale-105', {
+                    'bg-rose-100 text-rose-900 border-2 border-rose-600': pathname === route.path,
+                    'text-slate-700 hover:bg-slate-100': pathname !== route.path,
+                    })}
+                    >
+                    <li><FormattedMessage id={route.name} /></li>
                     </Link>
-                )}
-            
+                ))}
+                </ul>
             </div>
-        </div>
+
+            <div className="flex-shrink-0 flex space-x-4 items-center ml-8">
+
+            {/* Authentication Buttons */}
+            {user ? (
+            <button
+                className="px-6 py-2 text-sm font-black bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-lg hover:shadow-lg hover:from-blue-700 hover:to-blue-800 transition-all uppercase tracking-wide border-2 border-blue-800"
+                onClick={handleLogout}>
+                <FormattedMessage id="signOut" />
+            </button>
+            ) : (
+            <Link
+                href="/login"
+                className="px-6 py-2 text-sm font-black text-blue-600 border-2 border-blue-600 rounded-lg hover:bg-blue-50 transition-all uppercase tracking-wide hover:scale-105 transform">
+                <FormattedMessage id="signIn" />
+            </Link>
+            )}
+
+            {/* Language Switcher */}
+            <LangSwitcher />
+            </div>
+            </div>
 
         {/*weather date and time*/}
                 <div className="mt-3 pt-3 border-t-2 border-slate-300 flex justify-between items-center text-sm text-slate-700 font-bold">
