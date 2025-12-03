@@ -5,6 +5,7 @@ import { Person } from "@/utils/types";
 import PersonCard from "@/components/PersonCard";
 import { useAuth } from "@/contexts/AuthContext";
 import { FormattedMessage } from "react-intl";
+import Link from 'next/link';
 
 export default function PeoplePage() {
     const { user } = useAuth();
@@ -32,6 +33,7 @@ export default function PeoplePage() {
             if (!response.ok) {
                 throw new Error('Failed to fetch users'); 
             }
+
             const data: Person[] = (await response.json())['data'].map((item: any) => {
                 return {
                     id: item.id,
@@ -41,7 +43,7 @@ export default function PeoplePage() {
                     imageSrc: item.image,
                     imageAlt: item.image_alt,
                     website: item.website,
-                    projects: item.projects.map((project: any) => project.title),
+                    projects: item.projects,
                     active: item.active
                 }
             });

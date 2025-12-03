@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from 'react';
+import { usePathname, useSearchParams } from 'next/navigation';
 import ProjectCard from '@/components/ProjectCard';
 import { Project } from '@/utils/types';
 import { useAuth } from "@/contexts/AuthContext";
@@ -20,8 +21,26 @@ export default function NewsPage() {
         image_alt: ''
     });
 
+  // Wait for projects to render and scroll
+  useEffect(() => {
+    if (projects.length > 0) {
+      // Get the hash from the browser window (i.e. the hash string after the pathname)
+      const hash = window.location.hash;
+      if (hash) {
+        // Remove the '#' to get the ID
+        const targetId = hash.slice(1);
+
+        const targetElement = document.getElementById(targetId);
+
+        if (targetElement) {
+          targetElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      }
+    }
+  }, [projects]);
 
     const editFormRef = useRef<HTMLFormElement>(null);
+
     
     const getProjects = async () => {
         try {
@@ -343,8 +362,8 @@ export default function NewsPage() {
                             <div className="text-center py-16 pop-content">
                                 <p className="text-slate-700 text-lg font-bold">No projects yet</p>
                             </div>
-                        ) : (projects.map((project, index) => (
-                                <div key={project.id} className="card-lift">
+                        ) : (projects.map((project) => (
+                                <div key={project.id} id={project.id.toString()} className="card-lift">
                                     <ProjectCard
                                         title={project.title} 
                                         description={project.description}

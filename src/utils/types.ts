@@ -14,7 +14,7 @@ export interface Person {
     imageSrc: string;
     imageAlt: string;
     website: string;
-    projects: string[];
+    projects: Project[];
     active: boolean;
 }
 

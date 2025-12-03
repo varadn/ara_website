@@ -15,7 +15,7 @@ export async function GET() {
         image_alt,
         website,
         active,
-        projects ( title )
+        projects ( title, id )
         `)
 
     if (error){

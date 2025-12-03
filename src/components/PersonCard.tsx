@@ -1,5 +1,7 @@
 import Image from "next/image";
 import { convertGoogleDriveUrl } from '@/utils/helpers';
+import Link from "next/link";
+import { Project } from "@/utils/types";
 
 interface PersonCardProps {
   name: string;
@@ -7,7 +9,7 @@ interface PersonCardProps {
   description: string;
   imageSrc: string;
   imageAlt?: string;
-  projects?: string[];
+  projects?: Project[];
   website?: string;
 }
 
@@ -48,7 +50,7 @@ export default function PersonCard({
               {projects.map((project, i) => (
                 <li key={i} className="flex items-center font-semibold">
                   <span className="w-2 h-2 bg-blue-600 rounded-full mr-3"></span>
-                  {project}
+                  <Link href={`/projects#${project.id}`}>{project.title}</Link>
                 </li> 
               ))}
             </ul>
