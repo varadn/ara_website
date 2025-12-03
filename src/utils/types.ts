@@ -24,7 +24,8 @@ export interface Project {
     description: string;
     imageSrc: string;
     imageAlt: string;
-    people: string[]
+    people: string[];
+    dateCreated: Date;
 }
 
 export interface News {

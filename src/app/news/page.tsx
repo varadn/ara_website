@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import NewsCard from "@/components/NewsCard";
 import { News } from '@/utils/types';
-import { convertDateToText } from '@/utils/convertToDateString';
+import { convertDateToText } from '@/utils/dateHelpers';
 import { useAuth } from "@/contexts/AuthContext";
 import { FormattedMessage } from "react-intl";
 
@@ -31,17 +31,21 @@ export default function NewsPage() {
             if (!response.ok) {
                 throw new Error('Failed to fetch users');
             }
+            // console.log(response.json())
+
             const data: News[] = (await response.json())['data'].map((item: any) => {
                 return {
                     id: item.id,
                     title: item.title,
-                    date: convertDateToText(item.date),
+                    date: item.date,
                     location: item.location,
                     imageSrc: item.image,
                     imageAlt: item.image_alt,
                     description: item.description,
                 }
-            });
+            }).sort((a: News, b: News) => 
+                new Date(b.date).getTime() - new Date(a.date).getTime()
+            );
 
             setNewsItems(data)
         } catch (err: any) {
@@ -228,9 +232,10 @@ export default function NewsPage() {
                                     type="date"
                                     placeholder="Date *"
                                     value={newArticle.date}
-                                    onChange={(e) =>
-                                        setNewArticle({ ...newArticle, date: e.target.value })
-                                    }
+                                    onChange={(e) => {
+                                        setNewArticle({ ...newArticle, date: e.target.value });
+                                        console.log(newArticle);
+                                    }}
                                     className="w-full px-4 py-3 border-2 border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-600 bg-white"
                                     required
                                 />
@@ -397,7 +402,7 @@ export default function NewsPage() {
                                     <NewsCard 
                                         title={item.title}
                                         location={item.location}
-                                        date={item.date}
+                                        date={convertDateToText(item.date)}
                                         description={item.description}
                                         imageSrc={item.imageSrc} 
                                         imageAlt={item.imageAlt}

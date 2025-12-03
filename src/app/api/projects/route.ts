@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { supabase } from "@/utils/supabase/supabaseClient";
 import { createClient } from '@/utils/supabase/server';
+import { formatDateToSupabase } from '@/utils/dateHelpers';
 
 export async function GET() {
     //Fetch user data from a database or external API
@@ -11,7 +12,8 @@ export async function GET() {
         title,
         description,
         image,
-        image_alt
+        image_alt,
+        date_created
         `)
 
     if (error){
@@ -55,7 +57,8 @@ export async function POST(request: NextRequest) {
                 title,
                 description, 
                 image: image || '',
-                image_alt: image_alt || title
+                image_alt: image_alt || title,
+                date_created: formatDateToSupabase(new Date())
             }])
             .select();
 

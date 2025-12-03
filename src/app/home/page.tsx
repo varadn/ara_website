@@ -34,9 +34,12 @@ export default function HomePage() {
                         title: item.title,
                         description: item.description,
                         imageSrc: item.image,
-                        imageAlt: item.image_alt
+                        imageAlt: item.image_alt,
+                        dateCreated: new Date(item.date_created)
                     }
-                });
+                }).sort((a: Project, b: Project) => 
+                    b.dateCreated.getTime() - a.dateCreated.getTime()
+                );
 
                 setProjects(data)
                 
