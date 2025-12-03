@@ -5,9 +5,9 @@ export const routes = [
         name: 'nav.home',
     },
     {
-        key: 'news',
-        path: '/news',
-        name: 'nav.news',
+        key: 'projects',
+        path: '/projects',
+        name: 'nav.projects'
     },
     {
         key: 'people',
@@ -18,8 +18,7 @@ export const routes = [
         key: 'contact',
         path: '/contact',
         name: 'nav.contact',
-    },
-
+    }
 ];
 
 export const protectedRotues = [
