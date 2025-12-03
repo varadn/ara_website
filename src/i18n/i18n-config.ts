@@ -12,7 +12,7 @@ export interface LocaleMap {
     [localeCode: string]: LocaleEntry;
 }
 
-export const defaultLocale = "es-US";
+export const defaultLocale = "en-US";
 
 
 export const locales: LocaleMap = {
