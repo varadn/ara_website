@@ -200,11 +200,11 @@ export default function PeoplePage() {
 
     return (
         <div className="min-h-screen flex flex-col bg-slate-50 text-slate-900">
-            <main className="flex-grow mt-48 flex flex-col items-center px-6 pb-20">
-                <section className="w-full max-w-5xl">
+            <main className="flex-grow mt-48 flex flex-col items-center px-6 pb-20" role="main">
+                <section className="w-full max-w-5xl" role="region" aria-labelledby="people-title">
                     {/* Header Section */}
                     <div className="mb-20">
-                        <h1 className="text-6xl sm:text-7xl font-black mb-6 text-slate-900 tracking-tight uppercase">
+                        <h1 className="text-6xl sm:text-7xl font-black mb-6 text-slate-900 tracking-tight uppercase" id="people-title">
                             <FormattedMessage id="people.title" />
                         </h1>
                         <div className="flex gap-3 mb-6">
@@ -221,6 +221,8 @@ export default function PeoplePage() {
                         <form
                             onSubmit={handleAddPerson}
                             className="w-full modern-card bg-white mb-16 border-l-4 border-l-rose-500 comic-outline"
+                            role="form"
+                            aria-label="Add new team member form"
                         >
                             <h2 className="text-3xl font-black mb-8 text-slate-900 tracking-tight uppercase">
                                 Add New Team Member

@@ -191,10 +191,10 @@ export default function HomePage() {
     return (
     <div className="min-h-screen flex flex-col bg-white text-slate-900">
         {/*All the content  */}
-        <main className="flex-grow flex flex-col items-center text-center">
+        <main className="flex-grow flex flex-col items-center text-center" role="main">
         {/*"hero" part of page */} 
         <section className="flex flex-col items-center justify-center text-center w-full
-            h-screen gradient-primary relative overflow-hidden">
+            h-screen gradient-primary relative overflow-hidden" role="region" aria-label="Hero banner">
             <div className="absolute -top-20 -right-32 w-96 h-96 bg-white opacity-[0.03] rounded-full blur-3xl pointer-events-none transform rotate-45"></div>
             <div className="absolute -bottom-32 -left-40 w-full h-96 bg-black opacity-[0.05] rounded-full blur-3xl pointer-events-none"></div>
             
@@ -216,9 +216,9 @@ export default function HomePage() {
             </div>
         </section> 
 
-        <section className="w-full max-w-6xl px-6 py-24">
+        <section className="w-full max-w-6xl px-6 py-24" role="region" aria-labelledby="news-section-title">
             <div className="mb-20">
-              <h2 className="text-6xl font-black mb-6 text-slate-900 tracking-tight">
+              <h2 className="text-6xl font-black mb-6 text-slate-900 tracking-tight" id="news-section-title">
                 <FormattedMessage id="news.title" />
               </h2>
               <div className="flex gap-3 mb-4 justify-center">
@@ -236,6 +236,8 @@ export default function HomePage() {
                 <form
                     onSubmit={handleAddArticle}
                     className="w-full modern-card bg-white mb-16 border-l-4 border-l-blue-600 comic-outline text-left"
+                    role="form"
+                    aria-label="Add new news article form"
                 >
                 <h2 className="text-3xl font-black mb-8 text-slate-900 tracking-tight uppercase">
                     Add New Article
