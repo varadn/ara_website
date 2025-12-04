@@ -21,7 +21,7 @@ export default function ProjectCard({
   handleDelete,
 }: ProjectCardProps) {
   return (
-    <div className="modern-card bg-white flex flex-col sm:flex-row items-center sm:items-start gap-6 border-l-4 border-l-blue-600 card-lift w-full">
+    <div className="modern-card bg-white relative flex flex-col sm:flex-row items-center sm:items-start gap-6 border-l-4 border-l-blue-600 card-lift w-full">
         <div className="flex-shrink-0 w-full sm:w-1/3 relative">
             <div className="absolute -inset-3 bg-black opacity-20 rounded-lg blur-md"></div>
             <Image
@@ -43,13 +43,13 @@ export default function ProjectCard({
 
       {/* Edit and Delete Buttons */}
       {isEditing && (
-        <div className="flex justify-end space-x-2 mt-4">
+        <div className="absolute right-4 bottom-4 flex space-x-2 z-20">
           <button 
-          onClick={handlEdit}
-          className="px-3 py-1 bg-blue-600 text-white text-sm font-semibold rounded-lg hover:bg-blue-700 transition"
+            onClick={handlEdit}
+            className="px-3 py-1 bg-blue-600 text-white text-sm font-semibold rounded-lg hover:bg-blue-700 transition"
           >
             Edit
-          </button> 
+          </button>
           <button
             onClick={handleDelete}
             className="px-3 py-1 bg-red-600 text-white text-sm font-semibold rounded-lg hover:bg-red-700 transition"
