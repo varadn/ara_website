@@ -201,11 +201,11 @@ export default function NewsPage() {
 
     return (
         <div className="min-h-screen flex flex-col bg-slate-50 text-slate-900">
-            <main className="flex-grow mt-48 flex flex-col items-center px-6 pb-20">
-                <section className="w-full max-w-4xl">
+            <main className="flex-grow mt-48 flex flex-col items-center px-6 pb-20" role="main">
+                <section className="w-full max-w-4xl" role="region" aria-labelledby="projects-title">
                     {/* Header Section */}
                     <div className="mb-20">
-                        <h1 className="text-6xl sm:text-7xl font-black mb-6 text-slate-900 tracking-tight uppercase">
+                        <h1 className="text-6xl sm:text-7xl font-black mb-6 text-slate-900 tracking-tight uppercase" id="projects-title">
                             <FormattedMessage id="project.title" />
                         </h1>
                         <div className="flex gap-3 mb-6">

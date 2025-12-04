@@ -96,11 +96,11 @@ export default function Navbar() {
         }
 
     return(
-    <nav className="w-full bg-white shadow-lg fixed top-0 left-0 z-50 border-b-4 border-b-blue-600"> 
+    <nav className="w-full bg-white shadow-lg fixed top-0 left-0 z-50 border-b-4 border-b-blue-600" role="navigation" aria-label="Main navigation"> 
         <div className="max-w-full mx-auto px-6 py-4">
             <div className="flex items-center w-full">
             <div className="flex-shrink-0">
-            <Link href="/" className="flex items-center space-x-3 hover:opacity-80 transition-opacity group">
+            <Link href="/" className="flex items-center space-x-3 hover:opacity-80 transition-opacity group" aria-label="ARA Lab home">
             <Image 
                 src="/logo.png" 
                 alt="ARA Lab Logo"
@@ -115,7 +115,7 @@ export default function Navbar() {
             </div>
 
             <div className="flex-1 flex transform space-x-4 text-sm font-black uppercase tracking-wide" >
-                <ul className="flex-1 flex justify-center space-x-4 transform translate-x-18">
+                <ul className="flex-1 flex justify-center space-x-4 transform translate-x-18" role="menubar" aria-label="Main menu">
                 {routes
                 .map((route) => (
                     <Link
@@ -152,13 +152,15 @@ export default function Navbar() {
             {user ? (
             <button
                 className="px-6 py-2 text-sm font-black bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-lg hover:shadow-lg hover:from-blue-700 hover:to-blue-800 transition-all uppercase tracking-wide border-2 border-blue-800"
-                onClick={handleLogout}>
+                onClick={handleLogout}
+                aria-label="Sign out">
                 <FormattedMessage id="signOut" />
             </button>
             ) : (
             <Link
                 href="/login"
-                className="px-6 py-2 text-sm font-black text-blue-600 border-2 border-blue-600 rounded-lg hover:bg-blue-50 transition-all uppercase tracking-wide hover:scale-105 transform">
+                className="px-6 py-2 text-sm font-black text-blue-600 border-2 border-blue-600 rounded-lg hover:bg-blue-50 transition-all uppercase tracking-wide hover:scale-105 transform"
+                aria-label="Sign in">
                 <FormattedMessage id="signIn" />
             </Link>
             )}
@@ -169,15 +171,15 @@ export default function Navbar() {
             </div>
 
         {/*weather date and time*/}
-                <div className="mt-3 pt-3 border-t-2 border-slate-300 flex justify-between items-center text-sm text-slate-700 font-bold">
+                <div className="mt-3 pt-3 border-t-2 border-slate-300 flex justify-between items-center text-sm text-slate-700 font-bold" role="region" aria-label="Current weather and time information">
                     <div className="flex items-center space-x-6">
                         {/* Weather */}
                         {loading ? (
-                            <div className="text-slate-400 font-semibold">Loading weather...</div>
+                            <div className="text-slate-400 font-semibold" aria-busy="true">Loading weather...</div>
                         ) : weather ? (
-                        <div className="flex items-center space-x-2">
+                        <div className="flex items-center space-x-2" aria-label={`Weather in ${weather.location}: ${weather.temp}°F, ${weather.condition}`}>
                             <span className="font-black">{weather.location}:</span>
-                            <span className="font-bold">{weather.temp}°F</span>
+                            <span className="font-bold" aria-label={`Temperature: ${weather.temp}°F`}>{weather.temp}°F</span>
                             <span className="text-slate-400">-</span>
                             <span className="font-semibold">{weather.condition}</span>
                         </div>
@@ -187,7 +189,7 @@ export default function Navbar() {
                     </div>
                     
                     {/*date and time*/}
-                    <div className="flex items-center space-x-4">
+                    <div className="flex items-center space-x-4" aria-label={`Current date and time: ${currentDate} at ${currentTime}`}>
                         <span className="font-bold">{currentDate}</span>
                         <span className="text-slate-400">-</span>
                         <span className="font-mono font-black">{currentTime}</span>

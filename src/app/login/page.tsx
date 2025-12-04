@@ -58,10 +58,10 @@ export default function LoginPage() {
 
     return (
     <div className="min-h-screen flex flex-col bg-slate-50 text-slate-900">
-        <main className="flex-grow mt-48 flex flex-col items-center text-center px-6 pb-20">
-        <section className="w-full max-w-2xl">
+        <main className="flex-grow mt-48 flex flex-col items-center text-center px-6 pb-20" role="main">
+        <section className="w-full max-w-2xl" role="region" aria-labelledby="login-title">
             <div className="bg-white shadow-lg rounded-2xl p-10 mb-16 modern-card border-l-4 border-l-blue-600 comic-outline">
-                <h1 className="text-6xl font-black text-slate-900 mb-4 tracking-tight uppercase">
+                <h1 className="text-6xl font-black text-slate-900 mb-4 tracking-tight uppercase" id="login-title">
                 <FormattedMessage id="login" />
                 </h1>
                 <div className="flex gap-3 mb-8 justify-center">
@@ -69,7 +69,7 @@ export default function LoginPage() {
                   <div className="h-3 w-20 bg-rose-500 rounded-full"></div>
                 </div>
 
-                <form className="flex flex-col space-y-4">
+                <form className="flex flex-col space-y-4" role="form" aria-label="Login form" aria-describedby="login-error">
                     <div className="flex flex-col space-y-1">
                         <label 
                             htmlFor="email" 
@@ -84,6 +84,9 @@ export default function LoginPage() {
                             onChange={handleInput}
                             placeholder={placeholderText.email}
                             className="border-2 border-slate-300 rounded-lg p-4 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-600 bg-white font-semibold"
+                            required
+                            aria-required="true"
+                            aria-describedby="email-error"
                         />
                     </div>
 
@@ -101,6 +104,9 @@ export default function LoginPage() {
                             onChange={handleInput}
                             placeholder={placeholderText.password}
                             className="border-2 border-slate-300 rounded-lg p-4 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-600 bg-white font-semibold"
+                            required
+                            aria-required="true"
+                            aria-describedby="password-error"
                         />
                     </div>
 
@@ -109,12 +115,13 @@ export default function LoginPage() {
                         className="bg-gradient-to-r from-blue-600 to-blue-700 text-white py-4 rounded-lg font-black enabled:hover:shadow-lg enabled:hover:from-blue-700 enabled:hover:to-blue-800 enabled:transition-all disabled:opacity-50 disabled:text-slate-400 uppercase tracking-wide text-lg" 
                         onClick={handleLogin}
                         disabled={loading}
+                        aria-busy={loading}
                     >
                         {loading ? <FormattedMessage id="login.wait" /> : <FormattedMessage id="login" />}
                     </button>
 
                     {errorMsg.length !== 0 && 
-                        <p className="text-red-600 font-bold text-lg">{errorMsg}</p>}
+                        <p className="text-red-600 font-bold text-lg" id="login-error" role="alert">{errorMsg}</p>}
                     </form>
             </div>
         </section>
