@@ -8,6 +8,9 @@ interface NewsCardProps {
   description: string;
   imageSrc: string;
   imageAlt?: string;
+  isEditing?: boolean;
+  handlEdit?: () => void;
+  handleDelete?: () => void;
 }
 
 export default function NewsCard({
@@ -17,6 +20,9 @@ export default function NewsCard({
   description, 
   imageSrc,
   imageAlt = "News image",
+  isEditing,
+  handlEdit,
+  handleDelete,
 }: NewsCardProps) {
 
     let dateLocation: string = date;
@@ -45,6 +51,24 @@ export default function NewsCard({
         </p>
         <p className="text-slate-700 leading-relaxed font-medium">{description}</p>
       </div>
+
+      {/* Edit and Delete Buttons */}
+      {isEditing && (
+        <div className="flex justify-end space-x-2 mt-4">
+          <button 
+          onClick={handlEdit}
+          className="px-3 py-1 bg-blue-600 text-white text-sm font-semibold rounded-lg hover:bg-blue-700 transition"
+          >
+            Edit
+          </button> 
+          <button
+            onClick={handleDelete}
+            className="px-3 py-1 bg-red-600 text-white text-sm font-semibold rounded-lg hover:bg-red-700 transition"
+          >
+            Delete
+          </button>
+        </div>
+      )}
     </div>
   );
 }
