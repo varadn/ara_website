@@ -6,6 +6,7 @@ import PersonCard from "@/components/PersonCard";
 import { useAuth } from "@/contexts/AuthContext";
 import { FormattedMessage } from "react-intl";
 import Link from 'next/link';
+import { tree } from 'next/dist/build/templates/app-page';
 
 export default function PeoplePage() {
     const { user } = useAuth();
@@ -448,23 +449,10 @@ export default function PeoplePage() {
                                             imageAlt={person.imageAlt} 
                                             projects={person.projects}
                                             website={person.website} 
+                                            isEditing={user ? true: false}
+                                            handlEdit={() => startEdit(person)}
+                                            handleDelete={() => handleDeletePerson(person.id!)}
                                         />
-                                        {user && (
-                                            <div className="flex justify-end space-x-2 mt-3"> 
-                                                <button
-                                                    onClick={() => startEdit(person)}
-                                                    className="px-3 py-1 bg-blue-600 text-white text-sm font-semibold rounded-lg hover:bg-blue-700 transition"
-                                                > 
-                                                    Edit Person?
-                                                </button>
-                                                <button 
-                                                    onClick={() => handleDeletePerson(person.id!)}
-                                                    className="px-3 py-1 bg-red-600 text-white text-sm font-semibold rounded-lg hover:bg-red-700 transition"
-                                                >
-                                                    Delete Person?
-                                                </button>
-                                            </div>
-                                        )}
                                     </div>
                                 )))}
                       </div>
@@ -497,23 +485,15 @@ export default function PeoplePage() {
                                     imageAlt={person.imageAlt} 
                                     projects={person.projects}
                                     website={person.website} 
+                                    isEditing={user ? true: false}
+                                    handlEdit={() => startEdit(person)}
+                                    handleDelete={() => handleDeletePerson(person.id!)}
                                 />
-                                {user && (
-                                        <div className="flex justify-end space-x-2 mt-3">
-                                            <button 
-                                                onClick={() => startEdit(person)}
-                                                className="px-3 py-1 bg-blue-600 text-white text-sm font-semibold rounded-lg hover:bg-blue-700 transition"
-                                            >
-                                                Edit Person?
-                                            </button> 
-                                            <button
-                                                onClick={() => handleDeletePerson(person.id!)}
-                                                className="px-3 py-1 bg-red-600 text-white text-sm font-semibold rounded-lg hover:bg-red-700 transition"
-                                            >
-                                                Delete Person?
-                                            </button>
+                                {/* {user && (
+                                        <div className="flex justify-end space-x-2 -mt-8 relative z-10 pr-4 pb-4 hover:mt-15">
+                                            
                                         </div>
-                                    )}
+                                    )} */}
                             </div>
                             )))}
                     </div>

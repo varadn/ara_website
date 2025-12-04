@@ -6,6 +6,9 @@ interface ProjectCardProps {
   description: string;
   imageSrc: string; 
   imageAlt?: string;
+  isEditing?: boolean;
+  handlEdit?: () => void;
+  handleDelete?: () => void;
 }
 
 export default function ProjectCard({
@@ -13,9 +16,12 @@ export default function ProjectCard({
   description,
   imageSrc,
   imageAlt = "Image of a project",
+  isEditing,
+  handlEdit,
+  handleDelete,
 }: ProjectCardProps) {
   return (
-    <div className="modern-card bg-white flex flex-col sm:flex-row items-center sm:items-start gap-6 border-l-4 border-l-blue-600 card-lift w-full">
+    <div className="modern-card bg-white relative flex flex-col sm:flex-row items-center sm:items-start gap-6 border-l-4 border-l-blue-600 card-lift w-full">
         <div className="flex-shrink-0 w-full sm:w-1/3 relative">
             <div className="absolute -inset-3 bg-black opacity-20 rounded-lg blur-md"></div>
             <Image
@@ -34,6 +40,24 @@ export default function ProjectCard({
         <div className="h-1 w-20 bg-rose-500 rounded-full mb-6"></div>
         <p className="text-slate-700 leading-relaxed font-medium">{description}</p>
       </div>
+
+      {/* Edit and Delete Buttons */}
+      {isEditing && (
+        <div className="absolute right-4 bottom-4 flex space-x-2 z-20">
+          <button 
+            onClick={handlEdit}
+            className="px-3 py-1 bg-blue-600 text-white text-sm font-semibold rounded-lg hover:bg-blue-700 transition"
+          >
+            Edit
+          </button>
+          <button
+            onClick={handleDelete}
+            className="px-3 py-1 bg-red-600 text-white text-sm font-semibold rounded-lg hover:bg-red-700 transition"
+          >
+            Delete
+          </button>
+        </div>
+      )}
     </div>
   );
 }

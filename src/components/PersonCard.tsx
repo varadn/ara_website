@@ -11,6 +11,9 @@ interface PersonCardProps {
   imageAlt?: string;
   projects?: Project[];
   website?: string;
+  isEditing?: boolean;
+  handlEdit?: () => void;
+  handleDelete?: () => void;
 }
 
 export default function PersonCard({
@@ -21,6 +24,9 @@ export default function PersonCard({
   imageAlt = "Photo of a person", 
   projects,
   website,
+  isEditing,
+  handlEdit,
+  handleDelete,
 }: PersonCardProps) { 
   return (
     <div className="modern-card bg-white flex flex-col sm:flex-row items-center sm:items-start gap-6 border-l-4 border-l-rose-500 card-lift">
@@ -68,6 +74,24 @@ export default function PersonCard({
             Visit Website 
           </a>
         )}
+
+      {/* Edit and Delete Buttons */}
+      {isEditing && (
+        <div className="flex justify-end space-x-2">
+          <button 
+          onClick={handlEdit}
+          className="px-3 py-1 bg-blue-600 text-white text-sm font-semibold rounded-lg hover:bg-blue-700 transition"
+          >
+            Edit Person?
+          </button> 
+          <button
+            onClick={handleDelete}
+            className="px-3 py-1 bg-red-600 text-white text-sm font-semibold rounded-lg hover:bg-red-700 transition"
+          >
+            Delete Person?
+          </button>
+        </div>
+      )}
       </div>
     </div>
   );

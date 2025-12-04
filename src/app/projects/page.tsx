@@ -369,23 +369,10 @@ export default function NewsPage() {
                                         description={project.description}
                                         imageSrc={project.imageSrc}
                                         imageAlt={project.imageAlt}
+                                        isEditing={user ? true: false}
+                                        handlEdit={() => startEdit(project)}
+                                        handleDelete={() => handleDeleteProject(project.id!)}
                                     />
-                            {user && (
-                                <div className="flex justify-end space-x-2 mt-3">
-                                    <button
-                                        onClick={() => startEdit(project)}
-                                        className="px-4 py-2 bg-blue-600 text-white text-sm font-bold rounded-lg hover:bg-blue-700 transition uppercase"
-                                    >
-                                        Edit
-                                    </button> 
-                                    <button
-                                        onClick={() => handleDeleteProject(project.id!)}
-                                        className="px-4 py-2 bg-red-600 text-white text-sm font-bold rounded-lg hover:bg-red-700 transition uppercase"
-                                    >
-                                        Delete
-                                    </button>
-                                </div>
-                            )}
                             </div>
                         )))}
                     </div>
