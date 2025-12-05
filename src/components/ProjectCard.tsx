@@ -6,6 +6,7 @@ interface ProjectCardProps {
   description: string;
   imageSrc: string; 
   imageAlt?: string;
+  link?: string;
 }
 
 export default function ProjectCard({
@@ -13,6 +14,7 @@ export default function ProjectCard({
   description,
   imageSrc,
   imageAlt = "Image of a project",
+  link
 }: ProjectCardProps) {
   return (
     <div className="modern-card bg-white flex flex-col sm:flex-row items-center sm:items-start gap-6 border-l-4 border-l-blue-600 card-lift w-full">
@@ -31,6 +33,16 @@ export default function ProjectCard({
         <h3 className="text-2xl font-black text-slate-900 mb-3 tracking-tight uppercase">
           {title}
         </h3>
+        { link &&
+            (
+            <div className="mb-2">
+                <a href={link}>
+                    View the project!
+                </a>
+            </div>
+            )
+
+        }
         <div className="h-1 w-20 bg-rose-500 rounded-full mb-6"></div>
         <p className="text-slate-700 leading-relaxed font-medium">{description}</p>
       </div>

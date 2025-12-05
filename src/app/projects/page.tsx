@@ -18,7 +18,8 @@ export default function NewsPage() {
         title: '',
         description: '',
         image: '',
-        image_alt: ''
+        image_alt: '',
+        link: ''
     });
 
   // Wait for projects to render and scroll
@@ -55,7 +56,8 @@ export default function NewsPage() {
                     description: item.description,
                     imageSrc: item.image,
                     imageAlt: item.image_alt,
-                    dateCreated: new Date(item.date_created)
+                    dateCreated: new Date(item.date_created),
+                    link: item.link
                 }
             }).sort((a: Project, b: Project) => 
                 b.dateCreated.getTime() - a.dateCreated.getTime()
@@ -119,7 +121,8 @@ export default function NewsPage() {
                     title: '',
                     description: '',
                     image: '',
-                    image_alt: ''
+                    image_alt: '',
+                    link: ''
                 });
 
                 //Refreshs the projects list :D
@@ -142,7 +145,8 @@ export default function NewsPage() {
                 title: editingProject.title,
                 description: editingProject.description,
                 image: editingProject.imageSrc || '/placeholder.jpg',
-                image_alt: editingProject.imageAlt || editingProject.title
+                image_alt: editingProject.imageAlt || editingProject.title,
+                link: editingProject.link
             };
     
             try {
@@ -267,6 +271,16 @@ export default function NewsPage() {
                                     }
                                     className="w-full px-4 py-3 border-2 border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-600 bg-white font-semibold"
                                 />
+
+                                <input
+                                    type="text"
+                                    placeholder="Project Link (ex: GitHub Link, arXiv link, etc...)"
+                                    value={newProject.link}
+                                    onChange={(e) =>
+                                        setNewProject({ ...newProject, link: e.target.value })
+                                    }
+                                    className="w-full px-4 py-3 border-2 border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-600 bg-white font-semibold"
+                                />
                             </div>
 
                             <button
@@ -330,6 +344,15 @@ export default function NewsPage() {
                                     }
                                     className="w-full px-4 py-3 border-2 border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-600 bg-white font-semibold"
                                 />
+                                <input
+                                    type="text"
+                                    placeholder="Project Link (ex: GitHub Link, arXiv link, etc...)"
+                                    value={editingProject.link}
+                                    onChange={(e) =>
+                                        setEditingProject({ ...editingProject, link: e.target.value })
+                                    }
+                                    className="w-full px-4 py-3 border-2 border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-600 bg-white font-semibold"
+                                />
                             </div>
 
                             <div className="flex space-x-3 mt-8">
@@ -369,6 +392,7 @@ export default function NewsPage() {
                                         description={project.description}
                                         imageSrc={project.imageSrc}
                                         imageAlt={project.imageAlt}
+                                        link={project.link}
                                     />
                             {user && (
                                 <div className="flex justify-end space-x-2 mt-3">

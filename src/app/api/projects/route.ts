@@ -13,9 +13,11 @@ export async function GET() {
         description,
         image,
         image_alt,
-        date_created
+        date_created,
+        link
         `)
 
+        
     if (error){
         console.log(error)
         return NextResponse.json({ message: error.message}, { status: 400})
@@ -40,7 +42,7 @@ export async function POST(request: NextRequest) {
 
         const body = await request.json();
         
-        const { title, description, image, image_alt } = body;
+        const { title, description, image, image_alt, link } = body;
 
         //validates required fields
         if (!title || !description) {  
@@ -58,7 +60,8 @@ export async function POST(request: NextRequest) {
                 description, 
                 image: image || '',
                 image_alt: image_alt || title,
-                date_created: formatDateToSupabase(new Date())
+                date_created: formatDateToSupabase(new Date()),
+                link: link
             }])
             .select();
 
@@ -99,7 +102,7 @@ export async function PUT(request: NextRequest) {
         }
 
         const body = await request.json();
-        const { id, title, description, image, image_alt } = body;
+        const { id, title, description, image, image_alt, link } = body;
 
         //Validates required fields
         if (!id || !title || !description) {
@@ -116,7 +119,8 @@ export async function PUT(request: NextRequest) {
                 title,
                 description, 
                 image: image || '',
-                image_alt: image_alt || title
+                image_alt: image_alt || title,
+                link: link
             })
             .eq('id', id)
             .select();
