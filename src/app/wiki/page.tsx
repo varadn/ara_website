@@ -64,8 +64,8 @@ export default function WikiPage() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          title: newEntry.title,
-          content: newEntry.content
+          articleName: newEntry.title,
+          Content: newEntry.content
         }),
       });
 
