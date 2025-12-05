@@ -64,8 +64,8 @@ export default function WikiPage() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          title: newEntry.title,
-          content: newEntry.content
+          articleName: newEntry.title,
+          Content: newEntry.content
         }),
       });
 
@@ -152,12 +152,12 @@ export default function WikiPage() {
 
   return (
     
-      <div className="min-h-screen flex flex-col bg-slate-50 text-slate-900">
-        <main className="flex-grow mt-48 flex flex-col items-center px-6 pb-20">
-          <section className="w-full max-w-5xl">
+        <div className="min-h-screen flex flex-col bg-slate-50 text-slate-900">
+            <main className="flex-grow mt-48 flex flex-col items-center px-6 pb-20" role="main">
+          <section className="w-full max-w-5xl" role="region" aria-labelledby="wiki-title">
             {/* Header Section */}
             <div className="mb-20">
-              <h1 className="text-6xl sm:text-7xl font-black mb-6 text-slate-900 tracking-tight uppercase"> 
+              <h1 className="text-6xl sm:text-7xl font-black mb-6 text-slate-900 tracking-tight uppercase" id="wiki-title"> 
                 ARA Lab Wiki
               </h1>
               <div className="flex gap-3 mb-6">
@@ -174,6 +174,8 @@ export default function WikiPage() {
               <form
                 onSubmit={handleAddEntry} 
                 className="w-full modern-card bg-white mb-16 border-l-4 border-l-blue-600 comic-outline"
+                role="form"
+                aria-label="Add new wiki article form"
               > 
                 <h2 className="text-3xl font-black mb-8 text-slate-900 tracking-tight uppercase">
                   Add New Wiki Article

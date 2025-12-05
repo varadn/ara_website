@@ -11,6 +11,9 @@ interface PersonCardProps {
   imageAlt?: string;
   projects?: Project[];
   website?: string;
+  isEditing?: boolean;
+  handlEdit?: () => void;
+  handleDelete?: () => void;
 }
 
 export default function PersonCard({
@@ -21,9 +24,12 @@ export default function PersonCard({
   imageAlt = "Photo of a person", 
   projects,
   website,
+  isEditing,
+  handlEdit,
+  handleDelete,
 }: PersonCardProps) { 
   return (
-    <div className="modern-card bg-white flex flex-col sm:flex-row items-center sm:items-start gap-6 border-l-4 border-l-rose-500 card-lift">
+    <div className="modern-card bg-white flex flex-col sm:flex-row items-center sm:items-start gap-6 border-l-4 border-l-rose-500 card-lift" role="article" aria-label={`Team member: ${name}, ${title}`}>
         <div className="flex-shrink-0 w-full sm:w-40 relative">
             <div className="absolute -inset-3 bg-black opacity-20 rounded-lg blur-md"></div>
             <Image
@@ -36,19 +42,19 @@ export default function PersonCard({
         </div>
 
       <div className="text-left flex-1">
-        <h2 className="text-2xl font-black text-slate-900 tracking-tight uppercase">{name}</h2>
-        <p className="text-base font-black text-rose-600 mb-4 uppercase tracking-wide">{title}</p>
+        <h2 className="text-2xl font-black text-slate-900 tracking-tight uppercase" id={`person-${name}`}>{name}</h2>
+        <p className="text-base font-black text-rose-600 mb-4 uppercase tracking-wide" role="doc-subtitle">{title}</p>
         <p className="text-slate-700 mb-4 leading-relaxed font-medium">{description}</p>
 
         {/* Projects Section */} 
         {projects && projects.length > 0 && (
-          <div className="mb-4 bg-slate-100 p-4 rounded-lg border-2 border-slate-300">
-            <h3 className="text-sm font-black text-slate-900 mb-3 uppercase">
+          <div className="mb-4 bg-slate-100 p-4 rounded-lg border-2 border-slate-300" role="region" aria-labelledby="projects-heading">
+            <h3 className="text-sm font-black text-slate-900 mb-3 uppercase" id="projects-heading">
               Projects
             </h3>
-            <ul className="text-slate-700 text-sm space-y-2">
+            <ul className="text-slate-700 text-sm space-y-2" role="list">
               {projects.map((project, i) => (
-                <li key={i} className="flex items-center font-semibold">
+                <li key={i} className="flex items-center font-semibold" role="listitem">
                   <span className="w-2 h-2 bg-blue-600 rounded-full mr-3"></span>
                   <Link href={`/projects#${project.id}`}>{project.title}</Link>
                 </li> 
@@ -64,10 +70,31 @@ export default function PersonCard({
             target="_blank"
             rel="noopener noreferrer" 
             className="inline-block px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-700 font-black rounded-lg hover:shadow-lg hover:from-blue-700 hover:to-blue-800 transition-all uppercase tracking-wide text-sm !text-white"
+            aria-label={`Visit ${name}'s website`}
           > 
             Visit Website 
           </a>
         )}
+
+      {/* Edit and Delete Buttons */}
+      {isEditing && (
+        <div className="flex justify-end space-x-2" role="toolbar" aria-label={`Edit or delete ${name}`}>
+          <button 
+          onClick={handlEdit}
+          className="px-3 py-1 bg-blue-600 text-white text-sm font-semibold rounded-lg hover:bg-blue-700 transition"
+          aria-label={`Edit ${name}`}
+          >
+            Edit Person?
+          </button> 
+          <button
+            onClick={handleDelete}
+            className="px-3 py-1 bg-red-600 text-white text-sm font-semibold rounded-lg hover:bg-red-700 transition"
+            aria-label={`Delete ${name}`}
+          >
+            Delete Person?
+          </button>
+        </div>
+      )}
       </div>
     </div>
   );

@@ -6,6 +6,7 @@ import PersonCard from "@/components/PersonCard";
 import { useAuth } from "@/contexts/AuthContext";
 import { FormattedMessage } from "react-intl";
 import Link from 'next/link';
+import { tree } from 'next/dist/build/templates/app-page';
 
 export default function PeoplePage() {
     const { user } = useAuth();
@@ -199,11 +200,11 @@ export default function PeoplePage() {
 
     return (
         <div className="min-h-screen flex flex-col bg-slate-50 text-slate-900">
-            <main className="flex-grow mt-48 flex flex-col items-center px-6 pb-20">
-                <section className="w-full max-w-5xl">
+            <main className="flex-grow mt-48 flex flex-col items-center px-6 pb-20" role="main">
+                <section className="w-full max-w-5xl" role="region" aria-labelledby="people-title">
                     {/* Header Section */}
                     <div className="mb-20">
-                        <h1 className="text-6xl sm:text-7xl font-black mb-6 text-slate-900 tracking-tight uppercase">
+                        <h1 className="text-6xl sm:text-7xl font-black mb-6 text-slate-900 tracking-tight uppercase" id="people-title">
                             <FormattedMessage id="people.title" />
                         </h1>
                         <div className="flex gap-3 mb-6">
@@ -220,6 +221,8 @@ export default function PeoplePage() {
                         <form
                             onSubmit={handleAddPerson}
                             className="w-full modern-card bg-white mb-16 border-l-4 border-l-rose-500 comic-outline"
+                            role="form"
+                            aria-label="Add new team member form"
                         >
                             <h2 className="text-3xl font-black mb-8 text-slate-900 tracking-tight uppercase">
                                 Add New Team Member
@@ -448,23 +451,10 @@ export default function PeoplePage() {
                                             imageAlt={person.imageAlt} 
                                             projects={person.projects}
                                             website={person.website} 
+                                            isEditing={user ? true: false}
+                                            handlEdit={() => startEdit(person)}
+                                            handleDelete={() => handleDeletePerson(person.id!)}
                                         />
-                                        {user && (
-                                            <div className="flex justify-end space-x-2 mt-3"> 
-                                                <button
-                                                    onClick={() => startEdit(person)}
-                                                    className="px-3 py-1 bg-blue-600 text-white text-sm font-semibold rounded-lg hover:bg-blue-700 transition"
-                                                > 
-                                                    Edit Person?
-                                                </button>
-                                                <button 
-                                                    onClick={() => handleDeletePerson(person.id!)}
-                                                    className="px-3 py-1 bg-red-600 text-white text-sm font-semibold rounded-lg hover:bg-red-700 transition"
-                                                >
-                                                    Delete Person?
-                                                </button>
-                                            </div>
-                                        )}
                                     </div>
                                 )))}
                       </div>
@@ -497,23 +487,15 @@ export default function PeoplePage() {
                                     imageAlt={person.imageAlt} 
                                     projects={person.projects}
                                     website={person.website} 
+                                    isEditing={user ? true: false}
+                                    handlEdit={() => startEdit(person)}
+                                    handleDelete={() => handleDeletePerson(person.id!)}
                                 />
-                                {user && (
-                                        <div className="flex justify-end space-x-2 mt-3">
-                                            <button 
-                                                onClick={() => startEdit(person)}
-                                                className="px-3 py-1 bg-blue-600 text-white text-sm font-semibold rounded-lg hover:bg-blue-700 transition"
-                                            >
-                                                Edit Person?
-                                            </button> 
-                                            <button
-                                                onClick={() => handleDeletePerson(person.id!)}
-                                                className="px-3 py-1 bg-red-600 text-white text-sm font-semibold rounded-lg hover:bg-red-700 transition"
-                                            >
-                                                Delete Person?
-                                            </button>
+                                {/* {user && (
+                                        <div className="flex justify-end space-x-2 -mt-8 relative z-10 pr-4 pb-4 hover:mt-15">
+                                            
                                         </div>
-                                    )}
+                                    )} */}
                             </div>
                             )))}
                     </div>

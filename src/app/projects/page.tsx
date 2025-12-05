@@ -205,11 +205,11 @@ export default function NewsPage() {
 
     return (
         <div className="min-h-screen flex flex-col bg-slate-50 text-slate-900">
-            <main className="flex-grow mt-48 flex flex-col items-center px-6 pb-20">
-                <section className="w-full max-w-4xl">
+            <main className="flex-grow mt-48 flex flex-col items-center px-6 pb-20" role="main">
+                <section className="w-full max-w-4xl" role="region" aria-labelledby="projects-title">
                     {/* Header Section */}
                     <div className="mb-20">
-                        <h1 className="text-6xl sm:text-7xl font-black mb-6 text-slate-900 tracking-tight uppercase">
+                        <h1 className="text-6xl sm:text-7xl font-black mb-6 text-slate-900 tracking-tight uppercase" id="projects-title">
                             <FormattedMessage id="project.title" />
                         </h1>
                         <div className="flex gap-3 mb-6">
@@ -393,23 +393,10 @@ export default function NewsPage() {
                                         imageSrc={project.imageSrc}
                                         imageAlt={project.imageAlt}
                                         link={project.link}
+                                        isEditing={user ? true: false}
+                                        handlEdit={() => startEdit(project)}
+                                        handleDelete={() => handleDeleteProject(project.id!)}
                                     />
-                            {user && (
-                                <div className="flex justify-end space-x-2 mt-3">
-                                    <button
-                                        onClick={() => startEdit(project)}
-                                        className="px-4 py-2 bg-blue-600 text-white text-sm font-bold rounded-lg hover:bg-blue-700 transition uppercase"
-                                    >
-                                        Edit
-                                    </button> 
-                                    <button
-                                        onClick={() => handleDeleteProject(project.id!)}
-                                        className="px-4 py-2 bg-red-600 text-white text-sm font-bold rounded-lg hover:bg-red-700 transition uppercase"
-                                    >
-                                        Delete
-                                    </button>
-                                </div>
-                            )}
                             </div>
                         )))}
                     </div>
