@@ -3,8 +3,15 @@ import React, {useState} from 'react';
 import { redirect } from 'next/navigation'
 import { createClient } from '@/utils/supabase/client';
 import { FormattedMessage, useIntl } from "react-intl";
+import { useAuth } from '@/contexts/AuthContext';
 
 export default function LoginPage() {
+    const { user } = useAuth();
+
+    if (user){
+        redirect('/');
+    }
+
     const [loginInfo, setLoginInfo] = useState({email: "", password: ""})
     const [errorMsg, setErrorMsg] = useState("")
     const [loading, setLoading] = useState(false)
