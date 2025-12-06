@@ -244,7 +244,14 @@ export default function HomePage() {
                 </h2>
 
                 <div className="space-y-4">
+                    <label 
+                        htmlFor="newsTitle" 
+                        className="block text-sm font-semibold text-gray-700 mb-1 text-left"
+                    >
+                        <FormattedMessage id="news.input.title" defaultMessage="Article Title *"/>
+                    </label>
                     <input
+                        id="newsTitle"
                         type="text" 
                         placeholder="Article Title *" 
                         value={newArticle.title}
@@ -256,40 +263,72 @@ export default function HomePage() {
                     />
 
                     <div className="grid sm:grid-cols-2 gap-4">
-                        <input
-                            type="date"
-                            placeholder="Date *"
-                            value={newArticle.date}
-                            onChange={(e) => {
-                                setNewArticle({ ...newArticle, date: e.target.value });
-                                console.log(newArticle);
-                            }}
-                            className="w-full px-4 py-3 border-2 border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-600 bg-white"
-                            required
-                        />
-
-                        <input
-                            type="text"  
-                            placeholder="Location"
-                            value={newArticle.location}
-                            onChange={(e) =>
-                                setNewArticle({ ...newArticle, location: e.target.value })
-                            }
-                            className="w-full px-4 py-3 border-2 border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-600 bg-white"
-                        />
+                        <div>
+                            <label 
+                                htmlFor="newsDate" 
+                                className="block text-sm font-semibold text-gray-700 mb-1 text-left"
+                            >
+                                <FormattedMessage id="news.input.date" defaultMessage="Date"/>
+                            </label>
+                            <input
+                                id="newsDate"
+                                type="date"
+                                placeholder="Date *"
+                                value={newArticle.date}
+                                onChange={(e) => {
+                                    setNewArticle({ ...newArticle, date: e.target.value });
+                                    console.log(newArticle);
+                                }}
+                                className="w-full px-4 py-3 border-2 border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-600 bg-white"
+                                required
+                            />
+                        </div>
+                        
+                        <div>
+                            <label 
+                                htmlFor="newsLocation" 
+                                className="block text-sm font-semibold text-gray-700 mb-1 text-left"
+                            >
+                                <FormattedMessage id="news.input.location" defaultMessage="Location"/>
+                            </label>
+                            <input
+                                id="newsLocation"
+                                type="text"  
+                                placeholder="Location"
+                                value={newArticle.location}
+                                onChange={(e) =>
+                                    setNewArticle({ ...newArticle, location: e.target.value })
+                                }
+                                className="w-full px-4 py-3 border-2 border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-600 bg-white"
+                            />
+                        </div>
                     </div>
 
+                    <label 
+                        htmlFor="newsDescription" 
+                        className="block text-sm font-semibold text-gray-700 mb-1 text-left"
+                    >
+                        <FormattedMessage id="news.input.description" defaultMessage="Description *"/>
+                    </label>
                     <textarea
+                        id="newsDescription"
                         placeholder="Description *"
                         value={newArticle.description}
                         onChange={(e) =>
                             setNewArticle({ ...newArticle, description: e.target.value })
                         }
-                        className="w-full px-4 py-3 border-2 border-slate-300 rounded-lg h-32 focus:ring-2 focus:ring-blue-500 focus:border-blue-600 bg-white resize-none"
+                        className="w-full px-4 py-3 border-2 border-slate-300 rounded-lg h-96 focus:ring-2 focus:ring-blue-500 focus:border-blue-600 bg-white resize-none"
                         required
                     />
 
+                    <label 
+                        htmlFor="newsImage" 
+                        className="block text-sm font-semibold text-gray-700 mb-1 text-left"
+                    >
+                        <FormattedMessage id="news.input.image" defaultMessage="Image URL (Google Drive Link)"/>
+                    </label>
                     <input
+                        id="newsImage"
                         type="text" 
                         placeholder="Image URL (for google drive images set share to allow anyone to access with link)"
                         value={newArticle.image} 
@@ -298,8 +337,14 @@ export default function HomePage() {
                         }
                         className="w-full px-4 py-3 border-2 border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-600 bg-white"
                     />
-
+                    <label 
+                        htmlFor="newsImageAltText" 
+                        className="block text-sm font-semibold text-gray-700 mb-1 text-left"
+                    >
+                        <FormattedMessage id="news.input.altText" defaultMessage="Image Alt Text"/>
+                    </label>
                     <input
+                        id="newsImageAltText"
                         type="text"
                         placeholder="Image Alt Text" 
                         value={newArticle.image_alt}

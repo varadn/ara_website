@@ -231,7 +231,14 @@ export default function NewsPage() {
                             </h2>
 
                             <div className="space-y-4"> 
+                                <label 
+                                    htmlFor="projectTitle" 
+                                    className="block text-sm font-semibold text-gray-700 mb-1 text-left"
+                                >
+                                    <FormattedMessage id="project.input.title" defaultMessage="Project Title *"/>
+                                </label>
                                 <input
+                                    id="projectTitle"
                                     type="text"
                                     placeholder="Project Title *" 
                                     value={newProject.title} 
@@ -242,17 +249,31 @@ export default function NewsPage() {
                                     required
                                 />
 
+                                <label 
+                                    htmlFor="projectDescription" 
+                                    className="block text-sm font-semibold text-gray-700 mb-1 text-left"
+                                >
+                                    <FormattedMessage id="project.input.description" defaultMessage="Project Description *"/>
+                                </label>
                                 <textarea
+                                    id="projectDescription"
                                     placeholder="Project Description *" 
                                     value={newProject.description}
                                     onChange={(e) => 
                                         setNewProject({ ...newProject, description: e.target.value })
                                     }
-                                    className="w-full px-4 py-3 border-2 border-slate-300 rounded-lg h-24 focus:ring-2 focus:ring-blue-500 focus:border-blue-600 bg-white resize-none font-semibold"
+                                    className="w-full px-4 py-3 border-2 border-slate-300 rounded-lg h-96 focus:ring-2 focus:ring-blue-500 focus:border-blue-600 bg-white resize-none font-semibold"
                                     required
                                 />
 
+                                <label 
+                                    htmlFor="projectImageLink" 
+                                    className="block text-sm font-semibold text-gray-700 mb-1 text-left"
+                                >
+                                    <FormattedMessage id="project.input.image" defaultMessage="Image URL (Google Drive Link)"/>
+                                </label>
                                 <input
+                                    id="projectImageLink" 
                                     type="text"
                                     placeholder="Image URL (Google Drive link)"
                                     value={newProject.image} 
@@ -262,7 +283,14 @@ export default function NewsPage() {
                                     className="w-full px-4 py-3 border-2 border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-600 bg-white font-semibold"
                                 />
 
+                                <label 
+                                    htmlFor="projectImageAltText" 
+                                    className="block text-sm font-semibold text-gray-700 mb-1 text-left"
+                                >
+                                    <FormattedMessage id="project.input.altText" defaultMessage="Image Alt Text"/>
+                                </label>
                                 <input
+                                    id="projectImageAltText" 
                                     type="text"
                                     placeholder="Image Alt Text"
                                     value={newProject.image_alt}
@@ -272,9 +300,16 @@ export default function NewsPage() {
                                     className="w-full px-4 py-3 border-2 border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-600 bg-white font-semibold"
                                 />
 
+                                <label 
+                                    htmlFor="projectLink" 
+                                    className="block text-sm font-semibold text-gray-700 mb-1 text-left"
+                                >
+                                    <FormattedMessage id="project.input.link" defaultMessage="Project Link"/>
+                                </label>
                                 <input
+                                    id="projectLink"
                                     type="text"
-                                    placeholder="Project Link (ex: GitHub Link, arXiv link, etc...)"
+                                    placeholder="ex: GitHub, arXiv"
                                     value={newProject.link}
                                     onChange={(e) =>
                                         setNewProject({ ...newProject, link: e.target.value })

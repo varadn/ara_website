@@ -243,39 +243,71 @@ export default function PeoplePage() {
 
                             <div className="space-y-4">
                                 <div className="grid sm:grid-cols-2 gap-4">
-                                    <input
-                                        type="text"
-                                        placeholder="Full Name *"
-                                        value={newPerson.name}
-                                        onChange={(e) =>
-                                            setNewPerson({ ...newPerson, name: e.target.value })
-                                        }
-                                        className="w-full px-4 py-3 border-2 border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-600 bg-white font-semibold"
-                                        required
-                                    />
+                                    <div>
+                                        <label 
+                                            htmlFor="peopleFullName" 
+                                            className="block text-sm font-semibold text-gray-700 mb-1 text-left"
+                                        >
+                                            <FormattedMessage id="people.input.fullName" defaultMessage="Full Name"/>
+                                        </label>
+                                        <input
+                                            id="peopleFullName"
+                                            type="text"
+                                            placeholder="Full Name *"
+                                            value={newPerson.name}
+                                            onChange={(e) =>
+                                                setNewPerson({ ...newPerson, name: e.target.value })
+                                            }
+                                            className="w-full px-4 py-3 border-2 border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-600 bg-white font-semibold"
+                                            required
+                                        />
+                                    </div>
 
-                                    <input
-                                        type="text"
-                                        placeholder="Title/Role *"
-                                        value={newPerson.title}
-                                        onChange={(e) =>
-                                            setNewPerson({ ...newPerson, title: e.target.value })
-                                        }
-                                        className="w-full px-4 py-3 border-2 border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-600 bg-white font-semibold"
-                                        required
-                                    />
+                                    <div>
+                                        <label 
+                                            htmlFor="peopleTitle" 
+                                            className="block text-sm font-semibold text-gray-700 mb-1 text-left"
+                                        >
+                                            <FormattedMessage id="people.input.title" defaultMessage="Title/Role"/>
+                                        </label>
+                                        <input
+                                            id="peopleTitle"
+                                            type="text"
+                                            placeholder="Title/Role *"
+                                            value={newPerson.title}
+                                            onChange={(e) =>
+                                                setNewPerson({ ...newPerson, title: e.target.value })
+                                            }
+                                            className="w-full px-4 py-3 border-2 border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-600 bg-white font-semibold"
+                                            required
+                                        />
+                                    </div>
                                 </div>
 
+                                <label 
+                                    htmlFor="peopleDescription" 
+                                    className="block text-sm font-semibold text-gray-700 mb-1 text-left"
+                                >
+                                    <FormattedMessage id="people.input.description" defaultMessage="Bio/Description"/>
+                                </label>
                                 <textarea
+                                    id="peopleDescription"
                                     placeholder="Bio/Description"
                                     value={newPerson.description}
                                     onChange={(e) =>
                                         setNewPerson({ ...newPerson, description: e.target.value })
                                     }
-                                    className="w-full px-4 py-3 border-2 border-slate-300 rounded-lg h-24 focus:ring-2 focus:ring-blue-500 focus:border-blue-600 bg-white resize-none"
+                                    className="w-full px-4 py-3 border-2 border-slate-300 rounded-lg h-96 focus:ring-2 focus:ring-blue-500 focus:border-blue-600 bg-white resize-none"
                                 />
 
+                                <label
+                                    htmlFor="peopleImageURL" 
+                                    className="block text-sm font-semibold text-gray-700 mb-1 text-left"
+                                >
+                                    <FormattedMessage id="people.input.image" defaultMessage="Profile Image URL"/>
+                                </label>
                                 <input
+                                    id="peopleImageURL"
                                     type="text"
                                     placeholder="Profile Image URL"
                                     value={newPerson.image}
@@ -285,7 +317,14 @@ export default function PeoplePage() {
                                     className="w-full px-4 py-3 border-2 border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-600 bg-white"
                                 />
 
+                                <label
+                                    htmlFor="peopleImageAltText" 
+                                    className="block text-sm font-semibold text-gray-700 mb-1 text-left"
+                                >
+                                    <FormattedMessage id="people.input.altText" defaultMessage="Image Alt Text"/>
+                                </label>
                                 <input
+                                    id="peopleImageAltText"
                                     type="text"
                                     placeholder="Image Alt Text"
                                     value={newPerson.image_alt}
@@ -295,7 +334,14 @@ export default function PeoplePage() {
                                     className="w-full px-4 py-3 border-2 border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-600 bg-white"
                                 />
 
+                                <label
+                                    htmlFor="peoplePersonalWebsite" 
+                                    className="block text-sm font-semibold text-gray-700 mb-1 text-left"
+                                >
+                                    <FormattedMessage id="people.input.personalWebsite" defaultMessage="Personal Website (optional)" />
+                                </label>
                                 <input
+                                    id="peoplePersonalWebsite"
                                     type="url"
                                     placeholder="Personal Website (optional)"
                                     value={newPerson.website}
