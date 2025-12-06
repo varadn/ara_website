@@ -24,6 +24,7 @@ export default function Navbar() {
     const [currentDate, setCurrentDate] = useState<string>('');
     const [weather, setWeather] = useState<WeatherData | null>(null);
     const [loading, setLoading] = useState(true);
+    const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
     const supabaseAuth = createClient()
 
@@ -97,8 +98,9 @@ export default function Navbar() {
 
     return(
     <nav className="w-full bg-white shadow-lg fixed top-0 left-0 z-50 border-b-4 border-b-blue-600" role="navigation" aria-label="Main navigation"> 
-        <div className="max-w-full mx-auto px-6 py-4">
-            <div className="flex items-center w-full">
+        <div className="max-w-full mx-auto px-4 sm:px-6 py-3 sm:py-4">
+            {/*desktop nav I have to do 2 seperate looks because mobile looks weird with the 3rd party api weather bar*/}
+            <div className="hidden lg:flex items-center w-full">
             <div className="flex-shrink-0">
             <Link href="/" className="flex items-center space-x-3 hover:opacity-80 transition-opacity group" aria-label="ARA Lab home">
             <Image 
@@ -115,7 +117,7 @@ export default function Navbar() {
             </div>
 
             <div className="flex-1 flex transform space-x-4 text-sm font-black uppercase tracking-wide" >
-                <ul className="flex-1 flex justify-center space-x-4 transform translate-x-18" role="menubar" aria-label="Main menu">
+                <ul className="flex-1 flex justify-center space-x-4  transform translate-x-18" role="menubar" aria-label="Main menu">
                 {routes
                 .map((route) => (
                     <Link
@@ -170,9 +172,98 @@ export default function Navbar() {
             </div>
             </div>
 
+        {/*Mobile nav*/}
+        <div className="lg:hidden">
+            <div className="flex items-center justify-between">
+                <Link href="/" className="flex items-center space-x-2" aria-label="ARA Lab home">
+                    <Image 
+                    src="/logo.png" 
+                    alt="ARA Lab Logo" 
+                    width={40}
+                    height={40}
+                    className="h-10 w-auto"
+                    />
+                    <span className="text-lg font-black text-slate-900">ARA LAB</span>
+                </Link>
+
+                <div className="flex items-center space-x-3"> 
+                    <LangSwitcher />
+                    <button
+                        onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                        className="p-2 rounded-lg text-slate-700 hover:bg-slate-100"
+                        aria-label="Toggle menu"
+                        aria-expanded={mobileMenuOpen}  
+                    >
+                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        {mobileMenuOpen ? (
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                        ) : (
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                        )}
+                    </svg>
+                    </button>
+                </div> 
+            </div>
+
+            {/*Menu dropdown for mobile :) this was the only way I could think of getting this to work on a small screen*/}
+            {mobileMenuOpen && (
+            <div className="mt-4 pb-4 border-t-2 border-slate-200">
+                <ul className="space-y-2 mt-4">
+                    {routes.map((route) => ( 
+                        <li key={route.key}>
+                            <Link
+                                href={route.path}
+                                onClick={() => setMobileMenuOpen(false)}
+                                className={clsx('block px-4 py-3 rounded-lg font-bold uppercase text-sm transition-all', {
+                                    'bg-blue-100 text-blue-900 border-l-4 border-blue-600': pathname === route.path,
+                                    'text-slate-700 hover:bg-slate-100': pathname !== route.path,
+                                })}
+                            >
+                                <FormattedMessage id={route.name} />
+                            </Link>
+                        </li>
+                    ))}
+                    {user && protectedRotues.map((route) => (
+                        <li key={route.key}> 
+                            <Link
+                                href={route.path}
+                                onClick={() => setMobileMenuOpen(false)}
+                                className={clsx('block px-4 py-3 rounded-lg font-bold uppercase text-sm transition-all', {
+                                    'bg-rose-100 text-rose-900 border-l-4 border-rose-600': pathname === route.path,
+                                    'text-slate-700 hover:bg-slate-100': pathname !== route.path,
+                                })}
+                            >
+                                <FormattedMessage id={route.name} />
+                            </Link>
+                        </li>
+                    ))} 
+                </ul>
+
+                <div className="mt-4 pt-4 border-t border-slate-200">
+                    {user ? (
+                        <button
+                            className="w-full px-4 py-3 text-sm font-black bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-lg uppercase tracking-wide"
+                            onClick={handleLogout}
+                        >
+                            <FormattedMessage id="signOut" />
+                        </button>
+                    ) : (
+                        <Link
+                            href="/login"
+                            onClick={() => setMobileMenuOpen(false)}
+                            className="block w-full px-4 py-3 text-center text-sm font-black text-blue-600 border-2 border-blue-600 rounded-lg uppercase tracking-wide"
+                        >
+                            <FormattedMessage id="signIn" />
+                        </Link>
+                    )}
+                </div> 
+            </div>
+            )} 
+        </div>
+
         {/*weather date and time*/}
-                <div className="mt-3 pt-3 border-t-2 border-slate-300 flex justify-between items-center text-sm text-slate-700 font-bold" role="region" aria-label="Current weather and time information">
-                    <div className="flex items-center space-x-6">
+                <div className="mt-3 pt-3 border-t-2 border-slate-300 flex flex-col sm:flex-row justify-between items-center gap-3 sm:gap-0 text-xs sm:text-sm text-slate-700 font-bold" role="region" aria-label="Current weather and time information">
+                    <div className="flex items-center space-x-4 sm:space-x-6">
                         {/* Weather */}
                         {loading ? (
                             <div className="text-slate-400 font-semibold" aria-busy="true">Loading weather...</div>
@@ -189,7 +280,7 @@ export default function Navbar() {
                     </div>
                     
                     {/*date and time*/}
-                    <div className="flex items-center space-x-4" aria-label={`Current date and time: ${currentDate} at ${currentTime}`}>
+                    <div className="flex items-center space-x-2 sm:space-x-4" aria-label={`Current date and time: ${currentDate} at ${currentTime}`}>
                         <span className="font-bold">{currentDate}</span>
                         <span className="text-slate-400">-</span>
                         <span className="font-mono font-black">{currentTime}</span>

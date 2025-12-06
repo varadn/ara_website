@@ -169,6 +169,18 @@ export default function WikiPage() {
               </p>
             </div>
 
+            {/*moving search up here :)*/}
+            <div>
+              {/*search for articles*/}
+              <input
+                type="text"
+                placeholder="Search wiki articles..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-full px-4 py-3 mb-8 border-2 border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-600 bg-white font-semibold"
+              />
+            </div>
+
             {/*Entry for an article - Only visible when user is logged in*/}
             {user && !editingEntry &&(
               <form
@@ -265,16 +277,8 @@ export default function WikiPage() {
 
 
 
-            {/*Search and all wiki articles*/}
+            {/*all wiki articles*/}
             <div>
-              {/*search for articles*/}
-              <input
-                type="text"
-                placeholder="Search wiki articles..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full px-4 py-3 mb-8 border-2 border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-600 bg-white font-semibold"
-              />
      
               {/*All the wiki articles using the component */} 
               <div className="space-y-8">
