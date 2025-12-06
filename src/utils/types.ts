@@ -16,6 +16,7 @@ export interface Person {
     website: string;
     projects: Project[];
     active: boolean;
+    faculty: boolean;
 }
 
 export interface Project {

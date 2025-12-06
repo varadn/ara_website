@@ -15,6 +15,7 @@ export async function GET() {
         image_alt,
         website,
         active,
+        faculty,
         projects ( title, id )
         `)
 
@@ -41,7 +42,7 @@ export async function POST(request: NextRequest) {
         }
 
         const body = await request.json();
-        const { name, title, description, image, image_alt, website, active } = body;
+        const { name, title, description, image, image_alt, website, active, faculty } = body;
         //Validate required fields
         if (!name || !title) {
             return NextResponse.json(
@@ -60,7 +61,8 @@ export async function POST(request: NextRequest) {
                 image: image || '',
                 image_alt: image_alt || name,
                 website: website || '',
-                active: active !== undefined ? active : true
+                active: active !== undefined ? active : true,
+                faculty: faculty !== undefined ? faculty : false
             }])
             .select();
 
@@ -99,7 +101,7 @@ export async function PUT(request: NextRequest) {
         }
 
         const body = await request.json();
-        const { id, name, title, description, image, image_alt, website, active } = body;
+        const { id, name, title, description, image, image_alt, website, active, faculty } = body;
 
         //Validates required fields
         if (!id || !name || !title) {
@@ -119,7 +121,8 @@ export async function PUT(request: NextRequest) {
                 image: image || '',
                 image_alt: image_alt || name,
                 website: website || '',
-                active: active !== undefined ? active : true
+                active: active !== undefined ? active : true,
+                faculty: faculty !== undefined ? faculty : false
             })
             .eq('id', id)
             .select();

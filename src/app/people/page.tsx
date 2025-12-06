@@ -10,6 +10,7 @@ import { tree } from 'next/dist/build/templates/app-page';
 
 export default function PeoplePage() {
     const { user } = useAuth();
+    const [faculty, setFaculty] = useState<Person[]>([]);
     const [labMembers, setLabMembers] = useState<Person[]>([]);
     const [alumni, setAlumni] = useState<Person[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
@@ -23,7 +24,8 @@ export default function PeoplePage() {
         image: '',
         image_alt: '', 
         website: '',
-        active: true
+        active: true,
+        faculty: false
     });
 
     const editFormRef = useRef<HTMLFormElement>(null); 
@@ -45,15 +47,24 @@ export default function PeoplePage() {
                     imageAlt: item.image_alt,
                     website: item.website,
                     projects: item.projects,
-                    active: item.active
+                    active: item.active,
+                    faculty: item.faculty
                 }
             });
 
-        const lab: Person[] = data.filter((person) => person.active); 
-        setLabMembers(lab)
+        const facultyMembers: Person[] = data.filter((person) => person.faculty); 
+        const currentMembers: Person[] = data.filter((person) => person.active && !person.faculty); 
+        const alumniMembers: Person[] = data.filter((person) => !person.active && !person.faculty);
+
+        setFaculty(facultyMembers);
+        setLabMembers(currentMembers); 
+        setAlumni(alumniMembers);
+        //old way to filter without faculty column
+        //const lab: Person[] = data.filter((person) => person.active); 
+        //setLabMembers(lab)
         
-        const alum: Person[] = data.filter((person) => !person.active);
-        setAlumni(alum)
+        //const alum: Person[] = data.filter((person) => !person.active);
+        //setAlumni(alum)
             
         } catch (err: any) {
             setError(err.message);
@@ -116,7 +127,8 @@ export default function PeoplePage() {
                 image: '',
                 image_alt: '',
                 website: '',
-                active: true
+                active: true,
+                faculty: false
             });
 
             //Refresh the people list
@@ -142,7 +154,8 @@ export default function PeoplePage() {
             image: editingPerson.imageSrc || '/placeholder.jpg',
             image_alt: editingPerson.imageAlt || editingPerson.name,
             website: editingPerson.website, 
-            active: editingPerson.active
+            active: editingPerson.active,
+            faculty: editingPerson.faculty
         };
 
         try {
@@ -291,7 +304,20 @@ export default function PeoplePage() {
                                     }
                                     className="w-full px-4 py-3 border-2 border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-600 bg-white"
                                 />
-
+                                <div className="flex items-center space-x-3 bg-slate-100 p-4 rounded-lg border-2 border-slate-300">
+                                    <input
+                                        type="checkbox"
+                                        id="faculty"
+                                        checked={newPerson.faculty}
+                                        onChange={(e) =>
+                                            setNewPerson({ ...newPerson, faculty: e.target.checked })
+                                        }
+                                        className="w-5 h-5 text-blue-600 border-slate-300 rounded focus:ring-blue-500 cursor-pointer"
+                                    />
+                                    <label htmlFor="faculty" className="text-sm font-bold text-slate-900 cursor-pointer uppercase">
+                                        Currently Faculty Member
+                                    </label>
+                                </div>
                                 <div className="flex items-center space-x-3 bg-slate-100 p-4 rounded-lg border-2 border-slate-300">
                                     <input
                                         type="checkbox"
@@ -306,6 +332,7 @@ export default function PeoplePage() {
                                         Currently Active Member
                                     </label>
                                 </div>
+                                 
                             </div>
 
                             <button
@@ -393,6 +420,21 @@ export default function PeoplePage() {
                                 <div className="flex items-center space-x-2">
                                     <input
                                         type="checkbox"
+                                        id="edit-faculty" 
+                                        checked={editingPerson.faculty}
+                                        onChange={(e) => 
+                                            setEditingPerson({ ...editingPerson, faculty: e.target.checked })
+                                        }
+                                        className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                                    />
+                                    <label htmlFor="edit-faculty" className="text-sm text-gray-700">
+                                        Faculty Lab Member
+                                    </label>
+                                </div>
+
+                                <div className="flex items-center space-x-2">
+                                    <input
+                                        type="checkbox"
                                         id="edit-active" 
                                         checked={editingPerson.active}
                                         onChange={(e) => 
@@ -423,7 +465,41 @@ export default function PeoplePage() {
                             </div>
                         </form>
                     )}
-
+                    {/*All faculty members*/}
+                    <div className="mb-20">
+                        <h2 className="text-4xl font-black text-slate-900 mb-10 tracking-tight uppercase"> 
+                            <FormattedMessage id="people.faculty" defaultMessage="Faculty" />
+                        </h2>
+                        <div className="space-y-8"> 
+                            { loading ? (    
+                                <div className="text-center py-16">
+                                    <div className="inline-block animate-spin mb-4">
+                                        <div className="w-12 h-12 border-4 border-rose-200 border-t-rose-600 rounded-full"></div>
+                                    </div>
+                                    <p className="text-slate-500 italic text-lg font-bold">Loading faculty...</p>
+                                </div>
+                            ) : faculty.length === 0 ? (
+                                <div className="text-center py-16 pop-content">
+                                    <p className="text-slate-700 text-lg font-bold p-8">No faculty members yet</p>
+                                </div>
+                            ) : ( faculty.map((person, index) => (
+                                    <div key={index} className="card-lift">
+                                    <PersonCard 
+                                        name={person.name}  
+                                        title={person.title} 
+                                        description={person.description}
+                                        imageSrc={person.imageSrc} 
+                                        imageAlt={person.imageAlt} 
+                                        projects={person.projects}
+                                        website={person.website} 
+                                        isEditing={user ? true: false}
+                                        handlEdit={() => startEdit(person)}
+                                        handleDelete={() => handleDeletePerson(person.id!)}
+                                    />
+                                </div>
+                            )))}
+                        </div>
+                    </div>
                     {/*All current members*/}
                     <div className="mb-20">
                     <h2 className="text-4xl font-black text-slate-900 mb-10 tracking-tight uppercase">
