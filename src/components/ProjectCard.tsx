@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { convertGoogleDriveUrl } from "@/utils/helpers";
+import { FormattedMessage } from "react-intl";
 
 interface ProjectCardProps {
   title: string;
@@ -43,7 +44,9 @@ export default function ProjectCard({
             (
             <div className="mb-2">
                 <a href={link}>
-                    View the project!
+                    <p className="underline">
+                        <FormattedMessage id="projectCard.viewLink" />
+                    </p>
                 </a>
             </div>
             )

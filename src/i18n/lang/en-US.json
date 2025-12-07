@@ -14,6 +14,7 @@
     "password": "Password",
     "project.title": "Featured Projects",
     "project.headline": "Cutting-edge research pushing the boundaries of assistive technology",
+    "projectCard.viewLink": "View the project!",
     "project.input.title": "Project Title *",
     "project.input.description": "Project Description *",
     "project.input.image": "Image URL (Google Drive Link)",
