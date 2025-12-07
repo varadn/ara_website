@@ -1,6 +1,6 @@
-# Architecture Overview: ara_website
+# Architecture Overview
 
-This overview details the architecture for both frontend and backend, referencing the frameworks, libraries, build tools, and API routing patterns used in `varadn/ara_website`.
+This overview details the architecture for both frontend and backend, referencing the frameworks, libraries, build tools, and API routing patterns used in the ARA website.
 
 ---
 
