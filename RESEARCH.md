@@ -1,63 +1,66 @@
-Authentication:
--User authentication using the Supabase Auth
--Protected routes and UI rendering dependent of if the user is signed in or not
--Role-based content management (auth users can add content edit/delete coming soon)
+# Architecture Overview: ara_website
 
-Real Time Data:
--Shows current weather for Lowell, MA in the nav bar using the Open-Meteo API
--Date and time: Real-time clock displaying current date and time
--refreshing weather data every 10 minutes
+This overview details the architecture for both frontend and backend, referencing the frameworks, libraries, build tools, and API routing patterns used in `varadn/ara_website`.
 
-Add new projects via form:
--Upload project images (Google Drive image support)
--create project descriptions
+---
 
-People Page (/people):
--Display current lab members and separate alumni section
--Admin Features (when you are logged in):
-    -Add new lab members mark them as active/alumni put profile images, titles, descriptions, and websites
+## Frontend
 
-News Page (/news):
--Recent lab news, events, and activities
--Date and location information
--Admin Features (when logged in):
-    -Add news articles with event dates, locations, and images
+**Frameworks/Libraries**
+- **Framework:** [Next.js](https://nextjs.org/) (using both server-side and client-side features, see `src/app` directory usage)
+- **UI Library:** [React 19](https://react.dev/)
+- **Styling:** [Tailwind CSS v4](https://tailwindcss.com/
+- **Internationalization:** [`react-intl`](https://formatjs.io/docs/react-intl/)
+- **Icons/Fonts:** Integration of Google Fonts via Next.js, e.g., Geist and Geist_Mono in `layout.tsx`
+- **Accessibility:** ARIA tags, alt text, contrast checking through [WebAim](https://webaim.org/resources/contrastchecker/).
 
-Wiki Page (/wiki):
--Internal lab member stuff (visible only to authenticated users)
--Search functionality
+**Build Tool & Structure**
+- **Build/Dev:** Unified via Next.js; `npm run dev` launch a dev server running both backend & frontend.
+- **Source Structure:** Uses Next.js App Router.
+- `/src/app` for pages, `/src/components` for UI pieces, `/src/utils` for helpers/types.
+- **TypeScript:** Primary language for both frontend and backend.
+- **Static Assets:** Managed with Next.js static file serving—see config for remote image patterns in `next.config.ts`.
+- **Linting:** Using default Next.js ESLint configurations.
+- **PostCSS:** Tailwind integrated via PostCSS config; custom rules are locaated in `postcss.config.mjs`.
 
-Contact Page (/contact)
--Contact form for inquiries
--First name, last name, email, and message fields
+**Page/Component Patterns**
+- All main pages (`home`, `projects`, `people`, `wiki`, `contact`, `login`) are React components.
+- Shared layout via `RootLayout`, includes shared components like `Navbar` and `Footer` and React contexts.
+- Image displayed via Google drive links (NOTE: to be changed in the future)
+---
 
-Image Handling:
--Google Drive Integration: Automatically converts Google Drive share links to direct image URLs
+## Backend
 
-UI/UX Features
--New CSS look (looks more friendly i guess)
+**Framework/Platform**
+- **Framework:** Next.js API Routes (`src/app/api/*/route.ts`)
+  - All API logic is implemented as part of the same Next.js app, deploying both frontend and backend in a monorepo/unified service (see README for folder structure). All API requests handled by Next.js's serverless functions.
+- **Database:** [Supabase](https://supabase.com/) (Postgres)
+  - All data fetching, auth, and CRUD interactions are through Supabase client libraries.
+- **Authentication:** Supabase auth, offering login/logout, token-based protection for routes.
+- **Deployment:** [Vercel](https://vercel.com/), using Next.js optimized deployment.
 
-To use Google Drive images:
--Upload image to Google Drive
--Set sharing on that image to "Anyone with the link can view"
--Copy the share link
--Paste into the image URL field in any form
+**API Routing**
+- API routes use Next.js's convention: files within `src/app/api/{entity}/route.ts` export HTTP handler functions (`GET`, `POST`, etc.).
+- Example:  
+  `src/app/api/people/route.ts`
+  ```typescript
+  export async function GET() {
+    const { data, error } = await supabase.from('people').select(/*fields*/);
+    // Returns JSON response using NextResponse
+  }
+  ```
+- Each API route contains access to a relevant Postgres table (`people`, `news`, etc.), handles errors, and returns JSON.
+- All API routes have authorization checks; protected routes ensure only authenticated users can mutate data.
 
+**Additional Backend Features**
+- **Internationalization & Accessibility:** API responses and page structure support multiple languages and accessible markup.
+- **External APIs:** There is mention of integration with external APIs (e.g., weather API) handled via custom API routes.
+- **CRUD Operations:** Supported on major content entities (people, projects, news, wiki).
 
-API Routes (Currently set up with GET and POST for both)
-All API routes:
+---
 
-GET /api/people
--Returns all people with their associated projects
-POST /api/people
--Makes a new person entry
+## Unified Deployment Architecture
 
-GET /api/projects
--Returns all projects
-POST /api/projects
--Makes a new project entry
-
-GET /api/news
--Returns all news articles sorted by date
-POST /api/news
--Makes a new news article
+- **Monorepo:** Both frontend and backend are developed together and deployed as a unified Next.js app.
+- **Serverless:** API endpoints are handled as serverless functions on Vercel, meaning rapid scalability and global edge distribution.
+- **Single Command Startup** Running `npm run dev` starts both layers locally for streamlined development.
