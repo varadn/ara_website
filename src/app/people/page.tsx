@@ -522,11 +522,15 @@ export default function PeoplePage() {
                                     <div className="inline-block animate-spin mb-4">
                                         <div className="w-12 h-12 border-4 border-rose-200 border-t-rose-600 rounded-full"></div>
                                     </div>
-                                    <p className="text-slate-500 italic text-lg font-bold">Loading faculty...</p>
+                                    <p className="text-slate-500 italic text-lg font-bold">
+                                        <FormattedMessage id="people.faculty.loading" />
+                                    </p>
                                 </div>
                             ) : faculty.length === 0 ? (
                                 <div className="text-center py-16 pop-content">
-                                    <p className="text-slate-700 text-lg font-bold p-8">No faculty members yet</p>
+                                    <p className="text-slate-700 text-lg font-bold p-8">
+                                        <FormattedMessage id="people.faculty.none" />
+                                    </p>
                                 </div>
                             ) : ( faculty.map((person, index) => (
                                     <div key={index} className="card-lift">
@@ -557,11 +561,15 @@ export default function PeoplePage() {
                                     <div className="inline-block animate-spin mb-4">
                                         <div className="w-12 h-12 border-4 border-blue-200 border-t-blue-600 rounded-full"></div>
                                     </div>
-                                    <p className="text-slate-500 italic text-lg font-bold">Loading team members...</p>
+                                    <p className="text-slate-500 italic text-lg font-bold">
+                                        <FormattedMessage id="people.currentMembers.loading" />
+                                    </p>
                                 </div>
                             ) : labMembers.length === 0 ? (
                                 <div className="text-center py-16 pop-content">
-                                    <p className="text-slate-700 text-lg font-bold p-8">No active members yet</p>
+                                    <p className="text-slate-700 text-lg font-bold p-8">
+                                        <FormattedMessage id="people.currentMembers.none" />
+                                    </p>
                                 </div>
                             ) : ( labMembers.map((person, index) => (
                                     <div key={index} className="card-lift">
@@ -593,11 +601,15 @@ export default function PeoplePage() {
                                 <div className="inline-block animate-spin mb-4">
                                     <div className="w-12 h-12 border-4 border-blue-200 border-t-blue-600 rounded-full"></div>
                                 </div>
-                                <p className="text-slate-500 italic text-lg font-bold">Loading alumni...</p>
+                                <p className="text-slate-500 italic text-lg font-bold">
+                                    <FormattedMessage id="people.alumni.loading" />
+                                </p>
                             </div>
                         ) : alumni.length === 0 ? (
                             <div className="text-center py-16 pop-content">
-                                <p className="text-slate-700 text-lg font-bold p-8">No alumni yet</p>
+                                <p className="text-slate-700 text-lg font-bold p-8">
+                                    <FormattedMessage id="people.alumni.none" />
+                                </p>
                             </div>
                         ) : ( alumni.map((person, index) => (
                             <div key={index} className="card-lift">
@@ -613,11 +625,6 @@ export default function PeoplePage() {
                                     handlEdit={() => startEdit(person)}
                                     handleDelete={() => handleDeletePerson(person.id!)}
                                 />
-                                {/* {user && (
-                                        <div className="flex justify-end space-x-2 -mt-8 relative z-10 pr-4 pb-4 hover:mt-15">
-                                            
-                                        </div>
-                                    )} */}
                             </div>
                             )))}
                     </div>

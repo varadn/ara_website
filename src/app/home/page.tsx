@@ -465,11 +465,15 @@ export default function HomePage() {
                         <div className="inline-block animate-spin mb-4">
                             <div className="w-12 h-12 border-4 border-blue-200 border-t-blue-600 rounded-full"></div>
                         </div>
-                        <p className="text-slate-500 italic text-lg font-bold">Loading news..</p>
+                        <p className="text-slate-500 italic text-lg font-bold">
+                            <FormattedMessage id="news.loading" />
+                        </p>
                     </div>
                 ) : newsItems.length === 0 ? (
                     <div className="text-center py-16 pop-content">
-                        <p className="text-slate-700 text-lg font-bold p-8">No news yet</p>
+                        <p className="text-slate-700 text-lg font-bold p-8">
+                            <FormattedMessage id="news.none" />
+                        </p>
                     </div>
                 ) : (newsItems.map((item) => (
                         <div key={item.id} className="card-lift">

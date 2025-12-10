@@ -414,11 +414,15 @@ export default function NewsPage() {
                                 <div className="inline-block animate-spin mb-4">
                                     <div className="w-12 h-12 border-4 border-blue-200 border-t-blue-600 rounded-full"></div>
                                 </div>
-                                <p className="text-slate-500 italic text-lg font-bold">Loading news..</p>
+                                <p className="text-slate-500 italic text-lg font-bold">
+                                    <FormattedMessage id="project.loading" />
+                                </p>
                             </div>
                         ) : projects.length === 0 ? (
                             <div className="text-center py-16 pop-content">
-                                <p className="text-slate-700 text-lg font-bold">No projects yet</p>
+                                <p className="text-slate-700 text-lg font-bold">
+                                    <FormattedMessage id="project.none" />
+                                </p>
                             </div>
                         ) : (projects.map((project) => (
                                 <div key={project.id} id={project.id.toString()} className="card-lift">
